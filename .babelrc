@@ -1,0 +1,18 @@
+{
+  "presets": [
+    "react",
+    "env",
+    "flow",
+    "stage-2"
+  ],
+  "env": {
+    "start": {
+      "presets": [
+        "react-hmre"
+      ]
+    }
+  },
+  "plugins": [
+    "styled-components"
+  ]
+}
