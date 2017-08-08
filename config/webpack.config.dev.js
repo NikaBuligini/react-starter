@@ -9,7 +9,7 @@ import SitemapPlugin from 'sitemap-webpack-plugin';
 import paths from './paths';
 
 export default {
-  entry: './src/index.js',
+  entry: ['webpack-hot-middleware/client?noInfo=true', './src/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name]-bundle.js',
@@ -79,6 +79,14 @@ export default {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
   ],
+  resolve: {
+    alias: {
+      components: path.resolve(__dirname, '../src/components/'),
+      actions: path.resolve(__dirname, '../src/actions/'),
+      reducers: path.resolve(__dirname, '../src/reducers/'),
+      utils: path.resolve(__dirname, '../src/utils/'),
+    },
+  },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     compress: true,

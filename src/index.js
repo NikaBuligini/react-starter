@@ -26,7 +26,7 @@ if (path) {
 }
 
 // Grab the state from a global variable injected into the server-generated HTML
-const preloadedState = window.__PRELOADED_STATE__;
+const preloadedState: ?Object = window.__PRELOADED_STATE__;
 
 // Allow the passed state to be garbage-collected
 delete window.__PRELOADED_STATE__;
@@ -37,7 +37,8 @@ const store = configureStore(
   reducers,
 );
 
-render(
-  <App store={store} />,
-  document.getElementById('mount'),
-);
+render(<App store={store} />, document.getElementById('mount'));
+
+if (module.hot) {
+  module.hot.accept();
+}

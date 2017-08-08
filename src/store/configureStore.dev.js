@@ -11,10 +11,5 @@ export default function configureStore(preloadedState, middlewares, rootReducer)
   );
   /* eslint-enable */
 
-  if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept();
-  }
-
   return store;
 }

@@ -35,6 +35,8 @@ if (IS_DEVELOPMENT) {
   app.use(
     webpackHotMiddleware(compiler, {
       log: console.log,
+      noInfo: true,
+      publicPath: webpackDevConfig.output.publicPath,
     }),
   );
 
@@ -57,7 +59,7 @@ if (IS_DEVELOPMENT) {
 }
 
 const PORT = process.env.PORT || 8000;
-server.listen(PORT, '0.0.0.0', (err) => {
+server.listen(PORT, '0.0.0.0', err => {
   if (err) {
     console.error(err);
   } else {
