@@ -2,3 +2,31 @@ body {
   margin: 0;
   padding: 0;
 }
+
+@at-root {
+  @-ms-viewport {
+    width: device-width;
+  }
+}
+
+html {
+  box-sizing: border-box;
+  -ms-overflow-style: scrollbar;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+@import "functions";
+@import "variables";
+
+// Grid mixins
+@import "mixins/breakpoints";
+@import "mixins/grid-framework";
+@import "mixins/grid";
+
+@import "grid";
+@import "utilities/flex";
