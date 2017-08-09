@@ -6,7 +6,11 @@ const SignIn = () =>
     <Helmet>
       <title>Sign In - Title</title>
     </Helmet>
-    SignIn
+    <div className="container">
+      <div className="row">
+        <div className="col-md-offset-2 col-md-8">SignIn</div>
+      </div>
+    </div>
   </div>;
 
 export default SignIn;
