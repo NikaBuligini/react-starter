@@ -3,6 +3,7 @@
 import { combineReducers } from 'redux';
 import merge from 'lodash/merge';
 import session from './session';
+import fetch from './fetch';
 
 const defaultEntities = {
   // services: {},
@@ -18,6 +19,7 @@ function entities(state = defaultEntities, action) {
 const rootReducer = combineReducers({
   session,
   entities,
+  fetch,
 });
 
 export default rootReducer;
