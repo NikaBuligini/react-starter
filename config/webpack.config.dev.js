@@ -17,6 +17,12 @@ export default {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      components: path.resolve(__dirname, '../src/components/'),
+      actions: path.resolve(__dirname, '../src/actions/'),
+      reducers: path.resolve(__dirname, '../src/reducers/'),
+      utils: path.resolve(__dirname, '../src/utils/'),
+    },
   },
   devtool: 'source-map',
   module: {
@@ -79,14 +85,6 @@ export default {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
   ],
-  resolve: {
-    alias: {
-      components: path.resolve(__dirname, '../src/components/'),
-      actions: path.resolve(__dirname, '../src/actions/'),
-      reducers: path.resolve(__dirname, '../src/reducers/'),
-      utils: path.resolve(__dirname, '../src/utils/'),
-    },
-  },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     compress: true,

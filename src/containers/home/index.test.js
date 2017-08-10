@@ -1,6 +1,6 @@
 import React from 'react';
-import Home from './index';
 import renderer from 'react-test-renderer';
+import Home from './index';
 
 test('renders Home component', () => {
   const component = renderer.create(<Home />);

@@ -53,7 +53,11 @@ if (IS_DEVELOPMENT) {
     next();
   });
 
-  app.use(express.static(webpackProdConfig.output.path));
+  app.use(
+    express.static(webpackProdConfig.output.path, {
+      maxage: '2h', // two hour
+    }),
+  );
 
   app.get('*', handleRender);
 }

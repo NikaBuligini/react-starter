@@ -1,3 +1,4 @@
+// @flow
 /* eslint-disable no-underscore-dangle */
 
 import 'babel-polyfill';
