@@ -11,7 +11,7 @@ import renderFullPage from './renderFullPage';
 import reducers from '../src/reducers';
 import App from '../src/App';
 
-export default function handleRender(req, res) {
+export default function handleRender(req: express$Request, res: express$Response) {
   const context = {};
 
   // Create a new Redux store instance

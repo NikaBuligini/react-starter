@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import type { RouterHistory } from 'react-router-dom';
-import { compose } from 'recompose';
+import { compose } from 'redux';
 import { Navigation, Footer, NAVIGATION_HEIGHT, FOOTER_HEIGHT } from './partials';
 import { Routes } from './constants';
 import { logout } from './actions';
