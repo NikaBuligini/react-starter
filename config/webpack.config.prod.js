@@ -9,6 +9,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import CompressionPlugin from 'compression-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 
+import stats from './plugins/stats';
 import paths from './paths';
 
 const optionalPlugins = [];
@@ -18,11 +19,29 @@ if (argv.analyzer === 'true') {
 }
 
 export default {
-  entry: './src/index.js',
+  entry: {
+    vendor: [
+      'moment',
+      'isomorphic-fetch',
+    ],
+    react: [
+      'react',
+      'react-dom',
+      'redux',
+      'react-router-dom',
+      'history',
+    ],
+    app: [
+      'babel-polyfill',
+      path.resolve(__dirname, '../src/index.js'),
+    ],
+  },
   output: {
-    path: path.resolve(__dirname, '..', 'dist'),
-    filename: '[name].[chunkhash:8].js',
-    publicPath: '/',
+    path: path.resolve(__dirname, '../dist/main/assets'),
+    pathinfo: true,
+    filename: '[name].js',
+    chunkFilename: '[id].chunk.js',
+    publicPath: '/assets/',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -61,7 +80,7 @@ export default {
         }),
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
@@ -77,7 +96,7 @@ export default {
     new HtmlWebpackPlugin({
       title: 'Title',
       template: path.resolve(__dirname, '../src/index.html'),
-      filename: path.resolve(__dirname, '../dist/template.html'),
+      filename: path.resolve(__dirname, '../dist//main/template.html'),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -134,6 +153,11 @@ export default {
       process.stdout.write(`${Math.floor(percentage * 100)}% ${message}`);
     }),
     ...optionalPlugins,
+    function Stats() {
+      this.plugin('done', (statsData) => {
+        stats.save(statsData);
+      });
+    },
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

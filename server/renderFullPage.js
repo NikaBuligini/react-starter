@@ -3,20 +3,16 @@
 import path from 'path';
 import fs from 'fs';
 
-let template = '';
-
+let templatePath;
 if (process.env.NODE_ENV === 'production') {
-  const templatePath = path.resolve(__dirname, '../dist/template.html');
-
-  if (fs.existsSync(templatePath)) {
-    template = fs.readFileSync(templatePath, 'utf8');
-  }
+  templatePath = path.resolve(__dirname, '../main/template.html');
 } else {
-  const templatePath = path.resolve(__dirname, './development.html');
+  templatePath = path.resolve(__dirname, '../../server/development.html');
+}
 
-  if (fs.existsSync(templatePath)) {
-    template = fs.readFileSync(templatePath, 'utf8');
-  }
+let template = '';
+if (fs.existsSync(templatePath)) {
+  template = fs.readFileSync(templatePath, 'utf8');
 }
 
 type ReplacerContext = {

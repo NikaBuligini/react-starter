@@ -14,22 +14,33 @@ function printErrors(summary, errors) {
   });
 }
 
-webpack(config).run((err, stats) => {
-  console.log('Creating an optimized production build...');
-  if (err) {
-    printErrors('Failed to compile.', [err]);
-    process.exit(1);
-  }
+function handleCompile(target, callback) {
+  return (err, stats) => {
+    console.log(`Creating an optimized production build for ${target}...`);
+    if (err) {
+      printErrors('Failed to compile.', [err]);
+      process.exit(1);
+    }
+  
+    if (stats.compilation.errors.length) {
+      printErrors('Failed to compile.', stats.compilation.errors);
+      process.exit(1);
+    }
+  
+    if (process.env.CI && stats.compilation.warnings.length) {
+      printErrors('Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.', stats.compilation.warnings);
+      process.exit(1);
+    }
+  
+    console.log(chalk.green(`Compiled successfully (${target}).`));
 
-  if (stats.compilation.errors.length) {
-    printErrors('Failed to compile.', stats.compilation.errors);
-    process.exit(1);
-  }
+    if (callback) {
+      callback();
+    }
+  };
+}
 
-  if (process.env.CI && stats.compilation.warnings.length) {
-    printErrors('Failed to compile. When process.env.CI = true, warnings are treated as failures. Most CI servers set this automatically.', stats.compilation.warnings);
-    process.exit(1);
-  }
-
-  console.log(chalk.green('Compiled successfully.'));
-});
+webpack(config).run(handleCompile('client-side', () => {
+  const serverConfig = require('../config/webpack.config.prod.server').default; // eslint-disable-line
+  webpack(serverConfig).run(handleCompile('server-side'));
+}));

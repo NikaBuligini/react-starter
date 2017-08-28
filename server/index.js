@@ -1,48 +1,25 @@
 /* eslint-disable no-console */
 
+import path from 'path';
 import http from 'http';
 import express from 'express';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackDevConfig from '../config/webpack.config.dev';
-import webpackProdConfig from '../config/webpack.config.prod';
-import handleRender from './handleRender';
+import compress from 'compression';
+import cookieParser from 'cookie-parser';
+import handleRequest from './handleRequest';
 
 const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 const app = express();
 const server = http.createServer(app);
 
+app.disable('x-powered-by');
+app.use(compress()); // should be first middleware
+app.use(cookieParser());
+
 if (IS_DEVELOPMENT) {
-  const compiler = webpack(webpackDevConfig);
-
-  app.use(
-    webpackDevMiddleware(compiler, {
-      publicPath: webpackDevConfig.output.publicPath,
-      contentBase: 'src',
-      hot: true,
-      stats: {
-        colors: true,
-        hash: false,
-        timings: true,
-        chunks: false,
-        chunkModules: false,
-        modules: false,
-      },
-    }),
-  );
-
-  app.use(
-    webpackHotMiddleware(compiler, {
-      log: console.log,
-      noInfo: true,
-      publicPath: webpackDevConfig.output.publicPath,
-    }),
-  );
-
-  app.get('*', handleRender);
+  const createDevelopmentProxy = require('./createDevelopmentProxy').default; // eslint-disable-line
+  createDevelopmentProxy(app);
 } else {
-  const blackListedWordsForGzip = ['vendor'];
+  const blackListedWordsForGzip = [];
 
   app.get('*.js', (req, res, next) => {
     const isBlackListed = new RegExp(blackListedWordsForGzip.join('|')).test(req.url);
@@ -54,13 +31,14 @@ if (IS_DEVELOPMENT) {
   });
 
   app.use(
-    express.static(webpackProdConfig.output.path, {
+    '/assets',
+    express.static(path.resolve(__dirname, './assets'), {
       maxage: '2h', // two hour
     }),
   );
-
-  app.get('*', handleRender);
 }
+
+app.get('*', handleRequest);
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, '0.0.0.0', err => {

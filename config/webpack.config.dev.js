@@ -6,15 +6,36 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 // import CopyWebpackPlugin from 'copy-webpack-plugin'; // for copying files
 import SitemapPlugin from 'sitemap-webpack-plugin';
 
+import stats from './plugins/stats';
 import paths from './paths';
 
 export default {
-  entry: ['webpack-hot-middleware/client?noInfo=true', './src/index.js'],
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name]-bundle.js',
-    publicPath: '/',
+  entry: {
+    vendor: [
+      'moment',
+      'isomorphic-fetch',
+    ],
+    react: [
+      'react',
+      'react-dom',
+      'redux',
+      'react-router-dom',
+      'history',
+    ],
+    app: [
+      'webpack-hot-middleware/client?noInfo=true&dynamicPublicPath=true',
+      'babel-polyfill',
+      path.resolve(__dirname, '../src/index.js'),
+    ],
   },
+  output: {
+    path: path.resolve(__dirname, '../dist/main/assets'),
+    pathinfo: true,
+    filename: '[name].js',
+    chunkFilename: '[id].chunk.js',
+    publicPath: '/assets/',
+  },
+  devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
@@ -24,7 +45,6 @@ export default {
       utils: path.resolve(__dirname, '../src/utils/'),
     },
   },
-  devtool: 'source-map',
   module: {
     loaders: [
       {
@@ -71,19 +91,26 @@ export default {
     //   filename: path.resolve(__dirname, './dist/template.html'),
     // }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.min.js',
+      names: ['react', 'vendor'],
+      minChunks: Infinity,
+      // name: 'vendor',
+      // filename: 'vendor.min.js',
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ExtractTextPlugin({
       filename: '[name].min.css',
       allChunks: true,
     }),
-    new SitemapPlugin('https://tpcpay.ge', paths, {
-      fileName: 'sitemap.xml',
-    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new SitemapPlugin('https://example.com', paths, {
+      fileName: 'sitemap.xml',
+    }),
+    function Stats() {
+      this.plugin('done', (statsData) => {
+        stats.save(statsData, 'memoryOnly');
+      });
+    },
   ],
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
