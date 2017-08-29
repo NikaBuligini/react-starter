@@ -34,16 +34,28 @@ export default {
     // noParse: ['react', 'react-dom', 'moment'],
     loaders: [
       {
+        test: /\.(jpe?g|png|gif|svg|json|txt|woff2?|svg)$/i,
+        loader: 'file-loader?emitFile=false',
+      },
+      {
+        test: /\.(ttf|woff|woff2|eot|otf)(\?.*)?$/,
+        loader: 'file-loader?emitFile=false',
+      },
+      {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         options: {
           cacheDirectory: true,
         },
       },
-      { test: /\.less$/, loader: 'fake-style!css?modules&localIdentName=[name]__[local]!less' },
-      { test: /\.css$/, loader: 'fake-style!css?modules&localIdentName=[name]__[local]' },
-      { test: /\.(woff)$/, loader: 'fake-url?limit=100000' },
-      { test: /\.(png|jpg|jpeg|svg)$/, loader: 'fake-url?limit=25000' },
+      {
+        test: /\.less$/,
+        loader: 'fake-style!css?modules&localIdentName=[name]__[local]!less',
+      },
+      {
+        test: /\.css$/,
+        loader: 'fake-style!css?modules&localIdentName=[name]__[local]',
+      },
     ],
   },
   plugins: [
@@ -58,7 +70,9 @@ export default {
       DEVELOPMENT: true,
       PRODUCTION: false,
       'process.env.NODE_ENV': JSON.stringify('development'),
-      API_SECRET: JSON.stringify(process.env.API_SECRET || 'MY_SUPER_API_SECRET'),
+      API_SECRET: JSON.stringify(
+        process.env.API_SECRET || 'MY_SUPER_API_SECRET',
+      ),
     }),
     new webpack.DefinePlugin({
       STATS: JSON.stringify(stats.load('memoryOnly')),

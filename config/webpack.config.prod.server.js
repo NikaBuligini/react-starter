@@ -33,6 +33,14 @@ export default {
     // noParse: ['react', 'react-dom', 'moment'],
     loaders: [
       {
+        test: /\.(jpe?g|png|gif|svg|json|txt|woff2?|svg)$/i,
+        loader: 'file-loader?emitFile=false',
+      },
+      {
+        test: /\.(ttf|woff|woff2|eot|otf)(\?.*)?$/,
+        loader: 'file-loader?emitFile=false',
+      },
+      {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         options: {
@@ -41,8 +49,6 @@ export default {
       },
       { test: /\.less$/, loader: 'fake-style!css?modules&localIdentName=[hash:base64]!less' },
       { test: /\.css$/, loader: 'fake-style!css?modules&localIdentName=[hash:base64]' },
-      { test: /\.(woff)$/, loader: 'fake-url?limit=100000' },
-      { test: /\.(png|jpg|jpeg|svg)$/, loader: 'fake-url?limit=25000' },
     ],
   },
   plugins: [
