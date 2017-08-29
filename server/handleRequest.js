@@ -7,11 +7,11 @@ import { ServerStyleSheet } from 'styled-components';
 import { StaticRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import renderFullPage from './renderFullPage';
+import { createPage, write } from './server-utils';
 import reducers from '../src/reducers';
 import App from '../src/App';
 
-export default function handleRender(req: express$Request, res: express$Response) {
+export default function handleRequest(req: express$Request, res: express$Response) {
   const context = {};
 
   // Create a new Redux store instance
@@ -20,7 +20,7 @@ export default function handleRender(req: express$Request, res: express$Response
   const sheet = new ServerStyleSheet();
 
   // Render the component to a string
-  const html = renderToString(
+  const markup = renderToString(
     sheet.collectStyles(
       <Provider store={store}>
         <StaticRouter
@@ -45,6 +45,7 @@ export default function handleRender(req: express$Request, res: express$Response
     const styleTags = sheet.getStyleTags();
 
     // Send the rendered page back to the client
-    res.send(renderFullPage(html, preloadedState, helmet, styleTags));
+    const html = createPage(markup, preloadedState, helmet, styleTags);
+    write(html, 'text/html', res);
   }
 }

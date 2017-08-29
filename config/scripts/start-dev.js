@@ -96,10 +96,7 @@ const devServer = new WebpackDevServer(clientCompiler, {
   publicPath: clientConfig.output.publicPath,
   stats: { colors: true },
   quiet: false,
-  noInfo: true,
-  proxy: {
-    '*': 'http://localhost:3000',
-  },
+  noInfo: false,
 });
 devServer.listen(8080);
 
