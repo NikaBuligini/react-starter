@@ -1,4 +1,5 @@
 // @flow
+
 import path from 'path';
 import fs from 'fs';
 import zlib from 'zlib';
@@ -7,7 +8,7 @@ const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 
 const templatePath = IS_DEVELOPMENT
   ? path.resolve(__dirname, '../../server/development.html')
-  : path.resolve(__dirname, '../main/template.html');
+  : path.resolve(__dirname, '../dist/main/template.html');
 
 let template = '';
 if (fs.existsSync(templatePath)) {
@@ -41,8 +42,8 @@ export function writeNotFound(res: express$Response) {
   res.end();
 }
 
-export function write(string, type, res) {
-  zlib.gzip(string, (err, result) => {
+export function write(html: string, type: string, res: express$Response) {
+  zlib.gzip(html, (err, result) => {
     res.writeHead(200, {
       'Content-Length': result.length,
       'Content-Type': type,
@@ -53,12 +54,7 @@ export function write(string, type, res) {
   });
 }
 
-export function createPage(
-  html: string,
-  preloadedState: ?Object,
-  helmet: any,
-  styleTags: string,
-) {
+export function createPage(html: string, preloadedState: ?Object, helmet: any, styleTags: string) {
   const context = {
     title: helmet.title.toString(),
     meta: helmet.meta.toString(),

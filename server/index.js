@@ -5,6 +5,7 @@ import http from 'http';
 import express from 'express';
 import compress from 'compression';
 import cookieParser from 'cookie-parser';
+import favicon from 'serve-favicon';
 import handleRequest from './handleRequest';
 
 const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
@@ -16,12 +17,16 @@ app.use(compress()); // should be first middleware
 app.use(cookieParser());
 
 if (IS_DEVELOPMENT) {
+  app.use(favicon(path.resolve(__dirname, '../main/assets/favicon.ico')));
+
   const createDevelopmentProxy = require('./createDevelopmentProxy').default; // eslint-disable-line
   createDevelopmentProxy(app);
 } else {
+  app.use(favicon(path.resolve(__dirname, '../dist/main/assets/favicon.ico')));
+
   const blackListedWordsForGzip = [];
 
-  app.get('*.js', (req, res, next) => {
+  app.get('/assets/*.js', (req, res, next) => {
     const isBlackListed = new RegExp(blackListedWordsForGzip.join('|')).test(req.url);
     if (!isBlackListed) {
       req.url += '.gz';
@@ -32,7 +37,7 @@ if (IS_DEVELOPMENT) {
 
   app.use(
     '/assets',
-    express.static(path.resolve(__dirname, './assets'), {
+    express.static(path.resolve(__dirname, '../dist/main/assets'), {
       maxage: '2h', // two hour
     }),
   );

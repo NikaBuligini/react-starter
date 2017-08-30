@@ -83,7 +83,7 @@ clientCompiler.plugin('compile', () => {
   bundleClientStart = Date.now();
 });
 
-clientCompiler.plugin('done', (stats) => {
+clientCompiler.plugin('done', stats => {
   if (!canContinue('server', false, stats)) return;
   log.info('webpack', `Bundled client in ${Date.now() - bundleClientStart}ms!`);
   bundleServer();
@@ -102,7 +102,7 @@ devServer.listen(8080);
 
 // work around a weird nodemon bug where something was logged to the console
 // even after the process exited
-process.on('SIGINT', (err) => {
+process.on('SIGINT', err => {
   if (err) console.log(err.stack);
   process.exit();
 });

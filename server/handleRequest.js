@@ -23,10 +23,7 @@ export default function handleRequest(req: express$Request, res: express$Respons
   const markup = renderToString(
     sheet.collectStyles(
       <Provider store={store}>
-        <StaticRouter
-          location={req.url}
-          context={context}
-        >
+        <StaticRouter location={req.url} context={context}>
           <App />
         </StaticRouter>
       </Provider>,

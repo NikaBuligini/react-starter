@@ -11,19 +11,11 @@ import paths from './paths';
 
 export default {
   entry: {
-    vendor: [
-      'moment',
-      'isomorphic-fetch',
-    ],
-    react: [
-      'react',
-      'react-dom',
-      'redux',
-      'react-router-dom',
-      'history',
-    ],
+    vendor: ['moment', 'isomorphic-fetch'],
+    react: ['react', 'react-dom', 'redux', 'react-router-dom', 'history'],
     app: [
-      'webpack-hot-middleware/client?noInfo=true&dynamicPublicPath=true',
+      'webpack-dev-server/client?http://0.0.0.0:8080',
+      'webpack/hot/only-dev-server', // reload page on HRM fail on your own
       'babel-polyfill',
       path.resolve(__dirname, '../src/index.js'),
     ],
@@ -56,7 +48,7 @@ export default {
         test: /\.(ttf|woff|woff2|eot|otf)(\?.*)?$/,
         loader: 'file-loader?name=fonts/[name].[ext]',
       },
-      { test: /\.(json|txt)$/, loader: 'file-loader?name=[name].[ext]' },
+      { test: /\.(json|txt|ico)$/, loader: 'file-loader?name=[name].[ext]' },
       {
         test: /\.scss$/,
         loaders: ExtractTextPlugin.extract({
@@ -85,11 +77,6 @@ export default {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
     }),
-    // new HtmlWebpackPlugin({
-    //   title: 'Title',
-    //   template: path.resolve(__dirname, '../src/index.html'),
-    //   filename: path.resolve(__dirname, './dist/template.html'),
-    // }),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['react', 'vendor'],
       minChunks: Infinity,
@@ -107,7 +94,7 @@ export default {
       fileName: 'sitemap.xml',
     }),
     function Stats() {
-      this.plugin('done', (statsData) => {
+      this.plugin('done', statsData => {
         stats.save(statsData, 'memoryOnly');
       });
     },

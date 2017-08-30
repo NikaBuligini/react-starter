@@ -5,7 +5,7 @@ import handleProxyError from './handleProxyError';
 
 const proxy = httpProxy.createProxyServer();
 
-function createDevelopmentProxy(app) {
+export default function createDevelopmentProxy(app) {
   // add error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
   proxy.on('error', handleProxyError);
 
@@ -24,5 +24,3 @@ function createDevelopmentProxy(app) {
     });
   });
 }
-
-export default createDevelopmentProxy;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-const Home = () =>
+const Home = () => (
   <div>
     <Helmet>
       <title>Home - Title</title>
@@ -11,6 +11,7 @@ const Home = () =>
         <div className="col-md-offset-2 col-md-8">Home</div>
       </div>
     </div>
-  </div>;
+  </div>
+);
 
 export default Home;
