@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-const SignIn = () =>
+const SignIn = () => (
   <div>
     <Helmet>
       <title>Sign In - Title</title>
@@ -11,6 +11,7 @@ const SignIn = () =>
         <div className="col-md-offset-2 col-md-8">SignIn</div>
       </div>
     </div>
-  </div>;
+  </div>
+);
 
 export default SignIn;

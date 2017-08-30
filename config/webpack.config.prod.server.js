@@ -9,10 +9,7 @@ export default {
   devtool: 'source-map',
   context: path.resolve(__dirname, '..'),
 
-  entry: [
-    'babel-polyfill',
-    path.resolve(__dirname, '../server/index.js'),
-  ],
+  entry: ['babel-polyfill', path.resolve(__dirname, '../server/index.js')],
   target: 'node',
   node: {
     console: true,
@@ -30,7 +27,6 @@ export default {
   },
   externals: nodeModules,
   module: {
-    // noParse: ['react', 'react-dom', 'moment'],
     loaders: [
       {
         test: /\.(jpe?g|png|gif|svg|json|txt|woff2?|svg)$/i,

@@ -3,11 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Routes } from './constants';
 // import PrivateRoute from './PrivateRoute';
 
-import {
-  Home,
-  SignIn,
-  NotFound,
-} from './containers';
+import { Home, SignIn, NotFound } from './containers';
 
 const RootRoutes = () => (
   <Switch>

@@ -9,11 +9,7 @@ export default {
   devtool: 'source-map',
   context: path.resolve(__dirname, '..'),
 
-  entry: [
-    'webpack/hot/signal.js',
-    'babel-polyfill',
-    path.resolve(__dirname, '../server/index.js'),
-  ],
+  entry: ['webpack/hot/signal.js', 'babel-polyfill', path.resolve(__dirname, '../server/index.js')],
   target: 'node',
   node: {
     console: true,
@@ -31,7 +27,6 @@ export default {
   },
   externals: nodeModules,
   module: {
-    // noParse: ['react', 'react-dom', 'moment'],
     loaders: [
       {
         test: /\.(jpe?g|png|gif|svg|json|txt|woff2?|svg)$/i,
@@ -70,9 +65,7 @@ export default {
       DEVELOPMENT: true,
       PRODUCTION: false,
       'process.env.NODE_ENV': JSON.stringify('development'),
-      API_SECRET: JSON.stringify(
-        process.env.API_SECRET || 'MY_SUPER_API_SECRET',
-      ),
+      API_SECRET: JSON.stringify(process.env.API_SECRET || 'MY_SUPER_API_SECRET'),
     }),
     new webpack.DefinePlugin({
       STATS: JSON.stringify(stats.load('memoryOnly')),

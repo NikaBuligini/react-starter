@@ -8,7 +8,15 @@ import { setAuthorizationToken } from './middlewares/api';
 import { getSession } from './selectors';
 import App from './App';
 
-class AppWrapper extends React.Component {
+type State = {
+  rehydrated: boolean,
+};
+
+type Props = {
+  store: Object,
+};
+
+class AppWrapper extends React.Component<Props, State> {
   state = {
     rehydrated: false,
   };
@@ -23,10 +31,6 @@ class AppWrapper extends React.Component {
       this.setState({ rehydrated: true });
     });
   }
-
-  props: {
-    store: Object,
-  };
 
   render() {
     if (!this.state.rehydrated) {

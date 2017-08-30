@@ -4,7 +4,7 @@ function track(action) {
   // console.log(action);
 }
 
-export default () => next => (action) => {
+export default () => next => action => {
   track(action);
   return next(action);
 };

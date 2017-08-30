@@ -4,7 +4,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 // import type { ContextRouter } from 'react-router-dom';
 
-const RedirectWithStatus = ({ from, to, status }: { from: string, to: string, status: number }) =>
+const RedirectWithStatus = ({ from, to, status }: { from: string, to: string, status: number }) => (
   <Route
     render={(router: Object) => {
       // router actually is type of ContextRouter
@@ -18,7 +18,8 @@ const RedirectWithStatus = ({ from, to, status }: { from: string, to: string, st
 
       return <Redirect from={from} to={to} />;
     }}
-  />;
+  />
+);
 
 /**
  * Example:
