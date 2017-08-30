@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
-import stats from './plugins/stats';
+import * as stats from './plugins/stats';
 import getNodeModules from './utils/getNodeModules';
 
 const nodeModules = getNodeModules();

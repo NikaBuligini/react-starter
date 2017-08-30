@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
-import stats from './plugins/stats';
+import * as stats from './plugins/stats';
+import progress from './plugins/progress';
 import getNodeModules from './utils/getNodeModules';
 
 const nodeModules = getNodeModules();
@@ -59,10 +60,16 @@ export default {
       PRODUCTION: true,
       'process.env.NODE_ENV': JSON.stringify('production'),
       API_SECRET: JSON.stringify(process.env.API_SECRET || 'MY_SUPER_API_SECRET'),
-    }),
-    new webpack.DefinePlugin({
       // STATS: JSON.stringify(stats.load('memoryOnly')),
       STATS: JSON.stringify(stats.load()),
+    }),
+    new webpack.ProgressPlugin((percentage, message) => {
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+
+      if (percentage !== 1) {
+        process.stdout.write(`${progress(percentage)} ${message}`);
+      }
     }),
   ],
 };

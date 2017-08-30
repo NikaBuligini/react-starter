@@ -9,7 +9,8 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import CompressionPlugin from 'compression-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 
-import stats from './plugins/stats';
+import * as stats from './plugins/stats';
+import progress from './plugins/progress';
 import paths from './paths';
 
 const optionalPlugins = [];
@@ -135,10 +136,12 @@ export default {
       },
     }),
     new webpack.ProgressPlugin((percentage, message) => {
-      // console.log(process.stdout.clearLine);
       process.stdout.clearLine();
       process.stdout.cursorTo(0);
-      process.stdout.write(`${Math.floor(percentage * 100)}% ${message}`);
+
+      if (percentage !== 1) {
+        process.stdout.write(`${progress(percentage)} ${message}`);
+      }
     }),
     ...optionalPlugins,
     function Stats() {

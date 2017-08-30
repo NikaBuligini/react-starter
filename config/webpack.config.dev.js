@@ -6,7 +6,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 // import CopyWebpackPlugin from 'copy-webpack-plugin'; // for copying files
 import SitemapPlugin from 'sitemap-webpack-plugin';
 
-import stats from './plugins/stats';
+import * as stats from './plugins/stats';
 import paths from './paths';
 
 export default {
