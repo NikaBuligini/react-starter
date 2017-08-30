@@ -21,7 +21,6 @@ if (argv.analyzer === 'true') {
 export default {
   entry: {
     vendor: ['moment', 'isomorphic-fetch'],
-    react: ['react', 'react-dom', 'redux', 'react-router-dom', 'history'],
     app: ['babel-polyfill', path.resolve(__dirname, '../src/index.js')],
   },
   output: {
@@ -78,10 +77,34 @@ export default {
     ],
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    //   filename: 'vendor.[hash:8].js',
+    // }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: true,
+      compress: {
+        warnings: false,
+        comparisons: false,
+        drop_console: false,
       },
+      output: {
+        comments: false,
+        ascii_only: true,
+      },
+      sourceMap: false,
+    }),
+    new ExtractTextPlugin({
+      filename: '[name].[chunkhash:8].css',
+      allChunks: true,
+    }),
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.(js|html)$/,
+      threshold: 10240,
+      minRatio: 0.8,
     }),
     new HtmlWebpackPlugin({
       title: 'Title',
@@ -100,42 +123,17 @@ export default {
         minifyURLs: true,
       },
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.[hash:8].js',
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: true,
-      compress: {
-        warnings: false,
-        comparisons: false,
-        drop_console: false,
-      },
-      output: {
-        comments: false,
-        ascii_only: true,
-      },
-      sourceMap: false,
-    }),
-    new CompressionPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.(js|html)$/,
-      threshold: 10240,
-      minRatio: 0.8,
-    }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new ExtractTextPlugin({
-      filename: '[name].[chunkhash:8].css',
-      allChunks: true,
-    }),
     new SitemapPlugin('https://example.ge', paths, {
       fileName: 'sitemap.xml',
       lastMod: true,
       changeFreq: 'monthly',
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
     new webpack.ProgressPlugin((percentage, message) => {
       // console.log(process.stdout.clearLine);
       process.stdout.clearLine();

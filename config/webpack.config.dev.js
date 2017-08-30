@@ -12,7 +12,6 @@ import paths from './paths';
 export default {
   entry: {
     vendor: ['moment', 'isomorphic-fetch'],
-    react: ['react', 'react-dom', 'redux', 'react-router-dom', 'history'],
     app: [
       'webpack-dev-server/client?http://0.0.0.0:8080',
       'webpack/hot/only-dev-server', // reload page on HRM fail on your own
