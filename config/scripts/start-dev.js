@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 //  webpack-dev-server --config bundling/webpack.config.dev.js --progress --colors --hot
 
 import webpack from 'webpack';

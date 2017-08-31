@@ -97,7 +97,11 @@ const fetchStatus = ({ types, mapActionToKey, initialState, retrieveData }) => {
 const fetch = combineReducers({
   articlesByUserId: fetchStatus({
     mapActionToKey: action => action.key,
-    types: ['ActionTypes.ARTICLES_REQUEST', 'ActionTypes.ARTICLES_SUCCESS', 'ActionTypes.ARTICLES_FAILURE'],
+    types: [
+      'ActionTypes.ARTICLES_REQUEST',
+      'ActionTypes.ARTICLES_SUCCESS',
+      'ActionTypes.ARTICLES_FAILURE',
+    ],
     initialState: { ids: [], isFullyLoaded: false },
     retrieveData: (state, action) => ({
       ids: union(state.ids, action.response.result),

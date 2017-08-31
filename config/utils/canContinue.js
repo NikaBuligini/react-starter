@@ -1,3 +1,5 @@
+/* eslint-disable no-console, array-callback-return */
+
 import log from 'npmlog';
 import PrettyError from 'pretty-error';
 

@@ -28,8 +28,12 @@ const Link = styled(NavLink)`
 
 const Navigation = () => (
   <Wrapper>
-    <Link exact to={Routes.home}>Home</Link>
-    <Link exact to={Routes.signIn}>Sign In</Link>
+    <Link exact to={Routes.home}>
+      Home
+    </Link>
+    <Link exact to={Routes.signIn}>
+      Sign In
+    </Link>
   </Wrapper>
 );
 
