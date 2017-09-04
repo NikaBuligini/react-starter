@@ -29,7 +29,7 @@ export default {
   module: {
     loaders: [
       {
-        test: /\.(jpe?g|png|gif|svg|json|txt|woff2?|svg)$/i,
+        test: /\.(jpe?g|png|gif|svg|txt|woff2?|svg)$/i,
         loader: 'file-loader?emitFile=false',
       },
       {

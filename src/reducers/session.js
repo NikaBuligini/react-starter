@@ -18,6 +18,9 @@ export default (state: typeof initialSession = initialSession, action) => {
     case ActionTypes.LOGOUT: {
       return { ...initialSession, language: state.language };
     }
+    case ActionTypes.CHANGE_LOCALE: {
+      return { ...state, language: action.locale };
+    }
     // case ActionTypes.SET_REDIRECT_PATH: {
     //   return { ...state, redirectUrl: action.url };
     // }

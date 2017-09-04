@@ -6,10 +6,15 @@ import { render } from 'react-dom';
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
+
+// Load the favicon, the manifest.json file and the robots.txt file
+/* eslint-disable import/no-webpack-loader-syntax, import/no-unresolved */
+import '!file-loader?name=[name].[ext]!./favicon.ico';
+import '!file-loader?name=[name].[ext]!./manifest.json';
+import '!file-loader?name=[name].[ext]!./robots.txt';
+/* eslint-enable import/no-webpack-loader-syntax, import/no-unresolved */
+
 import './vendor';
-import './favicon.ico';
-import './manifest.json';
-import './robots.txt';
 
 import api from './middlewares/api';
 import array from './middlewares/array';

@@ -52,7 +52,6 @@ export default {
         test: /\.(ttf|woff|woff2|eot|otf)(\?.*)?$/,
         loader: 'file-loader?name=fonts/[name].[ext]',
       },
-      { test: /\.(json|txt|ico)$/, loader: 'file-loader?name=[name].[ext]' },
       {
         test: /\.scss$/,
         loaders: ExtractTextPlugin.extract({
