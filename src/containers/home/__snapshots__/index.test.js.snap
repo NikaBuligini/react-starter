@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders Home component 1`] = `
+exports[`<Home /> should render the Home page 1`] = `
 <div>
   <div
     className="container"
@@ -11,7 +11,9 @@ exports[`renders Home component 1`] = `
       <div
         className="col-md-offset-2 col-md-8"
       >
-        Home
+        <span>
+          Home
+        </span>
       </div>
     </div>
   </div>
