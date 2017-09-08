@@ -6,6 +6,7 @@ import express from 'express';
 import compress from 'compression';
 import cookieParser from 'cookie-parser';
 import favicon from 'serve-favicon';
+import validateLocale from './middlewares/validateLocale';
 import handleRequest from './handleRequest';
 
 const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
@@ -42,6 +43,9 @@ if (IS_DEVELOPMENT) {
     }),
   );
 }
+
+// validates locale value in cookies
+app.use(validateLocale);
 
 app.get('*', handleRequest);
 

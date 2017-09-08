@@ -13,25 +13,13 @@ import App from '../src/App';
 
 import { setLocale } from '../src/actions';
 
-const DEFAULT_LANGUAGE = 'en';
-const ALLOWED_LANGUAGES = ['en', 'ka'];
-
 export default function handleRequest(req: express$Request, res: express$Response) {
   const context = {};
-
-  let { locale } = req.cookies;
-
-  if (!locale || ALLOWED_LANGUAGES.indexOf(locale) === -1) {
-    locale = DEFAULT_LANGUAGE;
-    res.cookie('locale', locale, {
-      maxAge: 7200000, // 2 hour
-    });
-  }
 
   // Create a new Redux store instance
   const store = createStore(reducers);
 
-  store.dispatch(setLocale(locale));
+  store.dispatch(setLocale(req.cookies.locale));
 
   const sheet = new ServerStyleSheet();
 
