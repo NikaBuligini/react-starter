@@ -5,7 +5,6 @@ import * as ActionTypes from '../actions';
 const initialSession = {
   user: {},
   userId: null,
-  language: 'en',
   redirectUrl: null,
 };
 
@@ -16,10 +15,7 @@ export default (state: typeof initialSession = initialSession, action) => {
     //   return { ...state, user, userId: user.userId };
     // }
     case ActionTypes.LOGOUT: {
-      return { ...initialSession, language: state.language };
-    }
-    case ActionTypes.CHANGE_LOCALE: {
-      return { ...state, language: action.locale };
+      return { ...initialSession };
     }
     // case ActionTypes.SET_REDIRECT_PATH: {
     //   return { ...state, redirectUrl: action.url };

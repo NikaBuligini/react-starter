@@ -2,8 +2,8 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
-import { changeLanguage } from '../actions';
 
 export const HEIGHT = 60;
 
@@ -24,14 +24,14 @@ const Wrapper = styled.div`
 `;
 
 type Props = {
-  changeLanguage: (locale: string) => void,
   locale: string,
 };
 
 class Footer extends React.Component<Props> {
   handleLanguageChange = (event: SyntheticInputEvent<*>) => {
-    console.log(event.target.value);
-    this.props.changeLanguage(event.target.value);
+    Cookies.set('locale', event.target.value);
+
+    location.reload();
   };
 
   render() {
@@ -53,13 +53,4 @@ class Footer extends React.Component<Props> {
   }
 }
 
-function mapStateToProps(state) {
-  const { session } = state;
-  return {
-    locale: session.language,
-  };
-}
-
-export default connect(mapStateToProps, {
-  changeLanguage,
-})(Footer);
+export default connect(({ locale }) => ({ locale }))(Footer);

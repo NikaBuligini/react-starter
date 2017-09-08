@@ -9,12 +9,12 @@ describe('<NotFound />', () => {
     const renderedComponent = shallow(<NotFound />);
     expect(
       renderedComponent.contains(
-        <h1>
+        <h5>
           <FormattedMessage
             id="containers.NotFoundPage.header"
             defaultMessage={'Page not found.'}
           />
-        </h1>,
+        </h5>,
       ),
     ).toEqual(true);
   });

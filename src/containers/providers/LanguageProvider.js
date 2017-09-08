@@ -16,11 +16,4 @@ const LanguageProvider = ({ locale, messages, children }: Props) => (
   </IntlProvider>
 );
 
-function mapStateToProps(state) {
-  const { session } = state;
-  return {
-    locale: session.language,
-  };
-}
-
-export default connect(mapStateToProps)(LanguageProvider);
+export default connect(({ locale }) => ({ locale }))(LanguageProvider);
