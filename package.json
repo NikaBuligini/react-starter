@@ -21,8 +21,10 @@
   },
   "dependencies": {
     "compression": "^1.7.0",
+    "connect-redis": "^3.3.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.4",
+    "express-session": "^1.15.5",
     "history": "^4.7.2",
     "humps": "^2.0.1",
     "js-cookie": "^2.1.4",
