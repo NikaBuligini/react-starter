@@ -4,9 +4,11 @@ import path from 'path';
 import http from 'http';
 import express from 'express';
 import compress from 'compression';
+import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import ConnectRedis from 'connect-redis';
+import responseTime from 'response-time';
 import favicon from 'serve-favicon';
 import validateLocale from './middlewares/validateLocale';
 import losesRedisConnection from './middlewares/losesRedisConnection';
@@ -18,7 +20,6 @@ const server = http.createServer(app);
 
 app.disable('x-powered-by');
 app.use(compress()); // should be first middleware
-app.use(cookieParser());
 
 const RedisStore = ConnectRedis(session);
 
@@ -37,6 +38,9 @@ if (IS_DEVELOPMENT) {
   const createDevelopmentProxy = require('./createDevelopmentProxy').default; // eslint-disable-line
   createDevelopmentProxy(app);
 } else {
+  // express security
+  app.use(helmet());
+
   app.set('trust proxy', 1); // trust first proxy
   sessionConfig.cookie.secure = true; // serve secure cookies
 
@@ -65,16 +69,16 @@ if (IS_DEVELOPMENT) {
   );
 }
 
+app.use(cookieParser());
+app.use(responseTime());
+
 // setup sessions
 app.use(session(sessionConfig));
 
 // checks if session is connected with redis
 app.use(losesRedisConnection);
 
-// validates locale value in cookies
-app.use(validateLocale);
-
-app.get('*', handleRequest);
+app.get('*', validateLocale, handleRequest);
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, '0.0.0.0', err => {
