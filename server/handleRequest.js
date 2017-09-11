@@ -48,7 +48,7 @@ export default function handleRequest(req: express$Request, res: express$Respons
     // Send the rendered page back to the client
     const html = createPage(markup, preloadedState, helmet, styleTags);
 
-    req.cache(html, 60);
+    // req.cache(html, 60);
 
     write(html, 'text/html', res);
   }
