@@ -1,0 +1,111 @@
+// @flow
+
+import React from 'react';
+import Wrapper from './Wrapper';
+import Percent from './Percent';
+
+type Props = {
+  percent: number,
+  updateProgress: (progress: number) => void,
+  autoIncrement: boolean,
+  intervalTime: number,
+};
+
+type State = {
+  percent: number,
+};
+
+class ProgressBar extends React.Component<Props, State> {
+  static defaultProps = {
+    percent: -1,
+    autoIncrement: true,
+    intervalTime: 75,
+  };
+
+  state = {
+    percent: this.props.percent,
+  };
+
+  componentDidMount() {
+    this.handleProps(this.props);
+  }
+
+  componentWillReceiveProps(nextProps: Props) {
+    if (this.interval) {
+      // stop progress when new props come in.
+      clearInterval(this.interval);
+      this.interval = undefined;
+    }
+
+    if (this.timeout) {
+      // clear timeout when new props come in.
+      clearTimeout(this.timeout);
+      this.timeout = undefined;
+    }
+
+    // start progress with updated props.
+    this.handleProps(nextProps);
+  }
+
+  componentWillUnmount() {
+    // cleaning up interval and timeout.
+    if (this.interval) {
+      clearInterval(this.interval);
+      this.interval = undefined;
+    }
+
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = undefined;
+    }
+  }
+
+  increment = () => {
+    let { percent } = this.state;
+
+    percent += Math.random() + 1 - Math.random(); // eslint-disable-line
+    percent = percent < 99 ? percent : 99;
+
+    this.setState({ percent });
+  };
+
+  interval: ?number;
+
+  handleProps = (props: Props) => {
+    const { autoIncrement, percent, intervalTime } = props;
+
+    if (autoIncrement && percent >= 0 && percent < 99) {
+      this.interval = setInterval(this.increment, intervalTime);
+    }
+
+    if (percent >= 100) {
+      this.setState({ percent: 99.9 }, () => {
+        this.timeout = setTimeout(() => {
+          this.setState({ percent: -1 }, () => this.props.updateProgress(-1));
+        }, 300);
+      });
+    } else {
+      this.setState({ percent });
+    }
+  };
+
+  timeout: ?number;
+
+  render() {
+    const { percent } = this.state;
+
+    // Hide progress bar if percent is less than 0.
+    const isHidden = percent < 0 || percent >= 100;
+
+    // Set `state.percent` as width.
+    const style = { width: `${percent <= 0 ? 0 : percent}%` };
+
+    return (
+      <Wrapper hidden={isHidden}>
+        <Percent style={style} />
+      </Wrapper>
+    );
+  }
+}
+
+export default ProgressBar;
