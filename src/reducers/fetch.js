@@ -95,17 +95,30 @@ const fetchStatus = ({ types, mapActionToKey, initialState, retrieveData }) => {
 };
 
 const fetch = combineReducers({
-  articlesByUserId: fetchStatus({
+  // EXAMPLE
+  // articlesByUserId: fetchStatus({
+  //   mapActionToKey: action => action.key,
+  //   types: [
+  //     'ActionTypes.ARTICLES_REQUEST',
+  //     'ActionTypes.ARTICLES_SUCCESS',
+  //     'ActionTypes.ARTICLES_FAILURE',
+  //   ],
+  //   initialState: { ids: [], isFullyLoaded: false },
+  //   retrieveData: (state, action) => ({
+  //     ids: union(state.ids, action.response.result),
+  //     isFullyLoaded: isFullyLoaded(action),
+  //   }),
+  // }),
+  contributorsByRepo: fetchStatus({
     mapActionToKey: action => action.key,
     types: [
-      'ActionTypes.ARTICLES_REQUEST',
-      'ActionTypes.ARTICLES_SUCCESS',
-      'ActionTypes.ARTICLES_FAILURE',
+      ActionTypes.CONTRIBUTORS_REQUEST,
+      ActionTypes.CONTRIBUTORS_SUCCESS,
+      ActionTypes.CONTRIBUTORS_FAILURE,
     ],
-    initialState: { ids: [], isFullyLoaded: false },
+    initialState: { ids: [] },
     retrieveData: (state, action) => ({
       ids: union(state.ids, action.response.result),
-      isFullyLoaded: isFullyLoaded(action),
     }),
   }),
 });

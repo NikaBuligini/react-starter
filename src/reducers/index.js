@@ -5,6 +5,7 @@ import merge from 'lodash/merge';
 import { SET_LOCALE } from '../actions';
 import session from './session';
 import fetch from './fetch';
+import progress from './progress';
 
 const defaultEntities = {
   // services: {},
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   entities,
   fetch,
   locale,
+  progress,
 });
 
 export default rootReducer;

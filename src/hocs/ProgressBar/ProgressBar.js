@@ -4,6 +4,8 @@ import React from 'react';
 import Wrapper from './Wrapper';
 import Percent from './Percent';
 
+const MAX_PERCENT = 85;
+
 type Props = {
   percent: number,
   updateProgress: (progress: number) => void,
@@ -19,7 +21,7 @@ class ProgressBar extends React.Component<Props, State> {
   static defaultProps = {
     percent: -1,
     autoIncrement: true,
-    intervalTime: 75,
+    intervalTime: 450,
   };
 
   state = {
@@ -63,8 +65,8 @@ class ProgressBar extends React.Component<Props, State> {
   increment = () => {
     let { percent } = this.state;
 
-    percent += Math.random() + 1 - Math.random(); // eslint-disable-line
-    percent = percent < 99 ? percent : 99;
+    percent += (Math.random() + 1 - Math.random()) * 3; // eslint-disable-line
+    percent = percent < MAX_PERCENT ? percent : MAX_PERCENT;
 
     this.setState({ percent });
   };

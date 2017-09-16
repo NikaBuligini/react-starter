@@ -1,17 +1,16 @@
 // @flow
 
 import React from 'react';
-import type { RouterHistory, Location } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import ProgressBar from './ProgressBar';
 
 type Props = {
-  location: Location,
-  history: RouterHistory,
+  isActive: boolean,
 };
 
 type State = {
   progress: number,
-  loadedRoutes: Array<string>,
 };
 
 function getDisplayName(WrappedComponent: React$ComponentType<*>) {
@@ -22,40 +21,23 @@ function withProgressBar(WrappedComponent: React$ComponentType<*>) {
   class ComponentWithProgressBar extends React.Component<Props, State> {
     state = {
       progress: -1,
-      loadedRoutes: this.props.location && [this.props.location.pathname],
     };
-
-    componentWillMount() {
-      this.unsubscribeHistory =
-        this.props.history &&
-        this.props.history.listen((location: Location) => {
-          if (this.state.loadedRoutes.indexOf(location.pathname) === -1) {
-            this.updateProgress(0);
-          }
-        });
-    }
 
     componentWillUpdate(props: Props, state: State) {
-      const { loadedRoutes, progress } = this.state;
-      const { pathname } = props.location;
+      const { progress } = this.state;
+      const { isActive: wasActive } = this.props;
+      const { isActive } = props;
 
-      // Complete progress when route changes. But prevent state update while re-rendering.
-      if (loadedRoutes.indexOf(pathname) === -1 && progress !== -1 && state.progress < 100) {
+      // Start progress
+      if (!wasActive && isActive) {
+        this.updateProgress(0);
+      }
+
+      // Complete progress when status changes. But prevent state update while re-rendering.
+      if (wasActive && !isActive && progress !== -1 && state.progress < 100) {
         this.updateProgress(100);
-        this.addVisitedRoute(pathname);
       }
     }
-
-    componentWillUnmount() {
-      // Unset unsubscribeHistory since it won't be garbage-collected.
-      this.unsubscribeHistory = undefined;
-    }
-
-    unsubscribeHistory: ?() => void;
-
-    addVisitedRoute = (pathname: string) => {
-      this.setState({ loadedRoutes: [...this.state.loadedRoutes, pathname] });
-    };
 
     updateProgress = (progress: number) => {
       this.setState({ progress });
@@ -76,4 +58,6 @@ function withProgressBar(WrappedComponent: React$ComponentType<*>) {
   return ComponentWithProgressBar;
 }
 
-export default withProgressBar;
+const enhance = compose(connect(state => ({ isActive: state.progress.isActive })), withProgressBar);
+
+export default enhance;

@@ -18,6 +18,7 @@ import './vendor';
 
 import api from './middlewares/api';
 import array from './middlewares/array';
+import debounce from './middlewares/debounce';
 import analytics from './middlewares/analytics';
 import reducers from './reducers';
 import configureStore from './store/configureStore';
@@ -38,7 +39,7 @@ delete window.__PRELOADED_STATE__;
 
 const store = configureStore(
   preloadedState,
-  applyMiddleware(thunk, array, analytics, api),
+  applyMiddleware(thunk, array, api, debounce, analytics),
   reducers,
 );
 

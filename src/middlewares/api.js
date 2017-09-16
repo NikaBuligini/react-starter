@@ -2,12 +2,13 @@
 
 import { schema as Schema, normalize } from 'normalizr';
 import { camelizeKeys } from 'humps';
+import uuid from 'uuid/v4';
 import { markAsUnauthorized } from '../actions';
 import config from '../config';
 
 const defaultHeaders: Object = {
   'Content-Type': 'application/json',
-  lang: 'en-US',
+  // lang: 'en-US',
 };
 
 export function setAuthorizationToken(token: ?string) {
@@ -50,7 +51,7 @@ async function callApi(
     init = { ...init, body };
   }
 
-  const response = await fetch(`${config.BASE_URL}/api/${endpoint}`, init);
+  const response = await fetch(`${config.BASE_URL}/${endpoint}`, init);
 
   if (response.status === 401) {
     return {
@@ -83,11 +84,13 @@ async function callApi(
  * );
  */
 
+const userSchema = new Schema.Entity('users');
+
 // Schemas for Github API responses.
-// export const Schemas = {
-//   USER: productSchema,
-//   USER_ARRAY: [productSchema],
-// };
+export const Schemas = {
+  USER: userSchema,
+  USER_ARRAY: [userSchema],
+};
 
 // Action key that carries API call info interpreted by this Redux middleware.
 export const CALL_API: any = Symbol('Call API');
@@ -101,7 +104,7 @@ export default (store: Object) => (next: Function) => async (action: Object) => 
   }
 
   let { endpoint } = callAPI;
-  const { schema, types, headers, body, meta } = callAPI;
+  const { schema, types, headers, body, meta, ...restOptions } = callAPI;
   const method = callAPI.method || 'GET';
 
   if (typeof endpoint === 'function') {
@@ -126,14 +129,24 @@ export default (store: Object) => (next: Function) => async (action: Object) => 
     return finalAction;
   }
 
+  const additionalProps = {};
+
+  if (restOptions.showProgress) {
+    additionalProps.progressId = uuid();
+  }
+
   const [requestType, successType, failureType] = types;
-  next(actionWith({ type: requestType }));
+  next(actionWith({ type: requestType, ...additionalProps }));
 
   try {
     const { response, error } = await callApi(endpoint, schema, method, headers, body, meta);
 
+    if (restOptions.debounce) {
+      additionalProps.debounce = restOptions.debounce;
+    }
+
     if (response) {
-      next(actionWith({ type: successType, response }));
+      next(actionWith({ type: successType, response, ...additionalProps }));
 
       if (meta && meta.onSuccess) {
         meta.onSuccess(response);
@@ -144,6 +157,7 @@ export default (store: Object) => (next: Function) => async (action: Object) => 
           type: failureType,
           error: error.messages || ['Something bad happened'],
           errorCode: error.errorCode,
+          ...additionalProps,
         }),
       );
 
