@@ -4,10 +4,12 @@
   "main": "index.js",
   "author": "Nikoloz Buligini",
   "scripts": {
-    "start": "cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
-    "bundle": "rimraf dist && babel-node config/scripts/build",
+    "start": "yarn serve",
+    "start:dev": "cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
+    "bundle": "node config/scripts/start-build",
     "build": "yarn bundle -- --analyzer=true",
-    "serve": "cross-env NODE_ENV=production cross-env PORT=8000 babel-node ./server",
+    "build:prod": "yarn bundle -- --production --port=80 && ",
+    "serve": "node ./dist/main/server",
     "deploy": "yarn bundle && babel-node config/scripts/deploy",
     "deploy:test": "yarn deploy -- --target=test",
     "deploy:production": "yarn deploy -- --target=production",
@@ -16,10 +18,10 @@
     "flow": "babel-node ./config/scripts/flow",
     "test": "jest",
     "test:coverage": "yarn test -- --coverage --collectCoverageFrom=**/src/*.{js,jsx}",
-    "test:watch": "yarn test -- --watch",
-    "postinstall": "yarn flow:build"
+    "test:watch": "yarn test -- --watch"
   },
   "dependencies": {
+    "babel-core": "^6.26.0",
     "compression": "^1.7.0",
     "connect-redis": "^3.3.0",
     "cookie-parser": "^1.4.3",
@@ -52,7 +54,6 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^21.0.0",
     "babel-loader": "^7.1.2",

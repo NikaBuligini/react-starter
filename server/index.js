@@ -7,12 +7,12 @@ import compress from 'compression';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import ConnectRedis from 'connect-redis';
+// import ConnectRedis from 'connect-redis';
 import responseTime from 'response-time';
 import favicon from 'serve-favicon';
 import validateLocale from './middlewares/validateLocale';
 import losesRedisConnection from './middlewares/losesRedisConnection';
-import cache from './middlewares/cache';
+// import cache from './middlewares/cache';
 import handleRequest from './handleRequest';
 
 const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
@@ -22,11 +22,11 @@ const server = http.createServer(app);
 app.disable('x-powered-by');
 app.use(compress()); // should be first middleware
 
-const RedisStore = ConnectRedis(session);
+// const RedisStore = ConnectRedis(session);
 
 // secret for cookieParser and session shoud be same string
 const sessionConfig = {
-  store: new RedisStore(),
+  // store: new RedisStore(),
   resave: false,
   saveUninitialized: true,
   cookie: {},
@@ -79,7 +79,7 @@ app.use(session(sessionConfig));
 // checks if session is connected with redis
 app.use(losesRedisConnection);
 
-app.get('*', validateLocale, cache.routeHtml, handleRequest);
+app.get('*', validateLocale, /* cache.routeHtml, */ handleRequest);
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, '0.0.0.0', err => {
