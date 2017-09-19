@@ -8,7 +8,7 @@ const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 
 const templatePath = IS_DEVELOPMENT
   ? path.resolve(__dirname, '../../server/development.html')
-  : path.resolve(__dirname, '../dist/main/template.html');
+  : path.resolve(__dirname, '../main/template.html');
 
 let template = '';
 if (fs.existsSync(templatePath)) {
@@ -68,7 +68,9 @@ export function createPage(html: string, preloadedState: ?Object, helmet: any, s
         window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
       </script>
     `,
-    devServer: IS_DEVELOPMENT ? '<script src="http://localhost:8080/webpack-dev-server.js"></script>' : '',
+    devServer: IS_DEVELOPMENT
+      ? '<script src="http://localhost:8080/webpack-dev-server.js"></script>'
+      : '',
   };
 
   return formatString(template, context);

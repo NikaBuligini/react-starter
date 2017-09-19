@@ -21,6 +21,7 @@ const server = http.createServer(app);
 
 app.disable('x-powered-by');
 app.use(compress()); // should be first middleware
+app.use(favicon(path.resolve(__dirname, '../main/assets/favicon.ico')));
 
 // const RedisStore = ConnectRedis(session);
 
@@ -34,8 +35,6 @@ const sessionConfig = {
 };
 
 if (IS_DEVELOPMENT) {
-  app.use(favicon(path.resolve(__dirname, '../main/assets/favicon.ico')));
-
   const createDevelopmentProxy = require('./createDevelopmentProxy').default; // eslint-disable-line
   createDevelopmentProxy(app);
 } else {
@@ -45,14 +44,10 @@ if (IS_DEVELOPMENT) {
   app.set('trust proxy', 1); // trust first proxy
   sessionConfig.cookie.secure = true; // serve secure cookies
 
-  app.use(favicon(path.resolve(__dirname, '../dist/main/assets/favicon.ico')));
-
   const blackListedWordsForGzip = [];
 
   app.get('/assets/*.js', (req, res, next) => {
-    const isBlackListed = new RegExp(blackListedWordsForGzip.join('|')).test(
-      req.url,
-    );
+    const isBlackListed = new RegExp(blackListedWordsForGzip.join('|')).test(req.url);
 
     if (!isBlackListed) {
       req.url += '.gz';
@@ -64,7 +59,7 @@ if (IS_DEVELOPMENT) {
 
   app.use(
     '/assets',
-    express.static(path.resolve(__dirname, '../dist/main/assets'), {
+    express.static(path.resolve(__dirname, '../main/assets'), {
       maxage: '2h', // two hour
     }),
   );

@@ -1,6 +1,7 @@
 // @flow
 
 import { CALL_API, Schemas } from '../middlewares/api';
+import { getContributors } from '../selectors';
 
 export const CONTRIBUTORS_REQUEST: string = 'CONTRIBUTORS_REQUEST';
 export const CONTRIBUTORS_SUCCESS: string = 'CONTRIBUTORS_SUCCESS';
@@ -20,5 +21,11 @@ function fetchContributors(owner: string, repo: string) {
 }
 
 export function loadContributors(owner: string, repo: string) {
-  return (dispatch: Function) => dispatch(fetchContributors(owner, repo));
+  return (dispatch: Function, getState: Function) => {
+    const { contributors: loadedContributors } = getContributors(getState(), owner, repo);
+
+    if (loadedContributors.length === 0) {
+      dispatch(fetchContributors(owner, repo));
+    }
+  };
 }

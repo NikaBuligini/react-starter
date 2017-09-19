@@ -1,8 +1,6 @@
 // @flow
 
 import React from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
 import ProgressBar from './ProgressBar';
 
 type Props = {
@@ -58,6 +56,4 @@ function withProgressBar(WrappedComponent: React$ComponentType<*>) {
   return ComponentWithProgressBar;
 }
 
-const enhance = compose(connect(state => ({ isActive: state.progress.isActive })), withProgressBar);
-
-export default enhance;
+export default withProgressBar;
