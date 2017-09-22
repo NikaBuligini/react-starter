@@ -9,9 +9,8 @@ import createHistory from 'history/createBrowserHistory';
 
 // Load the favicon, the manifest.json file and the robots.txt file
 /* eslint-disable import/no-webpack-loader-syntax, import/no-unresolved */
-import '!file-loader?name=[name].[ext]!./favicon.ico';
-import '!file-loader?name=[name].[ext]!./manifest.json';
-import '!file-loader?name=[name].[ext]!./robots.txt';
+import '!file-loader?name=[name].[ext]!../public/manifest.json';
+import '!file-loader?name=[name].[ext]!../public/robots.txt';
 /* eslint-enable import/no-webpack-loader-syntax, import/no-unresolved */
 
 import './vendor';

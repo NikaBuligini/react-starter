@@ -21,7 +21,7 @@ const server = http.createServer(app);
 
 app.disable('x-powered-by');
 app.use(compress()); // should be first middleware
-app.use(favicon(path.resolve(__dirname, '../main/assets/favicon.ico')));
+app.use(favicon(path.resolve(__dirname, '../../public/favicon.ico')));
 
 // const RedisStore = ConnectRedis(session);
 

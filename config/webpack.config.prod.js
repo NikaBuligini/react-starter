@@ -108,7 +108,7 @@ export default {
     }),
     new HtmlWebpackPlugin({
       title: 'Title',
-      template: path.resolve(__dirname, '../src/index.html'),
+      template: path.resolve(__dirname, '../public/index.html'),
       filename: path.resolve(__dirname, '../dist/main/template.html'),
       minify: {
         removeComments: true,
