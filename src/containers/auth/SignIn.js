@@ -16,9 +16,11 @@ const ContributorsWrapper = styled.div`margin-bottom: 12px;`;
 const ContributorList = ({
   isFetching,
   contributors,
+  onReload,
 }: {
   isFetching: boolean,
   contributors: Array<Object>,
+  onReload: Event => void,
 }) => {
   if (isFetching) {
     return <span>Loading...</span>;
@@ -26,21 +28,34 @@ const ContributorList = ({
 
   return (
     <ContributorsWrapper>
+      <div>
+        <a onClick={onReload}>reload</a>
+      </div>
       {contributors.map(contributor => <Contributor key={contributor.id} {...contributor} />)}
     </ContributorsWrapper>
   );
 };
 
 type Props = {
-  loadContributors: (owner: string, repo: string) => void,
+  loadContributors: (owner: string, repo: string, force: boolean) => void,
   isFetching: boolean,
   contributors: Array<Object>,
 };
 
 class SignIn extends React.Component<Props> {
   componentDidMount() {
-    this.props.loadContributors(OWNER, REPO);
+    this.loadContributors();
   }
+
+  handleReload = (event: Event) => {
+    event.preventDefault();
+
+    this.loadContributors(true);
+  };
+
+  loadContributors = (force: boolean = false) => {
+    this.props.loadContributors(OWNER, REPO, force);
+  };
 
   render() {
     const { isFetching, contributors } = this.props;
@@ -53,8 +68,12 @@ class SignIn extends React.Component<Props> {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h4>Contributors for {`${OWNER}/${REPO}`}:</h4>
-              <ContributorList isFetching={isFetching} contributors={contributors} />
+              <h4>Contributors for {`${OWNER}/${REPO}`}.</h4>
+              <ContributorList
+                isFetching={isFetching}
+                contributors={contributors}
+                onReload={this.handleReload}
+              />
             </div>
           </div>
         </div>

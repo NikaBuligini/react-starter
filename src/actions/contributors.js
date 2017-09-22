@@ -20,11 +20,11 @@ function fetchContributors(owner: string, repo: string) {
   };
 }
 
-export function loadContributors(owner: string, repo: string) {
+export function loadContributors(owner: string, repo: string, force: boolean) {
   return (dispatch: Function, getState: Function) => {
     const { contributors: loadedContributors } = getContributors(getState(), owner, repo);
 
-    if (loadedContributors.length === 0) {
+    if (force || loadedContributors.length === 0) {
       dispatch(fetchContributors(owner, repo));
     }
   };
