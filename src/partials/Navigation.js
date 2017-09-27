@@ -31,8 +31,8 @@ const Navigation = () => (
     <Link exact to={Routes.home}>
       Home
     </Link>
-    <Link exact to={Routes.signIn}>
-      Sign In
+    <Link exact to={Routes.contributors}>
+      Contributors
     </Link>
   </Wrapper>
 );

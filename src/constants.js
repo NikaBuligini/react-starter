@@ -1,6 +1,6 @@
 export const Routes = {
   home: '/',
-  signIn: '/auth/signIn',
+  contributors: '/contributors',
 };
 
 export const DEFAULT_LOCALE = 'en';

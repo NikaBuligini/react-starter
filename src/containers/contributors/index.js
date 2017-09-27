@@ -23,7 +23,11 @@ const ContributorList = ({
   onReload: Event => void,
 }) => {
   if (isFetching) {
-    return <span>Loading...</span>;
+    return (
+      <span>
+        Loading... <code>(Specially debounced for 5 seconds)</code>
+      </span>
+    );
   }
 
   return (
@@ -42,7 +46,7 @@ type Props = {
   contributors: Array<Object>,
 };
 
-class SignIn extends React.Component<Props> {
+class Cotributors extends React.Component<Props> {
   componentDidMount() {
     this.loadContributors();
   }
@@ -63,7 +67,7 @@ class SignIn extends React.Component<Props> {
     return (
       <div>
         <Helmet>
-          <title>Sign In - Title</title>
+          <title>Contributors - Title</title>
         </Helmet>
         <div className="container">
           <div className="row">
@@ -82,4 +86,6 @@ class SignIn extends React.Component<Props> {
   }
 }
 
-export default connect(state => getContributors(state, OWNER, REPO), { loadContributors })(SignIn);
+export default connect(state => getContributors(state, OWNER, REPO), { loadContributors })(
+  Cotributors,
+);
