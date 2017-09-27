@@ -77,11 +77,12 @@ export default {
     ],
   },
   plugins: [
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'vendor',
-    //   filename: 'vendor.[hash:8].js',
-    // }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
     new webpack.optimize.UglifyJsPlugin({
       mangle: true,
       compress: {
@@ -129,11 +130,6 @@ export default {
       changeFreq: 'monthly',
     }),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
-    }),
     new webpack.ProgressPlugin((percentage, message) => {
       process.stdout.clearLine();
       process.stdout.cursorTo(0);
