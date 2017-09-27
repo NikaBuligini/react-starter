@@ -1,5 +1,6 @@
 // @flow
 
+import fetch from 'isomorphic-fetch';
 import { schema as Schema, normalize } from 'normalizr';
 import { camelizeKeys } from 'humps';
 import uuid from 'uuid/v4';
@@ -104,7 +105,7 @@ export default (store: Object) => (next: Function) => async (action: Object) => 
   }
 
   let { endpoint } = callAPI;
-  const { schema, types, headers, body, meta, ...restOptions } = callAPI;
+  const { schema, types, headers, body, meta, callback, ...restOptions } = callAPI;
   const method = callAPI.method || 'GET';
 
   if (typeof endpoint === 'function') {
@@ -138,39 +139,39 @@ export default (store: Object) => (next: Function) => async (action: Object) => 
   const [requestType, successType, failureType] = types;
   next(actionWith({ type: requestType, ...additionalProps }));
 
-  try {
-    const { response, error } = await callApi(endpoint, schema, method, headers, body, meta);
+  const { response, error } = await callApi(endpoint, schema, method, headers, body, meta);
 
-    if (restOptions.debounce) {
-      additionalProps.debounce = restOptions.debounce;
+  if (restOptions.debounce) {
+    additionalProps.debounce = restOptions.debounce;
+  }
+
+  if (response) {
+    next(actionWith({ type: successType, response, ...additionalProps }));
+
+    if (meta && meta.onSuccess) {
+      meta.onSuccess(response);
+    }
+  } else if (error) {
+    next(
+      actionWith({
+        type: failureType,
+        error: error.messages || ['Something bad happened'],
+        errorCode: error.errorCode,
+        ...additionalProps,
+      }),
+    );
+
+    if (meta && meta.onFailure) {
+      meta.onFailure(error);
     }
 
-    if (response) {
-      next(actionWith({ type: successType, response, ...additionalProps }));
-
-      if (meta && meta.onSuccess) {
-        meta.onSuccess(response);
-      }
-    } else if (error) {
-      next(
-        actionWith({
-          type: failureType,
-          error: error.messages || ['Something bad happened'],
-          errorCode: error.errorCode,
-          ...additionalProps,
-        }),
-      );
-
-      if (meta && meta.onFailure) {
-        meta.onFailure(error);
-      }
-
-      if (error.status === 401) {
-        next(markAsUnauthorized());
-      }
+    if (error.status === 401) {
+      next(markAsUnauthorized());
     }
-  } catch (error) {
-    console.error(error); // eslint-disable-line
+  }
+
+  if (typeof callback === 'function') {
+    callback(response || error);
   }
 
   return true;

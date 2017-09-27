@@ -13,7 +13,7 @@ import favicon from 'serve-favicon';
 import validateLocale from './middlewares/validateLocale';
 import losesRedisConnection from './middlewares/losesRedisConnection';
 // import cache from './middlewares/cache';
-import handleRequest from './handleRequest';
+import routes from './routes';
 
 const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 const app = express();
@@ -73,8 +73,9 @@ app.use(session(sessionConfig));
 
 // checks if session is connected with redis
 app.use(losesRedisConnection);
+app.use(validateLocale);
 
-app.get('*', validateLocale, /* cache.routeHtml, */ handleRequest);
+app.use('/', routes);
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, '0.0.0.0', err => {

@@ -41,7 +41,7 @@ const ContributorList = ({
 };
 
 type Props = {
-  loadContributors: (owner: string, repo: string, force: boolean) => void,
+  loadContributors: (owner: string, repo: string, force: boolean, callback?: Function) => void,
   isFetching: boolean,
   contributors: Array<Object>,
 };

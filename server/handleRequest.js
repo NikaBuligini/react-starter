@@ -5,21 +5,18 @@ import { renderToString } from 'react-dom/server';
 import { Helmet } from 'react-helmet';
 import { ServerStyleSheet } from 'styled-components';
 import { StaticRouter } from 'react-router-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import type { Store } from 'redux';
 import { createPage, write } from './server-utils';
-import reducers from '../src/reducers';
+import configureStore from './configureStore';
 import App from '../src/App';
 
 import { setLocale } from '../src/actions';
 
-export default function handleRequest(req: express$Request, res: express$Response) {
+type AppStore = Store<*, *, *>;
+
+function handleRender(req: express$Request, res: express$Response, store: AppStore) {
   const context = {};
-
-  // Create a new Redux store instance
-  const store = createStore(reducers);
-
-  store.dispatch(setLocale(req.cookies.locale));
 
   const sheet = new ServerStyleSheet();
 
@@ -52,4 +49,24 @@ export default function handleRequest(req: express$Request, res: express$Respons
 
     write(html, 'text/html', res);
   }
+}
+
+function init(req: express$Request): AppStore {
+  // Create a new Redux store instance
+  const store = configureStore();
+
+  store.dispatch(setLocale(req.cookies.locale));
+
+  return store;
+}
+
+type Resolve = (req: express$Request, store: AppStore, render: (store: AppStore) => void) => void;
+
+export function handler(resolve: Resolve) {
+  return (req: express$Request, res: express$Response) =>
+    resolve(req, init(req), (store: AppStore) => handleRender(req, res, store));
+}
+
+export default function handleRequest(req: express$Request, res: express$Response) {
+  handleRender(req, res, init(req));
 }
