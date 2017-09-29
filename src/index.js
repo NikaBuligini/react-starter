@@ -43,10 +43,6 @@ const store = configureStore(
   reducers,
 );
 
-global.requestAnimationFrame = callback => {
-  setTimeout(callback, 0);
-};
-
 render(<App store={store} />, document.getElementById('mount'));
 
 if (module.hot) {
