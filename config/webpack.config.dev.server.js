@@ -2,14 +2,15 @@ import path from 'path';
 import webpack from 'webpack';
 import * as stats from './plugins/stats';
 import getNodeModules from './utils/getNodeModules';
+import paths from './paths';
 
 const nodeModules = getNodeModules();
 
 export default {
   devtool: 'source-map',
-  context: path.resolve(__dirname, '..'),
+  context: paths.root,
 
-  entry: ['webpack/hot/signal.js', 'babel-polyfill', path.resolve(__dirname, '../server/index.js')],
+  entry: ['webpack/hot/signal.js', 'babel-polyfill', paths.serverIndexJs],
   target: 'node',
   node: {
     console: true,
@@ -17,9 +18,9 @@ export default {
     __dirname: false,
     __filename: false,
   },
-  recordsPath: path.join(__dirname, '../dist/main/records.json'),
+  recordsPath: paths.serverRecords,
   output: {
-    path: path.resolve(__dirname, '../dist/main/assets'),
+    path: paths.appAssets,
     pathinfo: true,
     filename: path.join('..', 'server.js'),
     publicPath: '/assets/',

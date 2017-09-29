@@ -12,8 +12,29 @@ import SitemapPlugin from 'sitemap-webpack-plugin';
 import * as stats from './plugins/stats';
 import progress from './plugins/progress';
 import paths from './paths';
+import getClientEnvironment from './env';
+import sitemapPaths from './sitemap';
 
 const optionalPlugins = [];
+
+// Webpack uses `publicPath` to determine where the app is being served from.
+// In development, we always serve from the root. This makes config easier.
+const publicPath = paths.servedPath;
+// Source maps are resource heavy and can cause out of memory issue for large source files.
+const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
+// `publicUrl` is just like `publicPath`, but we will provide it to our app
+// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
+// Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
+const publicUrl = '';
+
+// Get environment variables to inject into our app.
+const env = getClientEnvironment(publicUrl);
+
+// Assert this just to be safe.
+// Development builds of React are slow and not intended for production.
+if (env.stringified['process.env'].NODE_ENV !== '"production"') {
+  throw new Error('Production builds must have NODE_ENV=production.');
+}
 
 if (argv.analyzer === 'true') {
   optionalPlugins.push(new BundleAnalyzerPlugin());
@@ -22,14 +43,14 @@ if (argv.analyzer === 'true') {
 export default {
   entry: {
     vendor: ['moment', 'isomorphic-fetch'],
-    app: ['babel-polyfill', path.resolve(__dirname, '../src/index.js')],
+    app: ['babel-polyfill', paths.appIndexJs],
   },
   output: {
-    path: path.resolve(__dirname, '../dist/main/assets'),
+    path: paths.appAssets,
     pathinfo: true,
     filename: '[name].[hash:8].js',
     chunkFilename: '[id].chunk.js',
-    publicPath: '/assets/',
+    publicPath,
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -40,7 +61,7 @@ export default {
       utils: path.resolve(__dirname, '../src/utils/'),
     },
   },
-  devtool: 'eval',
+  devtool: shouldUseSourceMap ? 'source-map' : false,
   module: {
     loaders: [
       {
@@ -78,11 +99,7 @@ export default {
   },
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
-    }),
+    new webpack.DefinePlugin(env.stringified),
     new webpack.optimize.UglifyJsPlugin({
       mangle: true,
       compress: {
@@ -109,7 +126,7 @@ export default {
     }),
     new HtmlWebpackPlugin({
       title: 'Title',
-      template: path.resolve(__dirname, '../public/index.html'),
+      template: paths.appHtml,
       filename: path.resolve(__dirname, '../dist/main/template.html'),
       minify: {
         removeComments: true,
@@ -124,7 +141,7 @@ export default {
         minifyURLs: true,
       },
     }),
-    new SitemapPlugin('https://example.ge', paths, {
+    new SitemapPlugin('https://example.ge', sitemapPaths, {
       fileName: 'sitemap.xml',
       lastMod: true,
       changeFreq: 'monthly',

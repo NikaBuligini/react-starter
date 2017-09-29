@@ -11,7 +11,7 @@
     "start:dev": "cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
     "bundle": "node config/scripts/start-build",
     "build": "yarn bundle --analyzer=true",
-    "build:prod": "yarn bundle --production --port=80 && ",
+    "build:prod": "yarn bundle --port=80 && ",
     "serve": "node ./dist/main/server",
     "deploy": "yarn bundle && babel-node config/scripts/deploy",
     "deploy:test": "yarn deploy --target=test",
@@ -20,7 +20,7 @@
     "flow:build": "flow-typed install",
     "flow": "babel-node ./config/scripts/flow",
     "test": "jest",
-    "test:coverage": "yarn test --coverage --collectCoverageFrom=**/src/*.{js,jsx}",
+    "test:coverage": "yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
     "test:watch": "yarn test --watch"
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "compression": "^1.7.0",
     "connect-redis": "^3.3.0",
     "cookie-parser": "^1.4.3",
+    "dotenv": "^4.0.0",
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "helmet": "^3.8.1",
@@ -38,6 +39,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "normalizr": "^3.2.3",
+    "object-assign": "^4.1.1",
     "prop-types": "^15.5.10",
     "react": "^16.0.0-rc.3",
     "react-dom": "^16.0.0-rc.3",
@@ -73,7 +75,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
-    "enzyme": "^2.9.1",
+    "enzyme": "3.0.0",
     "eslint": "^4.6.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-flowtype": "^2.35.1",
@@ -108,6 +110,13 @@
     "yargs": "^8.0.2"
   },
   "jest": {
-    "testEnvironment": "node"
+    "setupFiles": ["<rootDir>/config/polyfills.js"],
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"]
   }
 }

@@ -13,7 +13,8 @@ import '!file-loader?name=[name].[ext]!../public/manifest.json';
 import '!file-loader?name=[name].[ext]!../public/robots.txt';
 /* eslint-enable import/no-webpack-loader-syntax, import/no-unresolved */
 
-import './vendor';
+import '../config/polyfills';
+import './styles/global-styles';
 
 import api from './middlewares/api';
 import array from './middlewares/array';

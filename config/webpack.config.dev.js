@@ -7,7 +7,19 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 
 import * as stats from './plugins/stats';
+import getClientEnvironment from './env';
 import paths from './paths';
+import sitemapPaths from './sitemap';
+
+// Webpack uses `publicPath` to determine where the app is being served from.
+// In development, we always serve from the root. This makes config easier.
+const publicPath = '/assets/';
+// `publicUrl` is just like `publicPath`, but we will provide it to our app
+// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
+// Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
+const publicUrl = '';
+// Get environment variables to inject into our app.
+const env = getClientEnvironment(publicUrl);
 
 export default {
   entry: {
@@ -16,17 +28,17 @@ export default {
       'webpack-dev-server/client?http://0.0.0.0:8080',
       'webpack/hot/only-dev-server', // reload page on HRM fail on your own
       'babel-polyfill',
-      path.resolve(__dirname, '../src/index.js'),
+      paths.appIndexJs,
     ],
   },
   output: {
-    path: path.resolve(__dirname, '../dist/main/assets'),
+    path: paths.appAssets,
     pathinfo: true,
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',
-    publicPath: '/assets/',
+    publicPath,
   },
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
@@ -72,9 +84,7 @@ export default {
     ],
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-    }),
+    new webpack.DefinePlugin(env.stringified),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['react', 'vendor'],
       minChunks: Infinity,
@@ -88,7 +98,7 @@ export default {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new SitemapPlugin('https://example.com', paths, {
+    new SitemapPlugin('https://example.com', sitemapPaths, {
       fileName: 'sitemap.xml',
     }),
     function Stats() {
@@ -98,7 +108,7 @@ export default {
     },
   ],
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
+    contentBase: paths.appDist,
     compress: true,
   },
 };

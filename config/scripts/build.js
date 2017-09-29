@@ -7,8 +7,6 @@ import rimraf from 'rimraf';
 import webpack from 'webpack';
 import config from '../webpack.config.prod';
 
-process.env.NODE_ENV = argv.production ? 'production' : 'development';
-
 if (argv.port && typeof argv.port === 'number') {
   process.env.PORT = argv.port;
 }
