@@ -84,7 +84,7 @@ class ProgressBar extends React.Component<Props, State> {
       this.setState({ percent: 99.9 }, () => {
         this.timeout = setTimeout(() => {
           this.setState({ percent: -1 }, () => this.props.updateProgress(-1));
-        }, 300);
+        }, 400);
       });
     } else {
       this.setState({ percent });
@@ -100,11 +100,9 @@ class ProgressBar extends React.Component<Props, State> {
     const isHidden = percent < 0 || percent >= 100;
 
     // Set `state.percent` as width.
-    const style = { width: `${percent <= 0 ? 0 : percent}%` };
-
     return (
       <Wrapper hidden={isHidden}>
-        <Percent style={style} />
+        <Percent percent={percent} />
       </Wrapper>
     );
   }

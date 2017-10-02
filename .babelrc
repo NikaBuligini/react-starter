@@ -5,5 +5,5 @@
       "presets": ["react-hmre"]
     }
   },
-  "plugins": [["styled-components", { "displayName": false }]]
+  "plugins": [["styled-components", { "ssr": true, "displayName": false, "minify": true }]]
 }
