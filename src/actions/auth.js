@@ -1,5 +1,7 @@
 // @flow
 
+import type { Dispatch } from 'redux';
+
 import { CALL_API, setAuthorizationToken } from '../middlewares/api';
 import { getSession } from '../selectors';
 
@@ -20,7 +22,7 @@ export const LOGOUT: string = 'LOGOUT';
  * @param callback: Function
  */
 export function logout(callback: Function) {
-  return (dispatch: Function) => {
+  return (dispatch: Dispatch<*>) => {
     setAuthorizationToken(null);
     dispatch({ type: LOGOUT });
     callback();

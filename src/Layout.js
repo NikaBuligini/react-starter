@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import type { RouterHistory } from 'react-router-dom';
 import { compose } from 'redux';
+import withErrorBoundary from './hocs/ErrorBoundary';
 import withProgressBar from './hocs/ProgressBar';
 import { Navigation, Footer, NAVIGATION_HEIGHT, FOOTER_HEIGHT } from './partials';
 import { Routes } from './constants';
@@ -46,6 +47,7 @@ class Layout extends React.Component<Props> {
 
 const enhance = compose(
   withRouter,
+  withErrorBoundary,
   connect(
     // state => ({ redirectToSignIn: state.session.requireLogin }),
     state => ({ isActive: state.progress.isActive }),

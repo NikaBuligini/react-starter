@@ -1,5 +1,7 @@
 // @flow
 
+import type { Dispatch } from 'redux';
+
 import { CALL_API, Schemas } from '../middlewares/api';
 import { getContributors } from '../selectors';
 
@@ -22,7 +24,7 @@ function fetchContributors(owner: string, repo: string, callback: ?Function) {
 }
 
 export function loadContributors(owner: string, repo: string, force: boolean, callback?: Function) {
-  return (dispatch: Function, getState: Function) => {
+  return (dispatch: Dispatch<*>, getState: Function) => {
     const { contributors: loadedContributors } = getContributors(getState(), owner, repo);
 
     if (force || loadedContributors.length === 0) {
