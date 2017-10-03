@@ -23,7 +23,7 @@ function withErrorBoundary(WrappedComponent: React$ComponentType<*>) {
       hasError: false,
     };
 
-    componentDidCatch(error, info) {
+    componentDidCatch(error: any, info: any) {
       // display fallback UI
       this.setState({ hasError: true });
 
