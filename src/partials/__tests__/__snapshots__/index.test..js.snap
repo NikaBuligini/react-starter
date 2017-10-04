@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Partials /> should match Footer snapshot 1`] = `
+<div
+  className="s11ntyxv-0 bxWkpQ"
+>
+  <div
+    className="footer__inner"
+  >
+    ©Example
+    <select
+      className="language-switch"
+      onChange={[Function]}
+      value="en"
+    >
+      <option
+        value="en"
+      >
+        en
+      </option>
+      <option
+        value="ka"
+      >
+        ka
+      </option>
+    </select>
+  </div>
+</div>
+`;
+
+exports[`<Partials /> should match Navigation snapshot 1`] = `
+<div
+  className="rahdj5-0 loBpXO"
+>
+  <a
+    aria-current="true"
+    className="rahdj5-1 fvaGDL active"
+    href="/"
+    onClick={[Function]}
+    style={Object {}}
+  >
+    Home
+  </a>
+  <a
+    aria-current={false}
+    className="rahdj5-1 fvaGDL"
+    href="/contributors"
+    onClick={[Function]}
+    style={undefined}
+  >
+    Contributors
+  </a>
+</div>
+`;
+
+exports[`<Partials /> should match Navigation snapshot when route is /contributors 1`] = `
+<div
+  className="rahdj5-0 loBpXO"
+>
+  <a
+    aria-current={false}
+    className="rahdj5-1 fvaGDL"
+    href="/"
+    onClick={[Function]}
+    style={undefined}
+  >
+    Home
+  </a>
+  <a
+    aria-current="true"
+    className="rahdj5-1 fvaGDL active"
+    href="/contributors"
+    onClick={[Function]}
+    style={Object {}}
+  >
+    Contributors
+  </a>
+</div>
+`;

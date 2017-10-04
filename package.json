@@ -20,6 +20,7 @@
     "flow:build": "flow-typed install",
     "flow": "babel-node ./config/scripts/flow",
     "test": "babel-node ./config/scripts/start-test --env=jsdom",
+    "test:verbose": "yarn test --verbose",
     "test:coverage": "yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
     "test:watch": "yarn test --watch"
   },
@@ -112,10 +113,7 @@
     "yargs": "^8.0.2"
   },
   "jest": {
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js",
-      "<rootDir>/src/testsSetup.js"
-    ],
+    "setupFiles": ["<rootDir>/config/polyfills.js", "<rootDir>/src/testsSetup.js"],
     "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
@@ -126,8 +124,6 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ]
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"]
   }
 }

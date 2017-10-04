@@ -41,4 +41,12 @@ describe('withErrorBoundary()', () => {
     );
     expect(containsErrorMessage).toBeTruthy();
   });
+
+  it('should call sendToErrorReporting', () => {
+    const mockCallback = jest.fn();
+    const renderedComponent = mount(<HocComponent sendToErrorReporting={mockCallback} />);
+    const inst = renderedComponent.instance();
+    inst.componentDidCatch();
+    expect(mockCallback.mock.calls.length).toBe(1);
+  });
 });
