@@ -8,6 +8,10 @@ function statuses(state: Object = {}, status: ?Object, progressId: string) {
 
 let activeProgresses = 0;
 
+export function resetProgressCounter() {
+  activeProgresses = 0;
+}
+
 const initialState = {
   isActive: false,
   fetchStatus: {},
