@@ -12,6 +12,12 @@ const defaultHeaders: Object = {
   // lang: 'en-US',
 };
 
+let progressIsTurnedOn = true;
+
+export function toggleProgress() {
+  progressIsTurnedOn = !progressIsTurnedOn;
+}
+
 export function setAuthorizationToken(token: ?string) {
   if (token) {
     defaultHeaders.Authorization = `Bearer ${token}`;
@@ -132,7 +138,7 @@ export default (store: Object) => (next: Function) => async (action: Object) => 
 
   const additionalProps = {};
 
-  if (restOptions.showProgress) {
+  if (progressIsTurnedOn && restOptions.showProgress) {
     additionalProps.progressId = uuid();
   }
 

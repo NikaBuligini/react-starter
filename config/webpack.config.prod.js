@@ -36,7 +36,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
 
-if (argv.analyzer === 'true') {
+if (argv.analyzer) {
   optionalPlugins.push(new BundleAnalyzerPlugin());
 }
 
