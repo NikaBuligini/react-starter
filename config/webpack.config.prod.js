@@ -42,7 +42,25 @@ if (argv.analyzer) {
 
 export default {
   entry: {
-    vendor: ['moment', 'isomorphic-fetch'],
+    vendor: [
+      'core-js',
+      'history',
+      'humps',
+      'isomorphic-fetch',
+      'lodash',
+      'moment',
+      'normalizr',
+      'react',
+      'react-dom',
+      'react-helmet',
+      'react-intl',
+      'react-redux',
+      'react-router',
+      'react-router-dom',
+      'redux',
+      'redux-persist',
+      'styled-components',
+    ],
     app: ['babel-polyfill', paths.appIndexJs],
   },
   output: {
@@ -117,12 +135,17 @@ export default {
       filename: '[name].[chunkhash:8].css',
       allChunks: true,
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+    }),
     new CompressionPlugin({
       asset: '[path].gz[query]',
       algorithm: 'gzip',
       test: /\.(js|html)$/,
-      threshold: 10240,
+      threshold: 0,
       minRatio: 0.8,
+      // deleteOriginalAssets: true,
     }),
     new HtmlWebpackPlugin({
       title: 'Title',
