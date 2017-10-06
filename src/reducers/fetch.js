@@ -3,16 +3,23 @@
 import { combineReducers } from 'redux';
 import union from 'lodash/union';
 import * as ActionTypes from '../actions';
+// import { isFullyLoaded } from '../utils/reducer-helpers';
 
-function isFullyLoaded(action: Object, ids?: Array<number>) {
-  const data = ids || action.response.result.data;
-
-  return typeof action.limit === 'number' ? data.length < action.limit : false;
-}
+type FetchStatusConfig = {
+  types: any | Array<*>,
+  mapActionToKey: any | (any => Object),
+  initialState: mixed | Object,
+  retrieveData: any | ((state: any, action: any) => Object),
+};
 
 // Creates a reducer managing pagination, given the action types to handle,
 // and a function telling how to extract the key from an action.
-const fetchStatus = ({ types, mapActionToKey, initialState, retrieveData }) => {
+export const fetchStatus = ({
+  types,
+  mapActionToKey,
+  initialState,
+  retrieveData,
+}: FetchStatusConfig) => {
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected types to be an array of three elements.');
   }
@@ -38,6 +45,7 @@ const fetchStatus = ({ types, mapActionToKey, initialState, retrieveData }) => {
     initialStatusState = { ...initialStatusState, ...initialState };
   }
 
+  /* eslint-disable default-case */
   const updateFetchStatus = (state = initialStatusState, action) => {
     switch (action.type) {
       case requestType: {
@@ -53,7 +61,7 @@ const fetchStatus = ({ types, mapActionToKey, initialState, retrieveData }) => {
           ...state,
           isFetching: false,
           loaded: true,
-          loadedAt: new Date(),
+          loadedAt: Date.now(),
           ...data,
         };
       }
@@ -62,15 +70,13 @@ const fetchStatus = ({ types, mapActionToKey, initialState, retrieveData }) => {
           ...state,
           isFetching: false,
           loaded: true,
-          loadedAt: new Date(),
+          loadedAt: Date.now(),
           errors: action.error || ['Something bad happened'],
         };
       }
-      default: {
-        return state;
-      }
     }
   };
+  /* eslint-enable default-case */
 
   return (state = {}, action) => {
     // Update pagination by key

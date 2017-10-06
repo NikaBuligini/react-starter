@@ -11,14 +11,14 @@ const defaultEntities = {
   // services: {},
 };
 
-function entities(state = defaultEntities, action) {
+export function entities(state = defaultEntities, action) {
   if (action.response && action.response.entities) {
     return merge({}, state, action.response.entities);
   }
   return state;
 }
 
-function locale(state: string = 'en', action) {
+export function locale(state: string = 'en', action) {
   if (action.type === SET_LOCALE) {
     return action.locale;
   }

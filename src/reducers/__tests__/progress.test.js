@@ -12,7 +12,7 @@ describe('progress reducer', () => {
     });
   });
 
-  it('should toggle progress', () => {
+  it('should toggle progress on', () => {
     const state = {
       isActive: false,
       fetchStatus: {},
@@ -22,14 +22,26 @@ describe('progress reducer', () => {
       progressId: 'unique-id',
     };
 
-    const reducedState = reducer(state, action);
-
-    expect(reducedState).toEqual({
+    expect(reducer(state, action)).toEqual({
       isActive: true,
       fetchStatus: {
         'unique-id': 'loading',
       },
     });
+  });
+
+  it('should toggle progress off', () => {
+    const state = {
+      isActive: false,
+      fetchStatus: {},
+    };
+
+    const action = {
+      progressId: 'unique-id',
+    };
+
+    // action to toggle on
+    const reducedState = reducer(state, action);
 
     expect(reducer(reducedState, action)).toEqual({
       isActive: false,
