@@ -4,6 +4,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+
+import LoadingIndicator from '../../components/LoadingIndicator';
 import Contributor from './Contributor';
 import { loadContributors } from '../../actions';
 import { getContributors } from '../../selectors';
@@ -23,11 +25,7 @@ const ContributorList = ({
   onReload: Event => void,
 }) => {
   if (isFetching) {
-    return (
-      <span>
-        Loading... <code>(Specially debounced for 5 seconds)</code>
-      </span>
-    );
+    return <LoadingIndicator />;
   }
 
   return (

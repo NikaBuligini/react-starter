@@ -6,14 +6,124 @@ exports[`<Home /> should render the Home page 1`] = `
     className="container"
   >
     <div
-      className="row"
+      className="row justify-content-center"
     >
       <div
-        className="col-md-offset-2 col-md-8"
+        className="col-md-8"
       >
         <span>
           Home
         </span>
+        <div>
+          <div
+            className="ch88ub-0 llUBEe"
+          >
+            <div
+              className="ch88ub-1 uGBwi"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 drHSIA"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 dEEjpR"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 ifbuLs"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 bGclKu"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 koerre"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 kNMCQB"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 jpeLmv"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 epmYVV"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 jxMvjR"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 jXuWOQ"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 gsaFTF"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 jJDPwa"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 hQQWEJ"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 dqpsaC"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 iWORXR"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 jrthQY"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 iyKbtt"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 bwnMVG"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 emBLOQ"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 hoOILV"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 ikzOnb"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 joCLUq"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 ITIAy"
+              color="#fdb37f"
+            />
+            <div
+              className="ch88ub-1 gIZRba"
+              color="#999"
+            />
+            <div
+              className="ch88ub-1 hzAniI"
+              color="#fdb37f"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
