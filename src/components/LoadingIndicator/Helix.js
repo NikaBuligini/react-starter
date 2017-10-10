@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import times from 'lodash/times';
@@ -70,10 +72,20 @@ const Ball = styled.div`
   `};
 `;
 
-const Helix = () => (
+type Props = {
+  iteration: number,
+};
+
+const Helix = ({ iteration }: Props) => (
   <Wrapper>
-    {times(26).map(i => <Ball key={i} index={i} color={i % 2 ? PRIMARY_COLOR : SECONDARY_COLOR} />)}
+    {times(iteration).map(i => (
+      <Ball key={i} index={i} color={i % 2 ? PRIMARY_COLOR : SECONDARY_COLOR} />
+    ))}
   </Wrapper>
 );
+
+Helix.defaultProps = {
+  iteration: 26,
+};
 
 export default Helix;

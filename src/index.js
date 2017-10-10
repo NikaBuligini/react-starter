@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 
 import React from 'react';
-import { render } from 'react-dom';
+import { hydrate } from 'react-dom';
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
@@ -43,7 +43,7 @@ const store = configureStore(
   reducers,
 );
 
-render(<App store={store} />, document.getElementById('mount'));
+hydrate(<App store={store} />, document.getElementById('mount'));
 
 if (module.hot) {
   module.hot.accept();
