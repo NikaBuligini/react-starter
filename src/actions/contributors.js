@@ -1,15 +1,14 @@
 // @flow
 
-import type { Dispatch } from 'redux';
-
 import { CALL_API, Schemas } from '../middlewares/api';
 import { getContributors } from '../selectors';
+import type { Dispatch, GetState, ApiCallback } from './types';
 
 export const CONTRIBUTORS_REQUEST: string = 'CONTRIBUTORS_REQUEST';
 export const CONTRIBUTORS_SUCCESS: string = 'CONTRIBUTORS_SUCCESS';
 export const CONTRIBUTORS_FAILURE: string = 'CONTRIBUTORS_FAILURE';
 
-function fetchContributors(owner: string, repo: string, callback: ?Function) {
+function fetchContributors(owner: string, repo: string, callback: ?ApiCallback) {
   return {
     key: `${owner}/${repo}`,
     [CALL_API]: {
@@ -23,8 +22,13 @@ function fetchContributors(owner: string, repo: string, callback: ?Function) {
   };
 }
 
-export function loadContributors(owner: string, repo: string, force: boolean, callback?: Function) {
-  return (dispatch: Dispatch<*>, getState: Function) => {
+export function loadContributors(
+  owner: string,
+  repo: string,
+  force: boolean,
+  callback?: ApiCallback,
+) {
+  return (dispatch: Dispatch, getState: GetState) => {
     const { contributors: loadedContributors } = getContributors(getState(), owner, repo);
 
     if (force || loadedContributors.length === 0) {

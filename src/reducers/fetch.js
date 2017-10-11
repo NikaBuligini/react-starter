@@ -6,10 +6,10 @@ import * as ActionTypes from '../actions';
 // import { isFullyLoaded } from '../utils/reducer-helpers';
 
 type FetchStatusConfig = {
-  types: any | Array<*>,
-  mapActionToKey: any | (any => Object),
+  types: Array<string>,
+  mapActionToKey: Object => string,
   initialState: mixed | Object,
-  retrieveData: any | ((state: any, action: any) => Object),
+  retrieveData: (state: any, action: any) => Object,
 };
 
 // Creates a reducer managing pagination, given the action types to handle,
@@ -45,8 +45,8 @@ export const fetchStatus = ({
     initialStatusState = { ...initialStatusState, ...initialState };
   }
 
-  /* eslint-disable default-case */
-  const updateFetchStatus = (state = initialStatusState, action) => {
+  /* eslint-disable default-case, consistent-return */
+  const updateFetchStatus = (state = initialStatusState, action: Object) => {
     switch (action.type) {
       case requestType: {
         return {
@@ -76,9 +76,9 @@ export const fetchStatus = ({
       }
     }
   };
-  /* eslint-enable default-case */
+  /* eslint-enable default-case, consistent-return */
 
-  return (state = {}, action) => {
+  return (state: Object = {}, action: Object) => {
     // Update pagination by key
     switch (action.type) {
       case requestType:

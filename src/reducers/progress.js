@@ -1,6 +1,26 @@
 // @flow
 
-function statuses(state: Object = {}, status: ?Object, progressId: string) {
+type ProgressKey = string | number;
+type PossibleStatuses = 'loaded' | 'loading';
+
+type ProgressStatuses = {
+  [key: ProgressKey]: PossibleStatuses,
+};
+
+type ProgressState = {
+  isActive: boolean,
+  fetchStatus: ProgressStatuses,
+};
+
+type ProgressAction = {
+  progressId?: ProgressKey,
+};
+
+function statuses(
+  state: ProgressStatuses = {},
+  status: ?PossibleStatuses,
+  progressId: ProgressKey,
+) {
   return Object.assign({}, state, {
     [progressId]: status ? 'loaded' : 'loading',
   });
@@ -12,12 +32,12 @@ export function resetProgressCounter() {
   activeProgresses = 0;
 }
 
-const initialState = {
+const initialState: ProgressState = {
   isActive: false,
   fetchStatus: {},
 };
 
-export default function progress(state: typeof initialState = initialState, action: Object) {
+export default function progress(state: ProgressState = initialState, action: ProgressAction) {
   if (action.progressId) {
     const status = state.fetchStatus[action.progressId];
 

@@ -1,6 +1,7 @@
 // @flow
 
 import * as ActionTypes from '../actions';
+import type { Action } from '../actions/types';
 
 const initialSession = {
   user: {},
@@ -8,7 +9,7 @@ const initialSession = {
   redirectUrl: null,
 };
 
-export default (state: typeof initialSession = initialSession, action) => {
+export default (state: typeof initialSession = initialSession, action: Action) => {
   switch (action.type) {
     // case ActionTypes.LOGIN_SUCCESS: {
     //   const user = action.user || action.response.data;

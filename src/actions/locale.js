@@ -1,6 +1,6 @@
 // @flow
 
-export const SET_LOCALE: string = 'SET_LOCALE';
+export const SET_LOCALE = 'SET_LOCALE';
 
 export function setLocale(locale: string) {
   return {

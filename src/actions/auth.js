@@ -1,9 +1,8 @@
 // @flow
 
-import type { Dispatch } from 'redux';
-
 import { CALL_API, setAuthorizationToken } from '../middlewares/api';
 import { getSession } from '../selectors';
+import type { Dispatch } from './types';
 
 /**
  * authorizes user using accessToken
@@ -14,7 +13,7 @@ function authorizeUser(jwt: string) {
   setAuthorizationToken(jwt);
 }
 
-export const LOGOUT: string = 'LOGOUT';
+export const LOGOUT = 'LOGOUT';
 
 /**
  * clears JWT token from store and dispatches logout action
@@ -22,14 +21,14 @@ export const LOGOUT: string = 'LOGOUT';
  * @param callback: Function
  */
 export function logout(callback: Function) {
-  return (dispatch: Dispatch<*>) => {
+  return (dispatch: Dispatch) => {
     setAuthorizationToken(null);
     dispatch({ type: LOGOUT });
     callback();
   };
 }
 
-export const MARK_AS_UNAUTHORIZED: string = 'MARK_AS_UNAUTHORIZED';
+export const MARK_AS_UNAUTHORIZED = 'MARK_AS_UNAUTHORIZED';
 
 /**
  * also logouts user
