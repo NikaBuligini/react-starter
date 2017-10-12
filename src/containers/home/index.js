@@ -16,7 +16,7 @@ const Home = () => (
         <div className="col-md-8">
           <FormattedMessage id="containers.home.Greeting" />
           <div>
-            <HelixLoadingIndicator />
+            <HelixLoadingIndicator iteration={72} />
           </div>
         </div>
       </div>
