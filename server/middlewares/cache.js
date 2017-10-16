@@ -15,8 +15,7 @@ function serveWithCache(key: string, res: express$Response, next: Function) {
 }
 
 function cache(key: string, value: any, expires: number) {
-  const data = typeof value === 'string'
-    ? value : JSON.parse(value);
+  const data = typeof value === 'string' ? value : JSON.parse(value);
 
   client.set(key, data, expires);
 }

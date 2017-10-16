@@ -12,7 +12,9 @@ import { Navigation, Footer, NAVIGATION_HEIGHT, FOOTER_HEIGHT } from './partials
 import { Routes } from './constants';
 import { logout } from './actions';
 
-const MainContent = styled.div`min-height: calc(100vh - ${NAVIGATION_HEIGHT + FOOTER_HEIGHT}px);`;
+const MainContent = styled.div`
+  min-height: calc(100vh - ${NAVIGATION_HEIGHT + FOOTER_HEIGHT}px);
+`;
 
 type Props = {
   logout: Function => void,

@@ -13,7 +13,9 @@ import { getContributors } from '../../selectors';
 const OWNER = 'facebook';
 const REPO = 'react';
 
-const ContributorsWrapper = styled.div`margin-bottom: 12px;`;
+const ContributorsWrapper = styled.div`
+  margin-bottom: 12px;
+`;
 
 const ContributorList = ({
   isFetching,

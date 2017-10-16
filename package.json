@@ -1,21 +1,22 @@
 {
   "name": "react-starter",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "n/a",
   "author": "Nikoloz Buligini",
   "engines": {
-    "node": "8.x"
+    "node": ">=8.4.0"
   },
   "scripts": {
-    "start": "npm run serve",
+    "start": "node ./dist/main/server",
     "start:dev": "cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
     "bundle": "node config/scripts/start-build",
     "build": "yarn bundle --analyzer",
     "build:prod": "yarn bundle --port=80 && ",
-    "serve": "node ./dist/main/server",
     "deploy": "yarn bundle && babel-node config/scripts/deploy",
     "deploy:test": "yarn deploy --target=test",
     "deploy:production": "yarn deploy --target=production",
+    "prettier": "prettier --config .prettierrc --write \"{config,server,src}/**/*.js\"",
+    "prettier:diff": "prettier --config .prettierrc --list-different \"{config,server,src}/**/*.js\"",
     "lint": "babel-node ./config/scripts/eslint",
     "flow:build": "flow-typed install",
     "flow": "babel-node ./config/scripts/flow",
@@ -97,6 +98,7 @@
     "node-sass": "^4.5.3",
     "nodemon": "^1.12.0",
     "npmlog": "^4.1.2",
+    "prettier": "^1.7.4",
     "pretty-error": "^2.1.1",
     "react-hot-loader": "^1.3.1",
     "react-test-renderer": "16.0.0",
