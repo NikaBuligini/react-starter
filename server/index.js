@@ -82,6 +82,6 @@ server.listen(PORT, '0.0.0.0', err => {
   if (err) {
     console.error(err);
   } else {
-    console.log(`Listening at http://localhost:${PORT}`);
+    console.log(`Worker ${process.pid} is listening at http://localhost:${PORT}`);
   }
 });
