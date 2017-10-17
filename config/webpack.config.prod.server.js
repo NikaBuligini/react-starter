@@ -11,7 +11,7 @@ export default {
   devtool: 'source-map',
   context: paths.root,
 
-  entry: ['babel-polyfill', paths.serverIndexJs],
+  entry: ['babel-polyfill', paths.serverClusterJs],
   target: 'node',
   node: {
     console: true,
