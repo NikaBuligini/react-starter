@@ -7,22 +7,24 @@
     "node": ">=8.4.0"
   },
   "scripts": {
-    "start": "node ./dist/main/server",
-    "start:dev": "cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
-    "bundle": "node config/scripts/start-build",
     "build": "yarn bundle --analyzer",
     "build:prod": "yarn bundle --port=80 && ",
+    "bundle": "node config/scripts/start-build",
+    "check:all": "yarn prettier:diff && yarn lint && yarn flow",
     "deploy": "yarn bundle && babel-node config/scripts/deploy",
-    "deploy:test": "yarn deploy --target=test",
     "deploy:production": "yarn deploy --target=production",
-    "prettier": "prettier --config .prettierrc --write \"{config,server,src}/**/*.js\"",
-    "prettier:diff": "prettier --config .prettierrc --list-different \"{config,server,src}/**/*.js\"",
-    "lint": "babel-node ./config/scripts/eslint",
-    "flow:build": "flow-typed install",
+    "deploy:test": "yarn deploy --target=test",
     "flow": "babel-node ./config/scripts/flow",
+    "flow:build": "flow-typed install",
+    "lint": "babel-node ./config/scripts/eslint",
+    "precommit": "lint-staged",
+    "prettier": "prettier --config .prettierrc --write \"{config,server,src}/**/*.{js,json,css}\"",
+    "prettier:diff": "prettier --config .prettierrc --list-different \"{config,server,src}/**/*.{js,json,css}\"",
+    "start": "node ./dist/main/server",
+    "start:dev": "cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
     "test": "babel-node ./config/scripts/start-test --env=jsdom",
-    "test:verbose": "yarn test --verbose",
     "test:coverage": "yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
+    "test:verbose": "yarn test --verbose",
     "test:watch": "yarn test --watch"
   },
   "dependencies": {
@@ -81,9 +83,11 @@
     "enzyme-adapter-react-16": "^1.0.0",
     "eslint": "^4.6.1",
     "eslint-config-airbnb": "^15.1.0",
+    "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-flowtype": "^2.35.1",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^7.3.0",
     "exists-sync": "^0.0.4",
     "extract-text-webpack-plugin": "^3.0.0",
@@ -132,6 +136,12 @@
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ]
+  },
+  "lint-staged": {
+    "{config,server,src}/**/*.{js,json,css}": [
+      "prettier --config .prettierrc --write",
+      "git add"
     ]
   }
 }

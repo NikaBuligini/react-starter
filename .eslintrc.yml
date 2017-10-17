@@ -4,13 +4,14 @@ env:
   node: true
   jest: true
 
-extends: [airbnb, plugin:flowtype/recommended]
+extends: [airbnb, prettier, plugin:flowtype/recommended]
 
 plugins:
   - react
   - jsx-a11y
   - import
   - flowtype
+  - prettier
 
 rules:
   react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]
@@ -24,6 +25,7 @@ rules:
   react/no-array-index-key: [0]
   react/prop-types: [0]
   no-confusing-arrow: [0]
+  prettier/prettier: "error"
 
 settings:
   flowtype:
