@@ -18,8 +18,8 @@
     "flow:build": "flow-typed install",
     "lint": "babel-node ./config/scripts/eslint",
     "precommit": "lint-staged",
-    "prettier": "prettier --config .prettierrc --write \"{config,server,src}/**/*.{js,json,css}\"",
-    "prettier:diff": "prettier --config .prettierrc --list-different \"{config,server,src}/**/*.{js,json,css}\"",
+    "prettier": "prettier --write \"{config,server,src}/**/*.{js,json,css}\"",
+    "prettier:diff": "prettier --list-different \"{config,server,src}/**/*.{js,json,css}\"",
     "start": "node ./dist/main/server",
     "start:dev": "cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
     "test": "babel-node ./config/scripts/start-test --env=jsdom",
@@ -120,10 +120,7 @@
     "yargs": "^8.0.2"
   },
   "jest": {
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js",
-      "<rootDir>/src/testsSetup.js"
-    ],
+    "setupFiles": ["<rootDir>/config/polyfills.js", "<rootDir>/src/testsSetup.js"],
     "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
@@ -134,14 +131,9 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ]
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"]
   },
   "lint-staged": {
-    "{config,server,src}/**/*.{js,json,css}": [
-      "prettier --config .prettierrc --write",
-      "git add"
-    ]
+    "*.{js,json,css}": ["prettier --write", "git add"]
   }
 }
