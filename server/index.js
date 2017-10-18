@@ -14,6 +14,7 @@ import validateLocale from './middlewares/validateLocale';
 import losesRedisConnection from './middlewares/losesRedisConnection';
 // import cache from './middlewares/cache';
 import routes from './routes';
+import logger from './logger';
 
 const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 const app = express();
@@ -77,11 +78,16 @@ app.use(validateLocale);
 
 app.use('/', routes);
 
-const PORT = process.env.PORT || 8000;
-server.listen(PORT, '0.0.0.0', err => {
+// get the intended host and port number, use localhost and port 3000 if not provided
+const customHost = process.env.HOST;
+const host = customHost || null; // Let http.Server use its default IPv6/4 host
+const prettyHost = customHost || 'localhost';
+
+const port = process.env.PORT || 8000;
+server.listen(port, host, err => {
   if (err) {
-    console.error(err);
+    logger.error(err.message);
   } else {
-    console.log(`Worker ${process.pid} is listening at http://localhost:${PORT}`);
+    logger.appStarted(port, prettyHost);
   }
 });
