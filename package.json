@@ -120,7 +120,10 @@
     "yargs": "^8.0.2"
   },
   "jest": {
-    "setupFiles": ["<rootDir>/config/polyfills.js", "<rootDir>/src/testsSetup.js"],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js",
+      "<rootDir>/src/testsSetup.js"
+    ],
     "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
@@ -131,9 +134,14 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"]
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ]
   },
   "lint-staged": {
-    "*.{js,json,css}": ["prettier --write", "git add"]
+    "*.{js,json,css}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
