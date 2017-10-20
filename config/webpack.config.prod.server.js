@@ -1,9 +1,17 @@
 import path from 'path';
 import webpack from 'webpack';
+import { argv } from 'yargs';
+
 import * as stats from './plugins/stats';
 import progress from './plugins/progress';
 import getNodeModules from './utils/getNodeModules';
 import paths from './paths';
+
+let serverEntryJs = paths.serverIndexJs;
+
+if (argv.clusters) {
+  serverEntryJs = paths.serverClusterJs;
+}
 
 const nodeModules = getNodeModules();
 
@@ -11,7 +19,7 @@ export default {
   devtool: 'source-map',
   context: paths.root,
 
-  entry: ['babel-polyfill', paths.serverClusterJs],
+  entry: ['babel-polyfill', serverEntryJs],
   target: 'node',
   node: {
     console: true,
