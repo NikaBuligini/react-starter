@@ -7,3 +7,6 @@
 - [ ] Monitoring (Graphite)
 - [ ] Lazy loading example
 - [ ] Code splitting example
+- [ ] Google analytics
+- [ ] Open graph
+- [ ] Prepack
