@@ -10,10 +10,7 @@ describe('<NotFound />', () => {
     expect(
       renderedComponent.contains(
         <h5>
-          <FormattedMessage
-            id="containers.NotFoundPage.header"
-            defaultMessage={'Page not found.'}
-          />
+          <FormattedMessage id="containers.NotFoundPage.header" defaultMessage="Page not found." />
         </h5>,
       ),
     ).toEqual(true);

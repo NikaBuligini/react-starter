@@ -31,7 +31,7 @@ class Footer extends React.Component<Props> {
   handleLanguageChange = (event: SyntheticInputEvent<*>) => {
     Cookies.set('locale', event.target.value);
 
-    location.reload();
+    global.location.reload();
   };
 
   render() {

@@ -26,7 +26,7 @@ import App from './ClientSideAppWrapper';
 
 const history = createHistory();
 
-const path = (/#!(\/.*)$/.exec(location.hash) || [])[1];
+const path = (/#!(\/.*)$/.exec(global.location.hash) || [])[1];
 if (path) {
   history.replace(path);
 }

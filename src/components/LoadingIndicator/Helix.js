@@ -73,7 +73,7 @@ const Ball = styled.div`
 `;
 
 type Props = {
-  iteration: number,
+  iteration?: number,
 };
 
 const Helix = ({ iteration }: Props) => (

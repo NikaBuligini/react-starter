@@ -1,4 +1,5 @@
-// @flow\
+/* eslint-disable import/prefer-default-export */
+// @flow
 
 function mapIdsToUsers(state: Object, ids: Array<number>) {
   return ids.map(id => state.entities.users[id]);
