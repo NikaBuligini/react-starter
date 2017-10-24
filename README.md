@@ -10,3 +10,4 @@
 - [ ] Google analytics
 - [ ] Open graph
 - [ ] Prepack
+- [x] redux-persist v5
