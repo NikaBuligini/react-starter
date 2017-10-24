@@ -1,6 +1,17 @@
-import { createStore, compose } from 'redux';
-import { autoRehydrate } from 'redux-persist';
+import { createStore } from 'redux';
+import { persistReducer } from 'redux-persist';
+import storage from 'localforage';
+import transform from '../utils/redux-persist-transform';
+import localforage from '../utils/localforage';
+
+const config = {
+  version: 1,
+  key: 'root',
+  storage: localforage,
+  transforms: [transform],
+  stateReconciler: false,
+};
 
 export default function configureStore(preloadedState, middlewares, rootReducer) {
-  return createStore(rootReducer, preloadedState, compose(middlewares, autoRehydrate()));
+  return createStore(persistReducer(config, rootReducer), preloadedState, middlewares);
 }

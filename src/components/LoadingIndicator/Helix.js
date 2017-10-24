@@ -10,6 +10,8 @@ const PADDING = 0.6;
 const PRIMARY_COLOR = '#fdb37f';
 const SECONDARY_COLOR = '#999';
 
+const DEFAULT_ITERATION = 26;
+
 const DNARotation = keyframes`
   0% {
     opacity: 1;
@@ -78,14 +80,14 @@ type Props = {
 
 const Helix = ({ iteration }: Props) => (
   <Wrapper>
-    {times(iteration).map(i => (
+    {times(iteration || DEFAULT_ITERATION).map(i => (
       <Ball key={i} index={i} color={i % 2 ? PRIMARY_COLOR : SECONDARY_COLOR} />
     ))}
   </Wrapper>
 );
 
 Helix.defaultProps = {
-  iteration: 26,
+  iteration: DEFAULT_ITERATION,
 };
 
 export default Helix;

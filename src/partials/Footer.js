@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
+import type { MapStateToProps } from 'react-redux';
 
 export const HEIGHT = 60;
 
@@ -53,4 +54,10 @@ class Footer extends React.Component<Props> {
   }
 }
 
-export default connect(({ locale }) => ({ locale }))(Footer);
+type StoreState = {
+  locale: string,
+};
+
+const mapStateToProps: MapStateToProps<StoreState, Props, *> = ({ locale }) => ({ locale });
+
+export default connect(mapStateToProps)(Footer);

@@ -48,6 +48,7 @@ export default {
       'humps',
       'isomorphic-fetch',
       'lodash',
+      'localforage',
       'moment',
       'normalizr',
       'react',

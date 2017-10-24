@@ -1,15 +1,24 @@
 import { createStore, compose } from 'redux';
-import { autoRehydrate } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
+import transform from '../utils/redux-persist-transform';
+import localforage from '../utils/localforage';
 
-/* eslint-disable no-underscore-dangle */
+const config = {
+  version: 1,
+  key: 'root',
+  storage: localforage,
+  transforms: [transform],
+  stateReconciler: false,
+  debug: true,
+};
+
 export default function configureStore(preloadedState, middlewares, rootReducer) {
+  // eslint-disable-next-line no-underscore-dangle
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const store = createStore(
-    rootReducer,
-    preloadedState,
-    composeEnhancers(middlewares, autoRehydrate()),
-  );
-  /* eslint-enable */
 
-  return store;
+  return createStore(
+    persistReducer(config, rootReducer),
+    preloadedState,
+    composeEnhancers(middlewares),
+  );
 }

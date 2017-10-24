@@ -22,7 +22,7 @@ function cache(key: string, value: any, expires: number) {
 
 export default {
   routeHtml(req: express$Request, res: express$Response, next: Function) {
-    const key = (req.method + req.url)
+    const key = (req.method + req.originalUrl)
       .toLowerCase()
       .replace(/[:.]/g, '')
       .replace(/\//g, '_');

@@ -5,7 +5,7 @@ import { exec } from 'child_process';
 import { argv } from 'yargs';
 import chalk from 'chalk';
 
-const TEST_HOSTNAME = 'test.*****.ge'; // here goes production hostname
+const TEST_HOSTNAME = 'test.*****.ge'; // here goes test hostname
 const PRODUCTION_HOSTNAME = '*****.ge'; // here goes production hostname
 
 function deploy(target: string) {
