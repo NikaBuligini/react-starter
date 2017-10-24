@@ -4,12 +4,22 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import { setAuthorizationToken } from './middlewares/api';
 import { getSession } from './selectors';
 import App from './App';
 
+function createPersistor({ store }) {
+  return persistStore(store, () => {
+    const { isAuthenticated, user } = getSession(store.getState());
+    if (isAuthenticated) {
+      setAuthorizationToken(user.accessToken);
+    }
+  });
+}
+
 type State = {
-  rehydrated: boolean,
+  persistor: any,
 };
 
 type Props = {
@@ -18,31 +28,18 @@ type Props = {
 
 class AppWrapper extends React.Component<Props, State> {
   state = {
-    rehydrated: false,
+    persistor: createPersistor(this.props),
   };
 
-  componentDidMount() {
-    persistStore(this.props.store, { whitelist: ['session'] }, () => {
-      const { isAuthenticated, user } = getSession(this.props.store.getState());
-      if (isAuthenticated) {
-        setAuthorizationToken(user.accessToken);
-      }
-
-      this.setState({ rehydrated: true });
-    });
-  }
-
   render() {
-    if (!this.state.rehydrated) {
-      return null;
-    }
-
     return (
-      <Provider store={this.props.store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>
+      <PersistGate persistor={this.state.persistor} loading={null}>
+        <Provider store={this.props.store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
+      </PersistGate>
     );
   }
 }

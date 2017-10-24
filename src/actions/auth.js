@@ -1,7 +1,7 @@
 // @flow
 
-import { CALL_API, setAuthorizationToken } from '../middlewares/api';
-import { getSession } from '../selectors';
+import { setAuthorizationToken } from '../middlewares/api';
+// import { getSession } from '../selectors';
 import type { Dispatch } from './types';
 
 /**
@@ -9,9 +9,9 @@ import type { Dispatch } from './types';
  * @api public
  * @param jwt: string
  */
-function authorizeUser(jwt: string) {
-  setAuthorizationToken(jwt);
-}
+// function authorizeUser(jwt: string) {
+//   setAuthorizationToken(jwt);
+// }
 
 export const LOGOUT = 'LOGOUT';
 

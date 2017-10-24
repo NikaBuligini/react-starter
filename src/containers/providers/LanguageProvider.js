@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import type { MapStateToProps } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 
 type Props = {
@@ -16,4 +17,10 @@ const LanguageProvider = ({ locale, messages, children }: Props) => (
   </IntlProvider>
 );
 
-export default connect(({ locale }) => ({ locale }))(LanguageProvider);
+type StoreState = {
+  locale: string,
+};
+
+const mapStateToProps: MapStateToProps<StoreState, Props, *> = ({ locale }) => ({ locale });
+
+export default connect(mapStateToProps)(LanguageProvider);
