@@ -30,7 +30,7 @@ export default {
   module: {
     loaders: [
       {
-        test: /\.(jpe?g|png|gif|svg|txt|woff2?|svg)$/i,
+        test: /\.(jpe?g|png|gif|svg|txt|woff2)$/i,
         loader: 'file-loader?emitFile=false',
       },
       {
