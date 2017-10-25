@@ -7,25 +7,17 @@ const rimraf = require('rimraf');
 const chalk = require('chalk');
 const { argv } = require('yargs');
 
-let target = '';
+const possibleTargets = {
+  coverage: '../../coverage',
+  dist: '../../dist',
+  flow: '../../flow-typed/npm',
+};
 
-switch (argv.target) {
-  case 'coverage': {
-    target = '../../coverage';
-    break;
-  }
-  case 'dist': {
-    target = '../../dist';
-    break;
-  }
-  case 'flow': {
-    target = '../../flow-typed/npm';
-    break;
-  }
-  default: {
-    console.log(`${chalk.red('invalid target option')}`);
-    process.exit();
-  }
+let target = possibleTargets[argv.target];
+
+if (!target) {
+  console.log(`${chalk.red('invalid target option')}`);
+  process.exit();
 }
 
 if (!target) {
