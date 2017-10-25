@@ -4,7 +4,7 @@ import { Routes } from './constants';
 // import PrivateRoute from './PrivateRoute';
 
 import { Home, Contributors } from './containers';
-import NotFound from './containers/NotFoundPage';
+import NotFound from './containers/notFoundPage';
 
 const RootRoutes = () => (
   <Switch>
