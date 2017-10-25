@@ -1,4 +1,4 @@
-import Home from './Home';
-import Contributors from './Contributors';
+import Home from './home';
+import Contributors from './contributors';
 
 export { Home, Contributors };
