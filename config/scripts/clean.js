@@ -38,7 +38,7 @@ target = path.resolve(__dirname, target);
 if (fs.existsSync(target)) {
   rimraf.sync(target);
 
-  console.log(`${argv.target} ${chalk.green('✓')}`);
+  console.log(`clean ${argv.target} ${chalk.green('✓')}`);
 } else {
-  console.log(chalk.gray(`${argv.target}`));
+  console.log(chalk.gray(`clean ${argv.target}`));
 }

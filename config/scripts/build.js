@@ -3,15 +3,12 @@
 import path from 'path';
 import { argv } from 'yargs';
 import chalk from 'chalk';
-import rimraf from 'rimraf';
 import webpack from 'webpack';
 import config from '../webpack.config.prod';
 
 if (argv.port && typeof argv.port === 'number') {
   process.env.PORT = argv.port;
 }
-
-rimraf.sync(path.resolve(__dirname, '../../dist'));
 
 // Print out errors
 function printErrors(summary, errors) {

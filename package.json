@@ -9,7 +9,7 @@
   "scripts": {
     "build": "yarn bundle --analyzer",
     "build:prod": "yarn bundle:clusters --port=80",
-    "bundle": "node config/scripts/start-build",
+    "bundle": "yarn bundle:clean && node config/scripts/start-build",
     "bundle:clusters": "node config/scripts/start-build --clusters",
     "bundle:clean": "node ./config/scripts/clean --target=dist",
     "clean:all": "yarn bundle:clean && yarn flow:clean && yarn test:clean",
@@ -18,7 +18,7 @@
     "deploy:production": "yarn deploy --target=production",
     "deploy:test": "yarn deploy --target=test",
     "flow": "babel-node ./config/scripts/flow",
-    "flow:build": "flow-typed install",
+    "flow:build": "yarn flow:clean && flow-typed install",
     "flow:clean": "node ./config/scripts/clean --target=flow",
     "lint": "babel-node ./config/scripts/eslint",
     "precommit": "lint-staged",
@@ -27,7 +27,8 @@
     "start": "node ./dist/main/server",
     "start:dev": "cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
     "test": "babel-node ./config/scripts/start-test --env=jsdom",
-    "test:coverage": "yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
+    "test:coverage":
+      "yarn test:clean && yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
     "test:verbose": "yarn test --verbose",
     "test:watch": "yarn test --watch",
     "test:clean": "node ./config/scripts/clean --target=coverage"
