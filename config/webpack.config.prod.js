@@ -87,7 +87,7 @@ export default {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loader: 'file-loader?name=images/[name].[ext]',
       },
-      { test: /\.(woff2?|svg)$/, loader: 'url-loader?limit=10000' },
+      { test: /\.woff2$/, loader: 'url-loader?limit=10000' },
       {
         test: /\.(ttf|woff|woff2|eot|otf)(\?.*)?$/,
         loader: 'file-loader?name=fonts/[name].[ext]',

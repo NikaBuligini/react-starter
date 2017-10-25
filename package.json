@@ -25,7 +25,8 @@
     "prettier": "prettier --write \"{config,server,src}/**/*.{js,json,css}\"",
     "prettier:diff": "prettier --list-different \"{config,server,src}/**/*.{js,json,css}\"",
     "start": "node ./dist/main/server",
-    "start:dev": "cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
+    "start:dev":
+      "yarn bundle:clean && cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
     "test": "babel-node ./config/scripts/start-test --env=jsdom",
     "test:coverage":
       "yarn test:clean && yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
