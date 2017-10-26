@@ -2,3 +2,7 @@ env: flex
 runtime: nodejs
 skip_files:
   - yarn.lock
+manual_scaling:
+  instances: 1
+env_variables:
+  MY_VAR: 'my value'
