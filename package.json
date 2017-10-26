@@ -12,6 +12,7 @@
     "bundle": "yarn bundle:clean && node config/scripts/start-build",
     "bundle:clusters": "node config/scripts/start-build --clusters",
     "bundle:clean": "node ./config/scripts/clean --target=dist",
+    "browse": "gcloud app browse",
     "clean:all": "yarn bundle:clean && yarn flow:clean && yarn test:clean",
     "check:all": "yarn prettier:diff && yarn lint && yarn flow",
     "deploy": "yarn bundle && gcloud app deploy --stop-previous-version",
