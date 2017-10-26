@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import path from 'path';
-import { spawn } from 'child_process';
+const path = require('path');
+const { spawn } = require('child_process');
 
 const extension = process.platform === 'win32' ? '.cmd' : '';
 
