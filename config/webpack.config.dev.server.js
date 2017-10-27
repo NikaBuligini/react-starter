@@ -60,13 +60,8 @@ export default {
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
     // new webpack.BannerPlugin('require("source-map-support").install();', { raw: true }),
     new webpack.DefinePlugin({
-      CLIENT: false,
-      SERVER: true,
-      SERVER_API: false,
-      DEVELOPMENT: true,
-      PRODUCTION: false,
       'process.env.NODE_ENV': JSON.stringify('development'),
-      API_SECRET: JSON.stringify(process.env.API_SECRET || 'MY_SUPER_API_SECRET'),
+      // API_SECRET: JSON.stringify(process.env.API_SECRET || 'MY_SUPER_API_SECRET'),
     }),
     new webpack.DefinePlugin({
       STATS: JSON.stringify(stats.load('memoryOnly')),
