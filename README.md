@@ -9,5 +9,7 @@
 - [ ] Code splitting example
 - [ ] Google analytics
 - [ ] Open graph
-- [ ] Prepack
+- [ ] Prepack (experimental)
 - [x] redux-persist v5
+- [ ] Downshift
+- [ ] Socket.io

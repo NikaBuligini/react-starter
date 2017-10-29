@@ -25,11 +25,9 @@
     "prettier": "prettier --write \"{config,server,src}/**/*.{js,json,css}\"",
     "prettier:diff": "prettier --list-different \"{config,server,src}/**/*.{js,json,css}\"",
     "start": "node ./dist/main/server",
-    "start:dev":
-      "yarn bundle:clean && cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
+    "start:dev": "yarn bundle:clean && cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
     "test": "node ./config/scripts/start-test --env=jsdom",
-    "test:coverage":
-      "yarn test:clean && yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
+    "test:coverage": "yarn test:clean && yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
     "test:verbose": "yarn test --verbose",
     "test:watch": "yarn test --watch",
     "test:clean": "yarn clean --target=coverage"
@@ -130,7 +128,10 @@
     "yargs": "^10.0.3"
   },
   "jest": {
-    "setupFiles": ["<rootDir>/config/polyfills.js", "<rootDir>/src/testsSetup.js"],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js",
+      "<rootDir>/src/testsSetup.js"
+    ],
     "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
@@ -141,9 +142,14 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"]
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ]
   },
   "lint-staged": {
-    "*.{js,json,css}": ["prettier --write", "git add"]
+    "*.{js,json,css}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
