@@ -9,7 +9,7 @@ import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
-import configureStore from '../store/configureStore';
+import configureStore from '../store/configureStoreMock';
 
 import api from '../middlewares/api';
 import array from '../middlewares/array';

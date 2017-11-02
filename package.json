@@ -4,7 +4,7 @@
   "main": "n/a",
   "author": "Nikoloz Buligini",
   "engines": {
-    "node": ">=8.4.0"
+    "node": ">=8.8.0"
   },
   "scripts": {
     "build": "yarn bundle --analyzer",
@@ -25,9 +25,11 @@
     "prettier": "prettier --write \"{config,server,src}/**/*.{js,json,css}\"",
     "prettier:diff": "prettier --list-different \"{config,server,src}/**/*.{js,json,css}\"",
     "start": "node ./dist/main/server",
-    "start:dev": "yarn bundle:clean && cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
+    "start:dev":
+      "yarn bundle:clean && cross-env NODE_ENV=development babel-node ./config/scripts/start-dev",
     "test": "node ./config/scripts/start-test --env=jsdom",
-    "test:coverage": "yarn test:clean && yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
+    "test:coverage":
+      "yarn test:clean && yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
     "test:verbose": "yarn test --verbose",
     "test:watch": "yarn test --watch",
     "test:clean": "yarn clean --target=coverage"
@@ -99,7 +101,7 @@
     "exists-sync": "^0.0.4",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.5",
-    "flow-bin": "^0.57.3",
+    "flow-bin": "^0.58.0",
     "flow-typed": "^2.2.1",
     "html-webpack-plugin": "^2.30.1",
     "http-proxy": "^1.16.2",
@@ -128,10 +130,7 @@
     "yargs": "^10.0.3"
   },
   "jest": {
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js",
-      "<rootDir>/src/testsSetup.js"
-    ],
+    "setupFiles": ["<rootDir>/config/polyfills.js", "<rootDir>/src/testsSetup.js"],
     "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
@@ -142,14 +141,9 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ]
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"]
   },
   "lint-staged": {
-    "*.{js,json,css}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{js,json,css}": ["prettier --write", "git add"]
   }
 }
