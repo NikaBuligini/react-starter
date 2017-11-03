@@ -21,6 +21,12 @@ function withProgressBar(WrappedComponent: React$ComponentType<*>) {
       progress: -1,
     };
 
+    componentDidMount() {
+      if (this.props.isActive) {
+        this.updateProgress(0);
+      }
+    }
+
     componentWillUpdate(props: Props, state: State) {
       const { progress } = this.state;
       const { isActive: wasActive } = this.props;
