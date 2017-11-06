@@ -2,6 +2,7 @@
 
 <PROJECT_ROOT>/node_modules/.*
 <PROJECT_ROOT>/dist/.*
+<PROJECT_ROOT>/logs/.*
 
 [include]
 

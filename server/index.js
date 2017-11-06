@@ -19,7 +19,7 @@ import losesRedisConnection from './middlewares/losesRedisConnection';
 import errorHandler from './middlewares/errorHandler';
 // import cache from './middlewares/cache';
 import routes from './routes';
-import logger from './logger';
+import { coreLogger } from './logger';
 
 const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 const app = express();
@@ -96,8 +96,8 @@ const prettyHost = customHost || 'localhost';
 const port = process.env.PORT || 8000;
 server.listen(port, host, err => {
   if (err) {
-    logger.error(err.message);
+    coreLogger.error(err.message);
   } else {
-    logger.appStarted(port, prettyHost);
+    coreLogger.appStarted(port, prettyHost);
   }
 });
