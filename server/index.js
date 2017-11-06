@@ -1,4 +1,6 @@
-/* eslint-disable no-console */
+/* eslint-disable import/first */
+
+import './support-debug';
 
 import path from 'path';
 import http from 'http';
@@ -7,11 +9,14 @@ import compress from 'compression';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import bodyParser from 'body-parser';
+import methodOverride from 'method-override';
 // import ConnectRedis from 'connect-redis';
 import responseTime from 'response-time';
 import favicon from 'serve-favicon';
 import validateLocale from './middlewares/validateLocale';
 import losesRedisConnection from './middlewares/losesRedisConnection';
+import errorHandler from './middlewares/errorHandler';
 // import cache from './middlewares/cache';
 import routes from './routes';
 import logger from './logger';
@@ -67,6 +72,9 @@ if (IS_DEVELOPMENT) {
 }
 
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(methodOverride());
 app.use(responseTime());
 
 // setup sessions
@@ -77,6 +85,8 @@ app.use(losesRedisConnection);
 app.use(validateLocale);
 
 app.use('/', routes);
+
+app.use(errorHandler);
 
 // get the intended host and port number, use localhost and port 3000 if not provided
 const customHost = process.env.HOST;

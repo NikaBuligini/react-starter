@@ -3,6 +3,10 @@
 import path from 'path';
 import fs from 'fs';
 import zlib from 'zlib';
+import createDebug from 'debug';
+import statuses from 'statuses';
+
+const debug = createDebug('app');
 
 const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 
@@ -75,3 +79,63 @@ export function createPage(html: string, preloadedState: ?Object, helmet: any, s
 
   return formatString(template, context);
 }
+
+/* eslint-disable default-case */
+export function createError(...args: Array<*>) {
+  let err;
+  let msg;
+  let status = 500;
+  let props = {};
+
+  for (let i = 0; i < args.length; i += 1) {
+    const arg = args[i];
+
+    if (arg instanceof Error) {
+      err = arg;
+      status = err.status || err.statusCode || status;
+    } else {
+      switch (typeof arg) {
+        case 'string': {
+          msg = arg;
+          break;
+        }
+        case 'number': {
+          status = arg;
+
+          if (i !== 0) {
+            debug(`non-first-argument status code; replace with createError(${arg}, ...)`);
+          }
+
+          break;
+        }
+        case 'object': {
+          props = arg;
+          break;
+        }
+      }
+    }
+  }
+
+  if (typeof status === 'number' && (status < 400 || status >= 600)) {
+    debug('non-error status code; use only 4xx or 5xx status codes');
+  }
+
+  if (typeof status !== 'number' || (!statuses[status] && (status < 400 || status >= 600))) {
+    status = 500;
+  }
+
+  if (!err) {
+    // create error
+    err = new Error(msg || statuses[status]);
+    Error.captureStackTrace(err, createError);
+  }
+
+  Object.keys(props).forEach(key => {
+    if (key !== 'status' && key !== 'statusCode') {
+      err[key] = props[key];
+    }
+  });
+
+  return err;
+}
+/* eslint-enable default-case */

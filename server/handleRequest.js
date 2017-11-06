@@ -60,11 +60,16 @@ function init(req: express$Request): AppStore {
   return store;
 }
 
-type Resolve = (req: express$Request, store: AppStore, render: (store: AppStore) => void) => void;
+type Resolve = (
+  req: express$Request,
+  store: AppStore,
+  render: (store: AppStore) => void,
+  next: express$NextFunction,
+) => void;
 
 export function handler(resolve: Resolve) {
-  return (req: express$Request, res: express$Response) =>
-    resolve(req, init(req), (store: AppStore) => handleRender(req, res, store));
+  return (req: express$Request, res: express$Response, next: express$NextFunction) =>
+    resolve(req, init(req), (store: AppStore) => handleRender(req, res, store), next);
 }
 
 export default function handleRequest(req: express$Request, res: express$Response) {

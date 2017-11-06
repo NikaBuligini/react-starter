@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 
-import path from 'path';
 import { argv } from 'yargs';
 import chalk from 'chalk';
 import webpack from 'webpack';

@@ -13,3 +13,9 @@
 - [x] redux-persist v5
 - [ ] Downshift
 - [ ] Socket.io
+- [x] Debug
+- [ ] Logging
+
+### Debug
+
+```yarn start --debug=app,express:*```
