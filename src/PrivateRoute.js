@@ -12,16 +12,16 @@ type Props = {
   component: Class<React$Component<*, *>>,
 };
 
-const PrivateRoute = ({ component: Component, isAuthenticated, location, ...rest }: Props) => (
-  <Route
-    {...rest}
-    render={props =>
-      isAuthenticated ? (
-        <Component {...props} isAuthenticated={isAuthenticated} {...rest} />
-      ) : (
-        <Redirect to={{ pathname: Routes.signin, state: { from: location } }} />
-      )}
-  />
-);
+const PrivateRoute = ({ component: Component, isAuthenticated, location, ...rest }: Props) => {
+  function render(props) {
+    if (isAuthenticated) {
+      return <Component {...props} isAuthenticated={isAuthenticated} {...rest} />;
+    }
+
+    return <Redirect to={{ pathname: Routes.signin, state: { from: location } }} />;
+  }
+
+  return <Route {...rest} render={render} />;
+};
 
 export default connect(getSession)(PrivateRoute);

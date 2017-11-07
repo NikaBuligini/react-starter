@@ -1,6 +1,5 @@
 import { createStore } from 'redux';
 import { persistReducer } from 'redux-persist';
-import storage from 'localforage';
 import transform from '../utils/redux-persist-transform';
 import localforage from '../utils/localforage';
 

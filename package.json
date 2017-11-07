@@ -22,8 +22,8 @@
     "flow:clean": "yarn clean --target=flow",
     "lint": "node ./config/scripts/eslint",
     "precommit": "lint-staged",
-    "prettier": "prettier --write \"{config,server,src}/**/*.{js,json,css}\"",
-    "prettier:diff": "prettier --list-different \"{config,server,src}/**/*.{js,json,css}\"",
+    "prettier": "prettier --write \"{config,server,src}/**/*.{js,json,css,md}\"",
+    "prettier:diff": "prettier --list-different \"{config,server,src}/**/*.{js,json,css,md}\"",
     "start": "cross-env NODE_ENV=production node ./dist/main/server",
     "start:dev": "yarn bundle:clean && node ./config/scripts/run-dev",
     "test": "node ./config/scripts/start-test --env=jsdom",
@@ -149,6 +149,6 @@
     "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"]
   },
   "lint-staged": {
-    "*.{js,json,css}": ["prettier --write", "git add"]
+    "*.{js,json,css,md}": ["prettier --write", "git add"]
   }
 }
