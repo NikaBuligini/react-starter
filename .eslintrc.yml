@@ -4,7 +4,12 @@ env:
   node: true
   jest: true
 
-extends: [airbnb, prettier, plugin:flowtype/recommended]
+parser: babel-eslint
+
+extends:
+  - airbnb
+  - prettier
+  - plugin:flowtype/recommended
 
 plugins:
   - react

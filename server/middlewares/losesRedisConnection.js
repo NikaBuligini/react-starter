@@ -1,12 +1,14 @@
 // @flow
 
+import { createError } from '../server-utils';
+
 export default function losesRedisConnection(
   req: express$Request,
   res: express$Response,
-  next: Function,
+  next: express$NextFunction,
 ) {
   if (!req.session) {
-    return next(new Error('connection with database is lost')); // handle error
+    return next(createError(500, 'connection with database is lost'));
   }
 
   return next();
