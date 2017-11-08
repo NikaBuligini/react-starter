@@ -48,14 +48,6 @@ describe('withProgressBar()', () => {
     expect(renderedComponent.state().progress).toBe(10);
   });
 
-  it('should call componentWillUpdate', () => {
-    sinon.spy(HocComponent.prototype, 'componentWillUpdate');
-    const renderedComponent = mount(<HocComponent isActive />);
-    renderedComponent.setProps({ isActive: false });
-    expect(HocComponent.prototype.componentWillUpdate.calledOnce).toEqual(true);
-    HocComponent.prototype.componentWillUpdate.restore();
-  });
-
   it('should update state.progress to 0 when progress activated', () => {
     const renderedComponent = mount(<HocComponent isActive={false} />);
     renderedComponent.setProps({ isActive: true });
