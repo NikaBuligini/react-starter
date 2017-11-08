@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import type { RouterHistory } from 'react-router-dom';
 import { compose } from 'redux';
 import withErrorBoundary from './hocs/ErrorBoundary';
-import ProgressBar from './hocs/ProgressBar';
+import ProgressBar from './components/ProgressBar';
 import { Navigation, Footer, NAVIGATION_HEIGHT, FOOTER_HEIGHT } from './partials';
 import { Routes } from './constants';
 import { logout } from './actions';
