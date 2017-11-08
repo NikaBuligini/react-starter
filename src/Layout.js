@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import type { RouterHistory } from 'react-router-dom';
 import { compose } from 'redux';
 import withErrorBoundary from './hocs/ErrorBoundary';
-import withProgressBar from './hocs/ProgressBar';
+import ProgressBar from './hocs/ProgressBar';
 import { Navigation, Footer, NAVIGATION_HEIGHT, FOOTER_HEIGHT } from './partials';
 import { Routes } from './constants';
 import { logout } from './actions';
@@ -20,6 +20,7 @@ type Props = {
   logout: Function => void,
   children?: React$Element<any>,
   redirectToSignIn: boolean,
+  isProgressActive: boolean,
   history: RouterHistory,
 };
 
@@ -39,6 +40,7 @@ class Layout extends React.Component<Props> {
   render() {
     return (
       <div>
+        <ProgressBar isActive={this.props.isProgressActive} />
         <Navigation />
         <MainContent>{this.props.children}</MainContent>
         <Footer />
@@ -52,10 +54,9 @@ const enhance = compose(
   withErrorBoundary,
   connect(
     // state => ({ redirectToSignIn: state.session.requireLogin }),
-    state => ({ isActive: state.progress.isActive }),
+    state => ({ isProgressActive: state.progress.isActive }),
     { logout },
   ),
-  withProgressBar,
 );
 
 export default enhance(Layout);

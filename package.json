@@ -27,8 +27,7 @@
     "start": "cross-env NODE_ENV=production node ./dist/main/server",
     "start:dev": "yarn bundle:clean && node ./config/scripts/run-dev",
     "test": "node ./config/scripts/start-test --env=jsdom",
-    "test:coverage":
-      "yarn test:clean && yarn test --coverage --collectCoverageFrom=src/**/*.{js,jsx}",
+    "test:coverage": "yarn test:clean && yarn test --coverage",
     "test:verbose": "yarn test --verbose",
     "test:watch": "yarn test --watch",
     "test:clean": "yarn clean --target=coverage"
@@ -136,6 +135,7 @@
   },
   "jest": {
     "setupFiles": ["<rootDir>/config/polyfills.js", "<rootDir>/src/testsSetup.js"],
+    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
     "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
