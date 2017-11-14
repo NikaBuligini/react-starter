@@ -18,12 +18,15 @@ import validateLocale from './middlewares/validateLocale';
 import losesRedisConnection from './middlewares/losesRedisConnection';
 import errorHandler from './middlewares/errorHandler';
 // import cache from './middlewares/cache';
+import monitor from 'express-status-monitor';
 import routes from './routes';
 import { coreLogger } from './logger';
 
 const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 const app = express();
 const server = http.createServer(app);
+
+app.use(monitor());
 
 app.disable('x-powered-by');
 app.use(compress()); // should be first middleware
