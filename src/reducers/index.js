@@ -2,10 +2,10 @@
 
 import { combineReducers } from 'redux';
 import merge from 'lodash/merge';
+import { reducer as progress } from 'react-redux-progress';
 import { SET_LOCALE } from '../actions';
 import session from './session';
 import fetch from './fetch';
-import progress from './progress';
 import type { Action } from '../actions/types';
 
 type ActionWithApiResponse = {

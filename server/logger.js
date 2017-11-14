@@ -47,7 +47,7 @@ const logger = createLogger({
   format: customFormat,
   transports: [
     new transports.File({
-      filename: path.resolve(logDirectory, 'errors.log'),
+      filename: path.resolve(logDirectory, 'app.log'),
       level: 'info',
     }),
     // new DailyRotateFile({
