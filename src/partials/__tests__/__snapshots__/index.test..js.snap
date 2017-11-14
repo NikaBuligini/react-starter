@@ -2,7 +2,7 @@
 
 exports[`<Partials /> should match Footer snapshot 1`] = `
 <div
-  className="uv6k93-0 fDthDY"
+  className="Footer__Wrapper-s1j3fe0c-0 XSWiM"
 >
   <div
     className="footer__inner"
@@ -30,11 +30,11 @@ exports[`<Partials /> should match Footer snapshot 1`] = `
 
 exports[`<Partials /> should match Navigation snapshot 1`] = `
 <div
-  className="rahdj5-0 loBpXO"
+  className="Navigation__Wrapper-s10ex460-0 jIdUJl"
 >
   <a
     aria-current="true"
-    className="rahdj5-1 fvaGDL active"
+    className="Navigation__Link-s10ex460-1 iyPCle active"
     href="/"
     onClick={[Function]}
     style={Object {}}
@@ -43,7 +43,7 @@ exports[`<Partials /> should match Navigation snapshot 1`] = `
   </a>
   <a
     aria-current={false}
-    className="rahdj5-1 fvaGDL"
+    className="Navigation__Link-s10ex460-1 iyPCle"
     href="/contributors"
     onClick={[Function]}
     style={undefined}
@@ -55,11 +55,11 @@ exports[`<Partials /> should match Navigation snapshot 1`] = `
 
 exports[`<Partials /> should match Navigation snapshot when route is /contributors 1`] = `
 <div
-  className="rahdj5-0 loBpXO"
+  className="Navigation__Wrapper-s10ex460-0 jIdUJl"
 >
   <a
     aria-current={false}
-    className="rahdj5-1 fvaGDL"
+    className="Navigation__Link-s10ex460-1 iyPCle"
     href="/"
     onClick={[Function]}
     style={undefined}
@@ -68,7 +68,7 @@ exports[`<Partials /> should match Navigation snapshot when route is /contributo
   </a>
   <a
     aria-current="true"
-    className="rahdj5-1 fvaGDL active"
+    className="Navigation__Link-s10ex460-1 iyPCle active"
     href="/contributors"
     onClick={[Function]}
     style={Object {}}
