@@ -12,6 +12,7 @@ const defaultHeaders: Object = {
   // lang: 'en-US',
 };
 
+const baseUrl = config.BASE_URL ? `${config.BASE_URL}/` : '';
 let progressIsTurnedOn = true;
 
 export function toggleProgress() {
@@ -58,7 +59,7 @@ async function callApi(
     init = { ...init, body };
   }
 
-  const response = await fetch(`${config.BASE_URL}/${endpoint}`, init);
+  const response = await fetch(`${baseUrl}${endpoint}`, init);
 
   if (response.status === 401) {
     return {
@@ -92,11 +93,13 @@ async function callApi(
  */
 
 const userSchema = new Schema.Entity('users');
+const coinSchema = new Schema.Entity('coins');
 
 // Schemas for Github API responses.
 export const Schemas = {
   USER: userSchema,
   USER_ARRAY: [userSchema],
+  COIN_ARRAY: [coinSchema],
 };
 
 // Action key that carries API call info interpreted by this Redux middleware.

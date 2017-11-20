@@ -127,6 +127,14 @@ const fetch = combineReducers({
       ids: union(state.ids, action.response.result),
     }),
   }),
+  tickersByUuid: fetchStatus({
+    mapActionToKey: action => action.key,
+    types: [ActionTypes.TICKER_REQUEST, ActionTypes.TICKER_SUCCESS, ActionTypes.TICKER_FAILURE],
+    initialState: { ids: [] },
+    retrieveData: (state, action) => ({
+      ids: union(state.ids, action.response.result),
+    }),
+  }),
 });
 
 export default fetch;

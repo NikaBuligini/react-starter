@@ -1,5 +1,5 @@
 // @flow
 
 export default {
-  BASE_URL: 'https://api.github.com',
+  BASE_URL: '',
 };

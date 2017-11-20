@@ -3,6 +3,7 @@
 import isEmpty from 'lodash/isEmpty';
 
 export * from './contributors';
+export * from './coinmarket';
 
 export function getSession(state: Object) {
   const { user, userId } = state.session;

@@ -9,6 +9,8 @@ import { Provider } from 'react-redux';
 import type { Store } from 'redux';
 import { createPage, write } from './server-utils';
 import configureStore from './configureStore';
+import fakePersistor from './fakePersistor';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import App from '../src/App';
 
 import { setLocale } from '../src/actions';
@@ -23,11 +25,13 @@ function handleRender(req: express$Request, res: express$Response, store: AppSto
   // Render the component to a string
   const markup = renderToString(
     sheet.collectStyles(
-      <Provider store={store}>
-        <StaticRouter location={req.url} context={context}>
-          <App />
-        </StaticRouter>
-      </Provider>,
+      <PersistGate persistor={fakePersistor} loading={null}>
+        <Provider store={store}>
+          <StaticRouter location={req.url} context={context}>
+            <App />
+          </StaticRouter>
+        </Provider>
+      </PersistGate>,
     ),
   );
 

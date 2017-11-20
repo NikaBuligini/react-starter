@@ -4,6 +4,7 @@ import express from 'express';
 import { createError } from './server-utils';
 import handleRequest, { handler } from './handleRequest';
 import { loadContributors } from '../src/actions/contributors';
+import { loadTicker } from '../src/actions/coinmarket';
 import logger from './logger';
 
 const router = express.Router();
@@ -13,6 +14,14 @@ router.get(
   handler((req, store, render) => {
     logger.info('request for /contributors received');
     store.dispatch(loadContributors('facebook', 'react', true, () => render(store)));
+  }),
+);
+
+router.get(
+  '/coinmarketcap',
+  handler((req, store, render) => {
+    logger.info('request for /coinmarketcap received');
+    store.dispatch(loadTicker('ticker', () => render(store)));
   }),
 );
 

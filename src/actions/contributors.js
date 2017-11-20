@@ -13,7 +13,7 @@ function fetchContributors(owner: string, repo: string, callback: ?ApiCallback) 
     key: `${owner}/${repo}`,
     [CALL_API]: {
       types: [CONTRIBUTORS_REQUEST, CONTRIBUTORS_SUCCESS, CONTRIBUTORS_FAILURE],
-      endpoint: `repos/${owner}/${repo}/contributors`,
+      endpoint: `https://api.github.com/repos/${owner}/${repo}/contributors`,
       schema: Schemas.USER_ARRAY,
       showProgress: true,
       debounce: 3000,

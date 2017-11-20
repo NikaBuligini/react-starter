@@ -34,6 +34,9 @@ const Navigation = () => (
     <Link exact to={Routes.contributors}>
       Contributors
     </Link>
+    <Link exact to={Routes.coinmarket}>
+      Coinmarketcap
+    </Link>
   </Wrapper>
 );
 
