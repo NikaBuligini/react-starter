@@ -18,3 +18,17 @@ export function getTicker(state: Object, uuid: string) {
 
   return { isFetching: false, coins: [] };
 }
+
+export function getCurrency(state: Object, name: string) {
+  const fetchStatus = state.fetch.currenciesByName[name];
+
+  if (fetchStatus) {
+    const { isFetching } = fetchStatus;
+    return {
+      isFetching,
+      currency: state.entities.coins[name],
+    };
+  }
+
+  return { isFetching: false, currency: undefined };
+}

@@ -7,10 +7,10 @@ import { ServerStyleSheet } from 'styled-components';
 import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import type { Store } from 'redux';
+import fakePersistor from './fakePersistor';
+import PersistGate from '../src/utils/PersistGate';
 import { createPage, write } from './server-utils';
 import configureStore from './configureStore';
-import fakePersistor from './fakePersistor';
-import { PersistGate } from 'redux-persist/lib/integration/react';
 import App from '../src/App';
 
 import { setLocale } from '../src/actions';
@@ -25,7 +25,7 @@ function handleRender(req: express$Request, res: express$Response, store: AppSto
   // Render the component to a string
   const markup = renderToString(
     sheet.collectStyles(
-      <PersistGate persistor={fakePersistor} loading={null}>
+      <PersistGate persistor={fakePersistor} ignoreBootstrap>
         <Provider store={store}>
           <StaticRouter location={req.url} context={context}>
             <App />

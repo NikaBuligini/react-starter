@@ -2,14 +2,14 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 function numberWithCommas(number: string) {
-  return Math.round(Number(number))
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  // return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return number;
 }
 
-type Coin = {
+export type Coin = {
   id: string,
   name: string,
   '24hVolumeUsd': string,
@@ -61,7 +61,9 @@ const PercentageChange = ({ value }: { value: string }) => {
 const CoinItem = ({ coin }: Props) => (
   <Wrapper>
     <td>{coin.rank}</td>
-    <td>{coin.name}</td>
+    <td>
+      <Link to={`/coinmarketcap/${coin.id}`}>{coin.name}</Link>
+    </td>
     <PriceCell value={coin.marketCapUsd} />
     <PriceCell value={coin.priceUsd} />
     <PriceCell value={coin['24hVolumeUsd']} />

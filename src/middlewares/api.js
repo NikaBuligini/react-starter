@@ -93,7 +93,7 @@ async function callApi(
  */
 
 const userSchema = new Schema.Entity('users');
-const coinSchema = new Schema.Entity('coins');
+const coinSchema = new Schema.Entity('coins', {}, { idAttribute: 'id' });
 
 // Schemas for Github API responses.
 export const Schemas = {

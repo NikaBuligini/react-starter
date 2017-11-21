@@ -19,7 +19,7 @@ type Entities = {
 };
 
 const defaultEntities = {
-  // services: {},
+  coins: {},
 };
 
 export function entities(state: Entities = defaultEntities, action: ActionWithApiResponse) {

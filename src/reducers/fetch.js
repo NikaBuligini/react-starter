@@ -135,6 +135,18 @@ const fetch = combineReducers({
       ids: union(state.ids, action.response.result),
     }),
   }),
+  currenciesByName: fetchStatus({
+    mapActionToKey: action => action.key,
+    types: [
+      ActionTypes.CURRENCY_REQUEST,
+      ActionTypes.CURRENCY_SUCCESS,
+      ActionTypes.CURRENCY_FAILURE,
+    ],
+    initialState: { ids: [] },
+    retrieveData: (state, action) => ({
+      ids: union(state.ids, action.response.result),
+    }),
+  }),
 });
 
 export default fetch;

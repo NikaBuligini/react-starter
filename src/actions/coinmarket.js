@@ -34,3 +34,55 @@ export function loadTicker(fetchId: string, callback?: ApiCallback) {
     }
   };
 }
+
+export const CURRENCY_REQUEST: string = 'CURRENCY_REQUEST';
+export const CURRENCY_SUCCESS: string = 'CURRENCY_SUCCESS';
+export const CURRENCY_FAILURE: string = 'CURRENCY_FAILURE';
+
+function fetchCurrency(currency: string, callback: ?ApiCallback) {
+  return {
+    key: currency,
+    [CALL_API]: {
+      types: [CURRENCY_REQUEST, CURRENCY_SUCCESS, CURRENCY_FAILURE],
+      endpoint: `https://api.coinmarketcap.com/v1/ticker/${currency}/`,
+      schema: Schemas.COIN_ARRAY,
+      showProgress: true,
+      debounce: 2000,
+      meta: {
+        withoutContentType: true,
+      },
+      callback,
+    },
+  };
+}
+
+export function loadCurrency(currency: string, callback?: ApiCallback) {
+  return (dispatch: Dispatch) => {
+    dispatch(fetchCurrency(currency, callback));
+  };
+}
+
+export const CURRENCY_GRAPH_REQUEST: string = 'CURRENCY_GRAPH_REQUEST';
+export const CURRENCY_GRAPH_SUCCESS: string = 'CURRENCY_GRAPH_SUCCESS';
+export const CURRENCY_GRAPH_FAILURE: string = 'CURRENCY_GRAPH_FAILURE';
+
+function fetchCurrencyGraph(currency: string, callback: ?ApiCallback) {
+  return {
+    key: currency,
+    [CALL_API]: {
+      types: [CURRENCY_GRAPH_REQUEST, CURRENCY_GRAPH_SUCCESS, CURRENCY_GRAPH_FAILURE],
+      endpoint: `https://graphs.coinmarketcap.com/currencies/${currency}/`,
+      showProgress: true,
+      meta: {
+        withoutContentType: true,
+      },
+      callback,
+    },
+  };
+}
+
+export function loadCurrencyGraph(currency: string, callback?: ApiCallback) {
+  return (dispatch: Dispatch) => {
+    dispatch(fetchCurrencyGraph(currency, callback));
+  };
+}

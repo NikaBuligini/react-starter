@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
+import Container from '../../components/Container';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import CoinItem from './CoinItem';
 import { loadTicker } from '../../actions';
@@ -68,14 +69,10 @@ class CoinMarket extends React.PureComponent<Props> {
         <Helmet>
           <title>CoinMarketCap - Title</title>
         </Helmet>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h4>CoinMarketCap</h4>
-              <CoinList isFetching={isFetching} coins={coins} />
-            </div>
-          </div>
-        </div>
+        <Container>
+          <h4>CoinMarketCap</h4>
+          <CoinList isFetching={isFetching} coins={coins} />
+        </Container>
       </div>
     );
   }
