@@ -4,7 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/lib/integration/react';
+import PersistGate from './utils/PersistGate';
 import { setAuthorizationToken } from './middlewares/api';
 import { getSession } from './selectors';
 import App from './App';
@@ -33,7 +33,7 @@ class AppWrapper extends React.Component<Props, State> {
 
   render() {
     return (
-      <PersistGate persistor={this.state.persistor} loading={null}>
+      <PersistGate persistor={this.state.persistor} ignoreBootstrap>
         <Provider store={this.props.store}>
           <BrowserRouter>
             <App />
