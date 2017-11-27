@@ -9,10 +9,12 @@ export function getTicker(state: Object, uuid: string) {
   const fetchStatus = state.fetch.tickersByUuid[uuid];
 
   if (fetchStatus) {
-    const { isFetching, ids } = fetchStatus;
+    const { isFetching, ids, loadedAt } = fetchStatus;
+
     return {
       isFetching,
       coins: mapIdsToCoins(state, ids),
+      loadedAt,
     };
   }
 

@@ -54,7 +54,7 @@ export default {
         },
       },
       { test: /\.less$/, loader: 'fake-style!css?modules&localIdentName=[hash:base64]!less' },
-      { test: /\.css$/, loader: 'fake-style!css?modules&localIdentName=[hash:base64]' },
+      { test: /\.css$/, loader: 'css-loader' },
     ],
   },
   plugins: [

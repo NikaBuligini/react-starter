@@ -58,6 +58,7 @@ export default {
       'react-redux',
       'react-router',
       'react-router-dom',
+      'react-virtualized',
       'redux',
       'redux-persist',
       'styled-components',

@@ -2,63 +2,69 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+import 'react-virtualized/styles.css';
 
 import Container from '../../components/Container';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import Countdown from '../../components/Countdown';
 import CoinItem from './CoinItem';
+import CoinList from './CoinList';
 import { loadTicker } from '../../actions';
 import { getTicker } from '../../selectors';
+import type { Coin } from './types';
 
 const fetchId = 'ticker';
+const DEFAULT_INTERVAL = 120; // seconds
 
-const CoinsWrapper = styled.div`
+const CountdownText = styled.div`
   margin-bottom: 12px;
-
-  thead tr th {
-    text-align: left;
-  }
+  color: #aaafb8;
 `;
 
-const CoinList = ({ isFetching, coins }: { isFetching: boolean, coins: Array<Object> }) => {
-  if (isFetching) {
-    return <LoadingIndicator />;
-  }
-
-  return (
-    <CoinsWrapper>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Market Cap</th>
-            <th>Price</th>
-            <th>Volume (24h)</th>
-            <th>Circulating Supply</th>
-            <th>Change (24h)</th>
-          </tr>
-        </thead>
-        <tbody>{coins.map(coin => <CoinItem key={coin.id} coin={coin} />)}</tbody>
-      </table>
-    </CoinsWrapper>
-  );
-};
-
 type Props = {
-  loadTicker: (fetchId: string, callback?: Function) => void,
+  loadTicker: (fetchId: string, force?: boolean, callback?: Function) => void,
   isFetching: boolean,
-  coins: Array<Object>,
+  loadedAt: ?number,
+  coins: Array<Coin>,
 };
 
-class CoinMarket extends React.PureComponent<Props> {
+type State = {
+  updateInterval: number,
+};
+
+class CoinMarket extends React.PureComponent<Props, State> {
+  state = {
+    updateInterval: DEFAULT_INTERVAL,
+  };
+
   componentDidMount() {
-    this.loadTicker();
+    this.props.loadTicker(fetchId);
+    this.calculateInterval();
   }
 
   loadTicker = () => {
-    this.props.loadTicker(fetchId);
+    this.props.loadTicker(fetchId, true, this.resetInterval);
+  };
+
+  resetInterval = () => {
+    if (this.state.updateInterval !== DEFAULT_INTERVAL) {
+      this.setState({ updateInterval: DEFAULT_INTERVAL });
+    }
+  };
+
+  calculateInterval = () => {
+    const { loadedAt } = this.props;
+
+    if (loadedAt) {
+      const diff = (Date.now() - loadedAt) / 1000;
+
+      if (diff < DEFAULT_INTERVAL) {
+        this.setState({ updateInterval: Math.round(DEFAULT_INTERVAL - diff) });
+      } else {
+        this.loadTicker();
+      }
+    }
   };
 
   render() {
@@ -71,6 +77,15 @@ class CoinMarket extends React.PureComponent<Props> {
         </Helmet>
         <Container>
           <h4>CoinMarketCap</h4>
+          {this.state.updateInterval ? (
+            <Countdown interval={this.state.updateInterval} onExpire={this.loadTicker}>
+              {({ timeLeft }) => (
+                <CountdownText>
+                  {`The price will be recalculated in ${timeLeft} seconds`}
+                </CountdownText>
+              )}
+            </Countdown>
+          ) : null}
           <CoinList isFetching={isFetching} coins={coins} />
         </Container>
       </div>

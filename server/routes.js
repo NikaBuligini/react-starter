@@ -21,7 +21,7 @@ router.get(
   '/coinmarketcap',
   handler((req, store, render) => {
     logger.info('request for /coinmarketcap received');
-    store.dispatch(loadTicker('ticker', () => render(store)));
+    store.dispatch(loadTicker('ticker', true, () => render(store)));
   }),
 );
 

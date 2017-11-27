@@ -50,7 +50,7 @@ export default {
       },
       {
         test: /\.css$/,
-        loader: 'fake-style!css?modules&localIdentName=[name]__[local]',
+        loader: 'css-loader',
       },
     ],
   },

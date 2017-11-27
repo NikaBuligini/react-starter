@@ -16,7 +16,6 @@ function fetchTicker(fetchId: string, callback: ?ApiCallback) {
       endpoint: 'https://api.coinmarketcap.com/v1/ticker/',
       schema: Schemas.COIN_ARRAY,
       showProgress: true,
-      debounce: 2000,
       meta: {
         withoutContentType: true,
       },
@@ -25,11 +24,11 @@ function fetchTicker(fetchId: string, callback: ?ApiCallback) {
   };
 }
 
-export function loadTicker(fetchId: string, callback?: ApiCallback) {
+export function loadTicker(fetchId: string, force?: boolean = false, callback?: ApiCallback) {
   return (dispatch: Dispatch, getState: GetState) => {
-    const { coins: loadedCoins } = getTicker(getState(), 'ticker');
+    const fetchStatus = getTicker(getState(), 'ticker');
 
-    if (loadedCoins.length === 0) {
+    if (force || fetchStatus.coins.length === 0) {
       dispatch(fetchTicker(fetchId, callback));
     }
   };
@@ -47,7 +46,6 @@ function fetchCurrency(currency: string, callback: ?ApiCallback) {
       endpoint: `https://api.coinmarketcap.com/v1/ticker/${currency}/`,
       schema: Schemas.COIN_ARRAY,
       showProgress: true,
-      debounce: 2000,
       meta: {
         withoutContentType: true,
       },
