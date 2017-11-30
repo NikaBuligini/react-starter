@@ -43,13 +43,13 @@ function changeCellRenderer({ cellData }) {
 
   return (
     <ColorfulCell color={isPositive ? 'green' : 'red'}>
-      {isPositive ? `+${cellData}` : cellData}
+      {isPositive ? `+${cellData}` : cellData}%
     </ColorfulCell>
   );
 }
 
 const CoinList = ({ isFetching, coins }: { isFetching: boolean, coins: Array<Coin> }) => {
-  if (isFetching) {
+  if (isFetching && coins.length === 0) {
     return <LoadingIndicator />;
   }
 
@@ -69,12 +69,12 @@ const CoinList = ({ isFetching, coins }: { isFetching: boolean, coins: Array<Coi
             rowGetter={({ index }) => coins[index]}
             scrollTop={scrollTop}
           >
-            <Column label="#" dataKey="rank" width={30} />
+            <Column label="#" dataKey="rank" width={35} />
             <Column label="Name" dataKey="name" width={150} cellRenderer={nameCellRenderer} />
             <Column
               label="Market Cap"
               dataKey="marketCapUsd"
-              width={150}
+              width={170}
               style={styles.rightAlignedCell}
             />
             <Column
@@ -87,7 +87,7 @@ const CoinList = ({ isFetching, coins }: { isFetching: boolean, coins: Array<Coi
             <Column
               label="Volume (24h)"
               dataKey="24hVolumeUsd"
-              width={150}
+              width={170}
               style={styles.rightAlignedCell}
             />
             <Column
@@ -99,6 +99,20 @@ const CoinList = ({ isFetching, coins }: { isFetching: boolean, coins: Array<Coi
             <Column
               label="Change (24h)"
               dataKey="percentChange24h"
+              width={150}
+              cellRenderer={changeCellRenderer}
+              style={styles.rightAlignedCell}
+            />
+            <Column
+              label="Change (1h)"
+              dataKey="percentChange1h"
+              width={150}
+              cellRenderer={changeCellRenderer}
+              style={styles.rightAlignedCell}
+            />
+            <Column
+              label="Change (7d)"
+              dataKey="percentChange7d"
               width={150}
               cellRenderer={changeCellRenderer}
               style={styles.rightAlignedCell}

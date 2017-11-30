@@ -64,6 +64,7 @@ export default {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
       // API_SECRET: JSON.stringify(process.env.API_SECRET || 'MY_SUPER_API_SECRET'),
+      'process.env.RUNTIME_ENV': JSON.stringify('server'),
       // STATS: JSON.stringify(stats.load('memoryOnly')),
       STATS: JSON.stringify(stats.load()),
     }),

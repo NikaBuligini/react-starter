@@ -7,10 +7,10 @@ import { ServerStyleSheet } from 'styled-components';
 import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import type { Store } from 'redux';
-import fakePersistor from './fakePersistor';
-import PersistGate from '../src/utils/PersistGate';
 import { createPage, write } from './server-utils';
 import configureStore from './configureStore';
+import fakePersistor from './fakePersistor';
+import PersistGate from '../src/utils/PersistGate';
 import App from '../src/App';
 
 import { setLocale } from '../src/actions';

@@ -147,6 +147,19 @@ const fetch = combineReducers({
       ids: union(state.ids, action.response.result),
     }),
   }),
+  graphsByCurrencyName: fetchStatus({
+    mapActionToKey: action => action.key,
+    types: [
+      ActionTypes.CURRENCY_GRAPH_REQUEST,
+      ActionTypes.CURRENCY_GRAPH_SUCCESS,
+      ActionTypes.CURRENCY_GRAPH_FAILURE,
+    ],
+    initialState: { marketCapByAvailableSupply: [], priceBtc: [], priceUsd: [], volumeUsd: [] },
+    retrieveData: (state, action) => {
+      const { marketCapByAvailableSupply, priceBtc, priceUsd, volumeUsd } = action.response;
+      return { marketCapByAvailableSupply, priceBtc, priceUsd, volumeUsd };
+    },
+  }),
 });
 
 export default fetch;

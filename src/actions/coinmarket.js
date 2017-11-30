@@ -69,7 +69,7 @@ function fetchCurrencyGraph(currency: string, callback: ?ApiCallback) {
     key: currency,
     [CALL_API]: {
       types: [CURRENCY_GRAPH_REQUEST, CURRENCY_GRAPH_SUCCESS, CURRENCY_GRAPH_FAILURE],
-      endpoint: `https://graphs.coinmarketcap.com/currencies/${currency}/`,
+      endpoint: `/graphs/${currency}/`,
       showProgress: true,
       meta: {
         withoutContentType: true,

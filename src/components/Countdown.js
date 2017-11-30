@@ -36,7 +36,7 @@ class Countdown extends React.PureComponent<Props, State> {
   startCountdown = (props: Props) => {
     this.setState({ timeLeft: props.interval });
 
-    if (this.interval) {
+    if (!this.interval) {
       this.interval = setInterval(this.decrement, 1000);
     }
   };

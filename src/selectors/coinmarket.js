@@ -34,3 +34,26 @@ export function getCurrency(state: Object, name: string) {
 
   return { isFetching: false, currency: undefined };
 }
+
+export function getGraph(state: Object, name: string) {
+  const fetchStatus = state.fetch.graphsByCurrencyName[name];
+
+  if (fetchStatus) {
+    const { isFetching, marketCapByAvailableSupply, priceBtc, priceUsd, volumeUsd } = fetchStatus;
+    return {
+      isFetching,
+      marketCapByAvailableSupply,
+      priceBtc,
+      priceUsd,
+      volumeUsd,
+    };
+  }
+
+  return {
+    isFetching: false,
+    marketCapByAvailableSupply: [],
+    priceBtc: [],
+    priceUsd: [],
+    volumeUsd: [],
+  };
+}
