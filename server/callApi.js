@@ -27,6 +27,8 @@ export default async function callApi(
     init = { ...init, body };
   }
 
+  console.log(endpoint);
+
   const response = await fetch(endpoint, init);
 
   const json = await response.json();

@@ -5,6 +5,7 @@ import { schema as Schema, normalize } from 'normalizr';
 import { camelizeKeys } from 'humps';
 import uuid from 'uuid/v4';
 import { markAsUnauthorized } from '../actions';
+import querify from '../utils/querify';
 import config from '../config';
 
 const defaultHeaders: Object = {
@@ -59,7 +60,13 @@ async function callApi(
     init = { ...init, body };
   }
 
-  const response = await fetch(`${baseUrl}${endpoint}`, init);
+  let finalEndpoint = endpoint;
+
+  if (method === 'GET' && body) {
+    finalEndpoint = querify(endpoint, body);
+  }
+
+  const response = await fetch(`${baseUrl}${finalEndpoint}`, init);
 
   if (response.status === 401) {
     return {

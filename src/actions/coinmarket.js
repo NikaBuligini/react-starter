@@ -64,12 +64,18 @@ export const CURRENCY_GRAPH_REQUEST: string = 'CURRENCY_GRAPH_REQUEST';
 export const CURRENCY_GRAPH_SUCCESS: string = 'CURRENCY_GRAPH_SUCCESS';
 export const CURRENCY_GRAPH_FAILURE: string = 'CURRENCY_GRAPH_FAILURE';
 
-function fetchCurrencyGraph(currency: string, callback: ?ApiCallback) {
+function fetchCurrencyGraph(
+  currency: string,
+  start: ?number,
+  end: ?number,
+  callback: ?ApiCallback,
+) {
   return {
     key: currency,
     [CALL_API]: {
       types: [CURRENCY_GRAPH_REQUEST, CURRENCY_GRAPH_SUCCESS, CURRENCY_GRAPH_FAILURE],
-      endpoint: `/graphs/${currency}/`,
+      endpoint: `/graphs/${currency}`,
+      body: start && end ? { start, end } : {},
       showProgress: true,
       meta: {
         withoutContentType: true,
@@ -79,8 +85,13 @@ function fetchCurrencyGraph(currency: string, callback: ?ApiCallback) {
   };
 }
 
-export function loadCurrencyGraph(currency: string, callback?: ApiCallback) {
+export function loadCurrencyGraph(
+  currency: string,
+  start: ?number,
+  end: ?number,
+  callback?: ApiCallback,
+) {
   return (dispatch: Dispatch) => {
-    dispatch(fetchCurrencyGraph(currency, callback));
+    dispatch(fetchCurrencyGraph(currency, start, end, callback));
   };
 }

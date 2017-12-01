@@ -27,7 +27,6 @@ type Props = {
   priceBtc: Array<NumberPair>,
   priceUsd: Array<NumberPair>,
   volumeUsd: Array<NumberPair>,
-  onSelection: Function,
 };
 
 class Stockchart extends React.PureComponent<Props> {
@@ -40,12 +39,11 @@ class Stockchart extends React.PureComponent<Props> {
       priceBtc,
       volumeUsd,
       marketCapByAvailableSupply,
-      onSelection,
     } = this.props;
 
     return (
       <HighchartsStockChart>
-        <Chart zoomType="x" onSelection={onSelection} />
+        <Chart zoomType="x" />
 
         {title && <Title>{title}</Title>}
         {subtitle && <Subtitle>{subtitle}</Subtitle>}

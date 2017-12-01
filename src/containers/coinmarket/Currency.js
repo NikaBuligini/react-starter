@@ -7,6 +7,7 @@ import type { Match } from 'react-router-dom';
 
 import Container from '../../components/Container';
 import { loadCurrency, loadCurrencyGraph } from '../../actions';
+import type { ApiCallback } from '../../actions/types';
 import { getCurrency, getGraph } from '../../selectors';
 import type { Coin } from './CoinItem';
 import CurrencyItem from './CurrencyItem';
@@ -21,7 +22,7 @@ type Props = {
   graphFetch: GraphFetch,
   match: Match,
   loadCurrency: (currency: string) => void,
-  loadCurrencyGraph: (currency: string) => void,
+  loadCurrencyGraph: (currency: string, callback: ?ApiCallback) => void,
 };
 
 class Currency extends React.PureComponent<Props> {
@@ -34,11 +35,6 @@ class Currency extends React.PureComponent<Props> {
     }
   }
 
-  handleStockchartSelection = (event: any) => {
-    console.log(event.xAxis[0].axis.dataMin);
-    console.log(event.xAxis[0].axis.dataMax);
-  };
-
   render() {
     const { currencyFetch, graphFetch } = this.props;
 
@@ -49,10 +45,7 @@ class Currency extends React.PureComponent<Props> {
         </Helmet>
         <Container>
           <CurrencyItem {...currencyFetch} />
-          <CurrencyStockchart
-            fetchStatus={graphFetch}
-            onSelection={this.handleStockchartSelection}
-          />
+          <CurrencyStockchart fetchStatus={graphFetch} />
         </Container>
       </div>
     );

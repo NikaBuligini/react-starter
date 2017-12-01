@@ -34,7 +34,7 @@ router.get(
   '/graphs/:currency',
   async (req: express$Request, res: express$Response, next: express$NextFunction) => {
     const { response, error } = await callApi(
-      `https://graphs.coinmarketcap.com/currencies/${req.params.currency}/`,
+      `https://graphs.coinmarketcap.com/currencies/${req.params.currency}`,
     );
 
     if (response) {

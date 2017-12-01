@@ -14,12 +14,11 @@ export type GraphFetch = {
 
 type Props = {
   fetchStatus: GraphFetch,
-  onSelection: Function,
 };
 
 const IS_SERVER = process.env.RUNTIME_ENV === 'server';
 
-const CurrencyStockchart = ({ fetchStatus, onSelection }: Props) => {
+const CurrencyStockchart = ({ fetchStatus }: Props) => {
   if (IS_SERVER) {
     return null;
   }
@@ -36,7 +35,6 @@ const CurrencyStockchart = ({ fetchStatus, onSelection }: Props) => {
       subtitle="Source: thesolarfoundation.com"
       yAxisTitle="24h Vol"
       {...rest}
-      onSelection={onSelection}
     />
   );
 };
