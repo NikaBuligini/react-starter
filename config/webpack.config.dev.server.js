@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
-import * as stats from './plugins/stats';
+import StatsPlugin from './plugins/StatsPlugin';
 import getNodeModules from './utils/getNodeModules';
 import paths from './paths';
 
@@ -65,7 +65,7 @@ export default {
       'process.env.RUNTIME_ENV': JSON.stringify('server'),
     }),
     new webpack.DefinePlugin({
-      STATS: JSON.stringify(stats.load('memoryOnly')),
+      STATS: JSON.stringify(StatsPlugin.load()),
     }),
   ],
 };

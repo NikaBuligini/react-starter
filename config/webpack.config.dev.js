@@ -6,7 +6,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 // import CopyWebpackPlugin from 'copy-webpack-plugin'; // for copying files
 import SitemapPlugin from 'sitemap-webpack-plugin';
 
-import * as stats from './plugins/stats';
+import StatsPlugin from './plugins/StatsPlugin';
 import getClientEnvironment from './env';
 import paths from './paths';
 import sitemapPaths from './sitemap';
@@ -101,11 +101,9 @@ export default {
     new SitemapPlugin('https://example.com', sitemapPaths, {
       fileName: 'sitemap.xml',
     }),
-    function Stats() {
-      this.plugin('done', statsData => {
-        stats.save(statsData, 'memoryOnly');
-      });
-    },
+    new StatsPlugin({
+      memoryOnly: true,
+    }),
   ],
   devServer: {
     contentBase: paths.appDist,

@@ -47,6 +47,7 @@ export default {
   serverIndexJs: resolveApp('server/index.js'),
   serverClusterJs: resolveApp('server/cluster.js'),
   serverRecords: resolveApp('dist/main/records.json'),
+  statsJson: resolveApp('dist/stats.json'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),

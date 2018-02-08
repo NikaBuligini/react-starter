@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import { argv } from 'yargs';
 
-import * as stats from './plugins/stats';
+import StatsPlugin from './plugins/StatsPlugin';
 import progress from './plugins/progress';
 import getNodeModules from './utils/getNodeModules';
 import paths from './paths';
@@ -66,7 +66,7 @@ export default {
       // API_SECRET: JSON.stringify(process.env.API_SECRET || 'MY_SUPER_API_SECRET'),
       'process.env.RUNTIME_ENV': JSON.stringify('server'),
       // STATS: JSON.stringify(stats.load('memoryOnly')),
-      STATS: JSON.stringify(stats.load()),
+      STATS: JSON.stringify(StatsPlugin.load()),
     }),
     new webpack.ProgressPlugin((percentage, message) => {
       process.stdout.clearLine();

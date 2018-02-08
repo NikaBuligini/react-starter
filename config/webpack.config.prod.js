@@ -9,7 +9,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import CompressionPlugin from 'compression-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 
-import * as stats from './plugins/stats';
+import StatsPlugin from './plugins/StatsPlugin';
 import progress from './plugins/progress';
 import paths from './paths';
 import getClientEnvironment from './env';
@@ -181,11 +181,9 @@ export default {
       }
     }),
     ...optionalPlugins,
-    function Stats() {
-      this.plugin('done', statsData => {
-        stats.save(statsData);
-      });
-    },
+    new StatsPlugin({
+      path: paths.statsJson,
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
