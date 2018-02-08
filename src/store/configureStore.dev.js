@@ -1,7 +1,8 @@
-import { createStore, compose } from 'redux';
+import { createStore } from 'redux';
 import { persistReducer } from 'redux-persist';
 import transform from '../utils/redux-persist-transform';
 import localforage from '../utils/localforage';
+import compose from '../utils/compose';
 
 const config = {
   version: 1,

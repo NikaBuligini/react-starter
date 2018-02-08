@@ -67,7 +67,7 @@
     "react-jsx-highstock": "^2.0.1",
     "react-loadable": "^5.3.1",
     "react-redux": "^5.0.6",
-    "react-redux-progress": "^0.3.0",
+    "react-redux-progress": "^0.4.2",
     "react-router-dom": "^4.2.2",
     "react-virtualized": "^9.12.0",
     "redis": "^2.8.0",
@@ -88,7 +88,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.2",
-    "babel-jest": "^21.2.0",
+    "babel-jest": "^22.0.4",
     "babel-loader": "^7.1.2",
     "babel-plugin-styled-components": "^1.3.0",
     "babel-preset-env": "^1.6.1",
@@ -111,11 +111,11 @@
     "exists-sync": "^0.0.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
-    "flow-bin": "^0.61.0",
+    "flow-bin": "^0.63.1",
     "flow-typed": "^2.2.3",
     "html-webpack-plugin": "^2.30.1",
     "http-proxy": "^1.16.2",
-    "jest": "^21.2.1",
+    "jest": "^22.0.5",
     "jsdom": "^11.3.0",
     "keypress": "^0.2.1",
     "lint-staged": "^6.0.0",
@@ -141,8 +141,13 @@
     "yargs": "^10.0.3"
   },
   "jest": {
-    "setupFiles": ["<rootDir>/config/polyfills.js", "<rootDir>/src/testsSetup.js"],
-    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js",
+      "<rootDir>/src/testsSetup.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
     "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
@@ -153,9 +158,14 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"]
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ]
   },
   "lint-staged": {
-    "*.{js,json,css,md}": ["prettier --write", "git add"]
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

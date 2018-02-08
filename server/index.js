@@ -69,6 +69,10 @@ if (IS_DEVELOPMENT) {
       maxage: '2h', // two hour
     }),
   );
+
+  app.use('/assets', (req, res) => {
+    res.status(404).send('Page not found');
+  });
 }
 
 app.use(cookieParser());

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import type { RouterHistory } from 'react-router-dom';
 import ProgressBar from 'react-redux-progress';
-import { compose } from 'redux';
+import compose from './utils/compose';
 import withErrorBoundary from './hocs/ErrorBoundary';
 import { Navigation, Footer, NAVIGATION_HEIGHT, FOOTER_HEIGHT } from './partials';
 import { Routes } from './constants';
