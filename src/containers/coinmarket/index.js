@@ -8,7 +8,7 @@ import 'react-virtualized/styles.css';
 
 import Container from '../../components/Container';
 import Countdown from '../../components/Countdown';
-import CoinItem from './CoinItem';
+// import CoinItem from './CoinItem';
 import CoinList from './CoinList';
 import { loadTicker } from '../../actions';
 import { getTicker } from '../../selectors';

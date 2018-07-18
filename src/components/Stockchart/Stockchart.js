@@ -11,7 +11,7 @@ import {
   XAxis,
   YAxis,
   LineSeries,
-  RangeSelector,
+  // RangeSelector,
   Tooltip,
   Navigator,
 } from 'react-jsx-highstock';
