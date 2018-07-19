@@ -71,6 +71,10 @@ if (IS_DEVELOPMENT) {
   );
 }
 
+app.get('/robots.txt', (req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'public/robots.txt'));
+});
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

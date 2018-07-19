@@ -41,22 +41,25 @@ type Props = {
 
 const Contributor = (contributor: Props) => (
   <Wrapper>
-    <Avatar href={contributor.htmlUrl} target="_blank">
+    <Avatar href={contributor.htmlUrl} target="_blank" rel="noopener noreferrer">
       <img src={contributor.avatarUrl} alt={contributor.login} />
     </Avatar>
     <div className="info">
-      <a href={contributor.htmlUrl} target="_blank">
+      <a href={contributor.htmlUrl} target="_blank" rel="noopener noreferrer">
         {contributor.login}
       </a>
-      <p>Contributions: +{contributor.contributions}</p>
+      <p>
+        Contributions: +
+        {contributor.contributions}
+      </p>
       <div className="links">
-        <a href={contributor.reposUrl} target="_blank">
+        <a href={contributor.reposUrl} target="_blank" rel="noopener noreferrer">
           Repositories
         </a>
-        <a href={contributor.followersUrl} target="_blank">
+        <a href={contributor.followersUrl} target="_blank" rel="noopener noreferrer">
           Followers
         </a>
-        <a href={contributor.organizationsUrl} target="_blank">
+        <a href={contributor.organizationsUrl} target="_blank" rel="noopener noreferrer">
           Organizations
         </a>
       </div>

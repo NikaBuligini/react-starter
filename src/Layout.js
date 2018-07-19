@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import type { RouterHistory } from 'react-router-dom';
-import ProgressBar from 'react-redux-progress';
+import { ProgressBarProvider } from 'react-redux-progress';
 import { compose } from 'redux';
 import withErrorBoundary from './hocs/ErrorBoundary';
 import { Navigation, Footer, NAVIGATION_HEIGHT, FOOTER_HEIGHT } from './partials';
@@ -38,11 +38,13 @@ class Layout extends React.Component<Props> {
   }
 
   render() {
+    const { isProgressActive, children } = this.props;
+
     return (
       <div>
-        <ProgressBar isActive={this.props.isProgressActive} />
+        <ProgressBarProvider isActive={isProgressActive} color="#db7093" />
         <Navigation />
-        <MainContent>{this.props.children}</MainContent>
+        <MainContent>{children}</MainContent>
         <Footer />
       </div>
     );

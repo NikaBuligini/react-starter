@@ -6,7 +6,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 // import CopyWebpackPlugin from 'copy-webpack-plugin'; // for copying files
 import SitemapPlugin from 'sitemap-webpack-plugin';
 
-import * as stats from './plugins/stats';
+import StatsPlugin from './plugins/StatsPlugin';
 import getClientEnvironment from './env';
 import paths from './paths';
 import sitemapPaths from './sitemap';
@@ -38,6 +38,7 @@ export default {
     chunkFilename: '[id].chunk.js',
     publicPath,
   },
+  mode: 'development',
   devtool: 'cheap-module-source-map',
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -49,26 +50,30 @@ export default {
     },
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'file-loader?name=images/[name].[ext]',
+        use: 'file-loader?name=images/[name].[ext]',
       },
-      { test: /\.woff2$/, loader: 'url-loader?limit=10000' },
+      { test: /\.woff2$/, use: 'url-loader?limit=10000' },
       {
         test: /\.(ttf|woff|woff2|eot|otf)(\?.*)?$/,
-        loader: 'file-loader?name=fonts/[name].[ext]',
+        use: 'file-loader?name=fonts/[name].[ext]',
+      },
+      {
+        test: /\.(manifest|txt)$/i,
+        use: 'file-loader?name=[name].[ext]',
       },
       {
         test: /\.scss$/,
-        loaders: ExtractTextPlugin.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: 'css-loader!sass-loader',
+          use: ['css-loader', 'sass-loader'],
         }),
       },
       {
         test: /\.css/,
-        loaders: ExtractTextPlugin.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader',
         }),
@@ -76,21 +81,17 @@ export default {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: true,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+          },
         },
       },
     ],
   },
   plugins: [
     new webpack.DefinePlugin(env.stringified),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['react', 'vendor'],
-      minChunks: Infinity,
-      // name: 'vendor',
-      // filename: 'vendor.min.js',
-    }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ExtractTextPlugin({
       filename: '[name].min.css',
@@ -101,11 +102,10 @@ export default {
     new SitemapPlugin('https://example.com', sitemapPaths, {
       fileName: 'sitemap.xml',
     }),
-    function Stats() {
-      this.plugin('done', statsData => {
-        stats.save(statsData, 'memoryOnly');
-      });
-    },
+    new StatsPlugin({
+      path: paths.statsJson,
+      memoryOnly: true,
+    }),
   ],
   devServer: {
     contentBase: paths.appDist,

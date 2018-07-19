@@ -53,7 +53,10 @@ export { withErrorBoundary };
 export default (...args: Array<*>) => {
   const WrappedComponent = withErrorBoundary(...args);
 
-  return connect(null, {
-    sendToErrorReporting,
-  })(WrappedComponent);
+  return connect(
+    null,
+    {
+      sendToErrorReporting,
+    },
+  )(WrappedComponent);
 };

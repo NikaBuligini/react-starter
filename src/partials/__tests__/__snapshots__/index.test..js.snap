@@ -2,7 +2,7 @@
 
 exports[`<Partials /> should match Footer snapshot 1`] = `
 <div
-  className="Footer__Wrapper-s1j3fe0c-0 XSWiM"
+  className="Footer__Wrapper-nvyc1g-0 bcigjm"
 >
   <div
     className="footer__inner"
@@ -30,11 +30,11 @@ exports[`<Partials /> should match Footer snapshot 1`] = `
 
 exports[`<Partials /> should match Navigation snapshot 1`] = `
 <div
-  className="Navigation__Wrapper-s10ex460-0 jIdUJl"
+  className="Navigation__Wrapper-t7ran0-0 kHXwQv"
 >
   <a
-    aria-current="true"
-    className="Navigation__Link-s10ex460-1 iyPCle active"
+    aria-current="page"
+    className="Navigation__Link-t7ran0-1 JWnMa active"
     href="/"
     onClick={[Function]}
     style={Object {}}
@@ -42,11 +42,10 @@ exports[`<Partials /> should match Navigation snapshot 1`] = `
     Home
   </a>
   <a
-    aria-current={false}
-    className="Navigation__Link-s10ex460-1 iyPCle"
+    aria-current={null}
+    className="Navigation__Link-t7ran0-1 JWnMa"
     href="/contributors"
     onClick={[Function]}
-    style={undefined}
   >
     Contributors
   </a>
@@ -55,20 +54,19 @@ exports[`<Partials /> should match Navigation snapshot 1`] = `
 
 exports[`<Partials /> should match Navigation snapshot when route is /contributors 1`] = `
 <div
-  className="Navigation__Wrapper-s10ex460-0 jIdUJl"
+  className="Navigation__Wrapper-t7ran0-0 kHXwQv"
 >
   <a
-    aria-current={false}
-    className="Navigation__Link-s10ex460-1 iyPCle"
+    aria-current={null}
+    className="Navigation__Link-t7ran0-1 JWnMa"
     href="/"
     onClick={[Function]}
-    style={undefined}
   >
     Home
   </a>
   <a
-    aria-current="true"
-    className="Navigation__Link-s10ex460-1 iyPCle active"
+    aria-current="page"
+    className="Navigation__Link-t7ran0-1 JWnMa active"
     href="/contributors"
     onClick={[Function]}
     style={Object {}}

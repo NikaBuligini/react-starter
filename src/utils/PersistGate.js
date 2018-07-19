@@ -6,7 +6,7 @@ import type { Node } from 'react';
 
 type Props = {
   onBeforeLift?: Function,
-  children?: Node,
+  children: Node,
   loading?: Node,
   persistor: Object,
   ignoreBootstrap?: boolean,
@@ -20,6 +20,7 @@ class PersistGate extends React.PureComponent<Props, State> {
   static defaultProps = {
     loading: null,
     ignoreBootstrap: false,
+    onBeforeLift: undefined,
   };
 
   state = {
@@ -38,11 +39,11 @@ class PersistGate extends React.PureComponent<Props, State> {
   }
 
   handlePersistorState = () => {
-    const { persistor } = this.props;
+    const { persistor, onBeforeLift } = this.props;
     const { bootstrapped } = persistor.getState();
     if (bootstrapped) {
-      if (this.props.onBeforeLift) {
-        Promise.resolve(this.props.onBeforeLift())
+      if (onBeforeLift) {
+        Promise.resolve(onBeforeLift())
           .then(() => this.setState({ bootstrapped: true }))
           .catch(() => this.setState({ bootstrapped: true }));
       } else {
@@ -58,11 +59,14 @@ class PersistGate extends React.PureComponent<Props, State> {
   _unsubscribe: ?Function;
 
   render() {
-    if (this.props.ignoreBootstrap) {
-      return this.props.children;
+    const { bootstrapped } = this.state;
+    const { ignoreBootstrap, loading, children } = this.props;
+
+    if (ignoreBootstrap) {
+      return children;
     }
 
-    return this.state.bootstrapped ? this.props.children : this.props.loading;
+    return bootstrapped ? children : loading;
   }
 }
 

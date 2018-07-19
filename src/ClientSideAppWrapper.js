@@ -32,9 +32,12 @@ class AppWrapper extends React.Component<Props, State> {
   };
 
   render() {
+    const { persistor } = this.state;
+    const { store } = this.props;
+
     return (
-      <PersistGate persistor={this.state.persistor} ignoreBootstrap>
-        <Provider store={this.props.store}>
+      <PersistGate persistor={persistor} ignoreBootstrap>
+        <Provider store={store}>
           <BrowserRouter>
             <App />
           </BrowserRouter>

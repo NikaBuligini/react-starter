@@ -9,11 +9,14 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import CompressionPlugin from 'compression-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 
-import * as stats from './plugins/stats';
+import StatsPlugin from './plugins/StatsPlugin';
 import progress from './plugins/progress';
+import { makeDirIfDoesnotExist } from './utils/fs-helpers';
 import paths from './paths';
 import getClientEnvironment from './env';
 import sitemapPaths from './sitemap';
+
+makeDirIfDoesnotExist(paths.appDist);
 
 const optionalPlugins = [];
 
@@ -42,26 +45,7 @@ if (argv.analyzer) {
 
 export default {
   entry: {
-    vendor: [
-      'core-js',
-      'history',
-      'humps',
-      'isomorphic-fetch',
-      'lodash',
-      'localforage',
-      'moment',
-      'normalizr',
-      'react',
-      'react-dom',
-      'react-helmet',
-      'react-intl',
-      'react-redux',
-      'react-router',
-      'react-router-dom',
-      'redux',
-      'redux-persist',
-      'styled-components',
-    ],
+    vendor: ['moment', 'isomorphic-fetch'],
     app: ['babel-polyfill', paths.appIndexJs],
   },
   output: {
@@ -80,28 +64,29 @@ export default {
       utils: path.resolve(__dirname, '../src/utils/'),
     },
   },
+  mode: 'production',
   devtool: shouldUseSourceMap ? 'source-map' : false,
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'file-loader?name=images/[name].[ext]',
+        use: 'file-loader?name=images/[name].[ext]',
       },
-      { test: /\.woff2$/, loader: 'url-loader?limit=10000' },
+      { test: /\.woff2$/, use: 'url-loader?limit=10000' },
       {
         test: /\.(ttf|woff|woff2|eot|otf)(\?.*)?$/,
-        loader: 'file-loader?name=fonts/[name].[ext]',
+        use: 'file-loader?name=fonts/[name].[ext]',
       },
       {
         test: /\.scss$/,
-        loaders: ExtractTextPlugin.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: 'css-loader!sass-loader',
+          use: ['css-loader', 'sass-loader'],
         }),
       },
       {
         test: /\.css/,
-        loaders: ExtractTextPlugin.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader',
         }),
@@ -109,9 +94,11 @@ export default {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          compact: true,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            compact: true,
+          },
         },
       },
     ],
@@ -119,26 +106,10 @@ export default {
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.DefinePlugin(env.stringified),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: true,
-      compress: {
-        warnings: false,
-        comparisons: false,
-        drop_console: false,
-      },
-      output: {
-        comments: false,
-        ascii_only: true,
-      },
-      sourceMap: false,
-    }),
+    new webpack.optimize.SplitChunksPlugin(),
     new ExtractTextPlugin({
       filename: '[name].[chunkhash:8].css',
       allChunks: true,
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity,
     }),
     new CompressionPlugin({
       asset: '[path].gz[query]',
@@ -180,11 +151,9 @@ export default {
       }
     }),
     ...optionalPlugins,
-    function Stats() {
-      this.plugin('done', statsData => {
-        stats.save(statsData);
-      });
-    },
+    new StatsPlugin({
+      path: paths.statsJson,
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

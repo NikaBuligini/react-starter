@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import { argv } from 'yargs';
 
-import * as stats from './plugins/stats';
+import StatsPlugin from './plugins/StatsPlugin';
 import progress from './plugins/progress';
 import getNodeModules from './utils/getNodeModules';
 import paths from './paths';
@@ -35,26 +35,29 @@ export default {
     publicPath: '/assets/',
     libraryTarget: 'commonjs2',
   },
+  mode: 'production',
   externals: nodeModules,
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(jpe?g|png|gif|svg|txt|woff2)$/i,
-        loader: 'file-loader?emitFile=false',
+        use: 'file-loader?emitFile=false',
       },
       {
         test: /\.(ttf|woff|woff2|eot|otf)(\?.*)?$/,
-        loader: 'file-loader?emitFile=false',
+        use: 'file-loader?emitFile=false',
       },
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: true,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+          },
         },
       },
-      { test: /\.less$/, loader: 'fake-style!css?modules&localIdentName=[hash:base64]!less' },
-      { test: /\.css$/, loader: 'fake-style!css?modules&localIdentName=[hash:base64]' },
+      { test: /\.less$/, use: 'fake-style!css?modules&localIdentName=[hash:base64]!less' },
+      { test: /\.css$/, use: 'fake-style!css?modules&localIdentName=[hash:base64]' },
     ],
   },
   plugins: [
@@ -65,7 +68,7 @@ export default {
       'process.env.NODE_ENV': JSON.stringify('production'),
       // API_SECRET: JSON.stringify(process.env.API_SECRET || 'MY_SUPER_API_SECRET'),
       // STATS: JSON.stringify(stats.load('memoryOnly')),
-      STATS: JSON.stringify(stats.load()),
+      STATS: JSON.stringify(StatsPlugin.load(paths.statsJson)),
     }),
     new webpack.ProgressPlugin((percentage, message) => {
       process.stdout.clearLine();

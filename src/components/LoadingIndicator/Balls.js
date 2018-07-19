@@ -42,9 +42,9 @@ const Ball = styled.div`
   height: 10px;
   margin: 10px auto;
   border-radius: 50px;
-  ${props => `
+  ${({ index }) => `
     background: ${BALL_COLLOR};
-    animation: ${props.index % 2 ? right : left} ${delays[props.index]}s infinite ease-in-out;
+    animation: ${index % 2 ? right : left} ${delays[index]}s infinite ease-in-out;
   `};
 `;
 

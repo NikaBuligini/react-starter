@@ -44,9 +44,12 @@ export const media = {
 
     if (size.min == null) {
       return media.lessThan(key);
-    } else if (size.max == null) {
+    }
+
+    if (size.max == null) {
       return media.greaterThan(key);
     }
+
     return media.between(key, key);
   },
 };

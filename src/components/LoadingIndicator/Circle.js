@@ -20,18 +20,18 @@ type Props = {
   rotate: number,
 };
 
-const Circle = (props: Props) => {
+const Circle = ({ rotate, delay }: Props) => {
   const CirclePrimitive = styled.div`
     width: 100%;
     height: 100%;
     position: absolute;
     left: 0;
     top: 0;
-    ${props.rotate &&
+    ${rotate &&
       `
-      -webkit-transform: rotate(${props.rotate}deg);
-      -ms-transform: rotate(${props.rotate}deg);
-      transform: rotate(${props.rotate}deg);
+      -webkit-transform: rotate(${rotate}deg);
+      -ms-transform: rotate(${rotate}deg);
+      transform: rotate(${rotate}deg);
     `} &:before {
       content: '';
       display: block;
@@ -41,10 +41,10 @@ const Circle = (props: Props) => {
       background-color: #999;
       border-radius: 100%;
       animation: ${circleFadeDelay} 1.2s infinite ease-in-out both;
-      ${props.delay &&
+      ${delay &&
         `
-        -webkit-animation-delay: ${props.delay}s;
-        animation-delay: ${props.delay}s;
+        -webkit-animation-delay: ${delay}s;
+        animation-delay: ${delay}s;
       `};
     }
   `;

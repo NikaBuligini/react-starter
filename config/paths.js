@@ -13,7 +13,9 @@ function ensureSlash(pathStr, needsSlash) {
   const hasSlash = pathStr.endsWith('/');
   if (hasSlash && !needsSlash) {
     return pathStr.substr(pathStr, pathStr.length - 1);
-  } else if (!hasSlash && needsSlash) {
+  }
+
+  if (!hasSlash && needsSlash) {
     return `${pathStr}/`;
   }
 
@@ -47,6 +49,7 @@ export default {
   serverIndexJs: resolveApp('server/index.js'),
   serverClusterJs: resolveApp('server/cluster.js'),
   serverRecords: resolveApp('dist/main/records.json'),
+  statsJson: resolveApp('dist/stats.json'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),

@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
-import * as stats from './plugins/stats';
+import StatsPlugin from './plugins/StatsPlugin';
 import getNodeModules from './utils/getNodeModules';
 import paths from './paths';
 
@@ -26,31 +26,34 @@ export default {
     publicPath: '/assets/',
     libraryTarget: 'commonjs2',
   },
+  mode: 'development',
   externals: nodeModules,
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(jpe?g|png|gif|svg|txt|woff2)$/i,
-        loader: 'file-loader?emitFile=false',
+        use: 'file-loader?emitFile=false',
       },
       {
         test: /\.(ttf|woff|woff2|eot|otf)(\?.*)?$/,
-        loader: 'file-loader?emitFile=false',
+        use: 'file-loader?emitFile=false',
       },
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: true,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+          },
         },
       },
       {
         test: /\.less$/,
-        loader: 'fake-style!css?modules&localIdentName=[name]__[local]!less',
+        use: 'fake-style!css?modules&localIdentName=[name]__[local]!less',
       },
       {
         test: /\.css$/,
-        loader: 'fake-style!css?modules&localIdentName=[name]__[local]',
+        use: 'fake-style!css?modules&localIdentName=[name]__[local]',
       },
     ],
   },
@@ -64,7 +67,7 @@ export default {
       // API_SECRET: JSON.stringify(process.env.API_SECRET || 'MY_SUPER_API_SECRET'),
     }),
     new webpack.DefinePlugin({
-      STATS: JSON.stringify(stats.load('memoryOnly')),
+      STATS: JSON.stringify(StatsPlugin.load(paths.statsJson, 'memoryOnly')),
     }),
   ],
 };
